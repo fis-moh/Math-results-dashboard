@@ -279,7 +279,6 @@
         tbody tr:hover { background: var(--bg-subtle); }
         .td-name { text-align: right; padding-right: 12px; font-weight: 800; white-space: nowrap; }
 
-        /* التمييز اللوني الذكي للدرجات */
         .score-low {
             background-color: var(--rose-bg) !important;
             color: var(--rose) !important;
@@ -334,11 +333,11 @@
             font-size: 14px;
         }
 
-        /* نافذة المعاينة والطباعة الرسمية (A4) */
+        /* ================= نافذة المعاينة والطباعة الرسمية (A4) ================= */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
@@ -348,7 +347,7 @@
             overflow-y: auto;
         }
         .modal-overlay.show { display: flex; }
-        .modal-box { width: 100%; max-width: 920px; margin: auto; }
+        .modal-box { width: 100%; max-width: 960px; margin: auto; }
 
         .modal-bar {
             background: #1e293b;
@@ -363,51 +362,101 @@
             gap: 10px;
         }
 
+        /* تصميم ورقة الـ A4 المضبوطة هندسياً لصفحة واحدة */
         .a4-printable {
             background: #ffffff;
             color: #0f172a;
-            border: 3px double #1e3a8a;
-            border-radius: 12px;
-            padding: 28px 32px;
+            border: 2px solid #1e3a8a;
+            border-radius: 10px;
+            padding: 20px 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            width: 100%;
+            overflow: hidden;
         }
 
         .a4-header {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1.1fr 1.8fr 1.1fr;
             align-items: center;
+            gap: 10px;
             border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 14px;
-            margin-bottom: 18px;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
         }
-        .a4-header h4 { font-size: 12.5px; color: #1e3a8a; font-weight: 800; line-height: 1.6; }
+        .a4-header-right h4 { font-size: 12px; color: #1e3a8a; font-weight: 800; line-height: 1.5; }
         .a4-title-box { text-align: center; }
-        .a4-title-box h2 { font-size: 19px; font-weight: 800; color: #0f172a; background: #f1f5f9; padding: 5px 20px; border-radius: 99px; border: 1px solid #cbd5e1; }
-        .a4-title-box p { font-size: 12px; color: #475569; font-weight: 700; margin-top: 4px; }
+        .a4-title-box h2 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+            background: #f1f5f9;
+            padding: 5px 14px;
+            border-radius: 99px;
+            border: 1px solid #cbd5e1;
+            display: inline-block;
+        }
+        .a4-title-box p { font-size: 11px; color: #475569; font-weight: 700; margin-top: 4px; }
+        .a4-header-left { text-align: left; font-size: 11.5px; font-weight: 800; color: #1e293b; line-height: 1.6; }
 
-        .a4-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-        .a4-table th, .a4-table td { border: 1px solid #94a3b8; padding: 7px 6px; font-size: 12.5px; color: #0f172a; text-align: center; }
-        .a4-table th { background: #e2e8f0; font-weight: 800; }
+        /* جدول وثيقة A4 مثبت العرض لمنع قص أي عمود */
+        .a4-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+        .a4-table th, .a4-table td {
+            border: 1px solid #94a3b8;
+            padding: 5px 4px;
+            font-size: 11px;
+            color: #0f172a;
+            text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.35;
+        }
+        .a4-table th {
+            background: #e2e8f0;
+            font-weight: 800;
+            font-size: 11px;
+            white-space: normal;
+        }
 
-        .a4-section { border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
-        .a4-sec-head { background: #1e3a8a; color: #fff; padding: 6px 12px; font-size: 13px; font-weight: 800; }
-        .a4-sec-body { padding: 10px 14px; font-size: 12.5px; line-height: 1.7; color: #1e293b; font-weight: 600; }
+        .sub-scores-line {
+            display: block;
+            font-size: 9.5px;
+            color: #475569;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .a4-section {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+        .a4-sec-head { background: #1e3a8a; color: #fff; padding: 5px 12px; font-size: 12px; font-weight: 800; }
+        .a4-sec-body { padding: 8px 12px; font-size: 11.5px; line-height: 1.6; color: #1e293b; font-weight: 600; }
 
         .a4-signatures {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 12px;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 10px;
             border-top: 2px solid #cbd5e1;
             text-align: center;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
-        .sig-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; }
-        .sig-card .role { font-size: 11.5px; color: #475569; font-weight: 800; }
-        .sig-card .name { font-size: 12.5px; color: #0f172a; font-weight: 800; margin: 4px 0 18px; }
-        .sig-card .line { font-size: 11px; color: #64748b; border-top: 1px dashed #94a3b8; padding-top: 4px; }
+        .sig-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px; }
+        .sig-card .role { font-size: 11px; color: #475569; font-weight: 800; }
+        .sig-card .name { font-size: 11.5px; color: #0f172a; font-weight: 800; margin: 3px 0 14px; }
+        .sig-card .line { font-size: 10px; color: #64748b; border-top: 1px dashed #94a3b8; padding-top: 3px; }
 
-        /* مؤشر التحميل المتجاوب */
         #syncToast {
             position: fixed;
             bottom: 20px;
@@ -427,18 +476,75 @@
 
         @media (max-width: 900px) {
             .charts-row { grid-template-columns: 1fr; }
-            .a4-signatures { grid-template-columns: 1fr 1fr; }
         }
 
+        /* ================= قوانين الطباعة الصارمة لمتصفح الآيباد (Safari) ================= */
         @media print {
-            @page { size: A4 portrait; margin: 10mm; }
-            body { background: #ffffff !important; padding: 0 !important; }
-            body.printing-modal .container { display: none !important; }
-            body.printing-modal .modal-overlay { position: static !important; background: none !important; padding: 0 !important; display: block !important; }
-            body.printing-modal .modal-bar { display: none !important; }
-            body.printing-modal .a4-printable { box-shadow: none !important; border: 2px solid #1e3a8a !important; padding: 16px !important; }
-            .no-print { display: none !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page {
+                size: A4 portrait;
+                margin: 7mm;
+            }
+            html, body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+            }
+            .no-print, #syncToast {
+                display: none !important;
+            }
+
+            /* إذا كانت نافذة الوثيقة مفتوحة، أخفِ الداشبورد الخلفي بالكامل طوال الوقت */
+            body.modal-open .container {
+                display: none !important;
+            }
+            body.modal-open .modal-overlay {
+                position: static !important;
+                display: block !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+            }
+            body.modal-open .modal-box {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            body.modal-open .modal-bar {
+                display: none !important;
+            }
+            body.modal-open .a4-printable {
+                box-shadow: none !important;
+                border: 2px solid #1e3a8a !important;
+                border-radius: 6px !important;
+                padding: 12px 14px !important;
+                width: 100% !important;
+            }
+            body.modal-open .a4-table tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* في حال طباعة الداشبورد الرئيسي نفسه (عندما تكون النافذة مغلقة) */
+            body:not(.modal-open) .charts-row {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+            body:not(.modal-open) table {
+                table-layout: auto !important;
+                width: 100% !important;
+            }
+            body:not(.modal-open) th, body:not(.modal-open) td {
+                padding: 5px 4px !important;
+                font-size: 10.5px !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
     </style>
 </head>
@@ -483,7 +589,6 @@
 
     <!-- المحتوى الفعال -->
     <div id="mainPeriodContent">
-        <!-- شريط الفصول والتبويبات -->
         <div class="nav-bar-second no-print">
             <div class="class-switcher">
                 <button class="sw-btn active" onclick="switchClass('class1', this)">أول ثانوي</button>
@@ -668,9 +773,9 @@
 <div class="modal-overlay" id="printModal" onclick="if(event.target===this) closePrintModal()">
     <div class="modal-box">
         <div class="modal-bar">
-            <span style="font-weight:700; font-size:14px;">📄 معاينة الوثيقة المعتمدة (جاهزة للطباعة A4 أو الحفظ كـ PDF)</span>
+            <span style="font-weight:700; font-size:14px;">📄 معاينة الوثيقة المعتمدة (مضبوطة لصفحة A4 واحدة كاملة بدون قص)</span>
             <div style="display:flex; gap:8px;">
-                <button class="u-btn" style="background:#10b981; color:#fff; border:none;" onclick="executeModalPrint()">🖨️ طباعة الوثيقة الآن (A4)</button>
+                <button class="u-btn" style="background:#10b981; color:#fff; border:none;" onclick="window.print()">🖨️ طباعة الوثيقة الآن (A4)</button>
                 <button class="u-btn" style="background:#ef4444; color:#fff; border:none;" onclick="closePrintModal()">✖ إغلاق</button>
             </div>
         </div>
@@ -682,7 +787,6 @@
 <div id="syncToast">🔄 جاري المزامنة مع Google Sheets...</div>
 
 <script>
-// رابط تطبيق Google Apps Script الخاص بك
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbKahFg5bk53xhd5HvgLfs0Lmul_ETPgo1JSG6i24m-S7FNI0zoOsmYP9muBsq99c/exec";
 
 const classMeta = {
@@ -691,7 +795,6 @@ const classMeta = {
     class3: { grade: 'الصف الثالث الثانوي', course: 'رياضيات (3-1)', units: 'الفصل الأول (تحليل الدوال) والفصل الثاني (العلاقات والدوال الأسية واللوغاريتمية)' }
 };
 
-// البيانات الاحتياطية المدمجة (تعمل فوراً وتُستبدل تلقائياً ببيانات الشيت)
 let allPeriodsData = {
     p1: {
         class1: [
@@ -757,23 +860,21 @@ let currentClass = 'class1';
 let currentSubview = 'overview';
 let barChart, radarChart;
 
-// معيار الفرز الحاسم للخطة العلاجية مقابل الإثرائية
 function isRemedial(s) {
     return (s.total < 48 || s.exam <= 12 || s.p4 === 0 || s.pw < 30);
 }
 
-// تشخيص فاقد الطالب وفق درجاته
 function getDiagnosisDetails(s) {
     if (isRemedial(s)) {
         let reasons = [];
-        if (s.exam <= 12) reasons.push(`تدني الاختبار التحريري (${s.exam}/20)`);
+        if (s.exam <= 12) reasons.push(`تدني الاختبار (${s.exam}/20)`);
         if (s.p4 === 0) reasons.push(`عدم تسليم المشروع (0/10)`);
         if (s.p2 <= 6) reasons.push(`نقص الواجبات (${s.p2}/10)`);
         if (s.p1 <= 6) reasons.push(`ضعف المشاركة (${s.p1}/10)`);
-        if (reasons.length === 0) reasons.push(`المجموع الكلي دون مستوى الإتقان (${s.total}/60)`);
+        if (reasons.length === 0) reasons.push(`المجموع دون الإتقان (${s.total}/60)`);
 
         let action = 'أوراق عمل علاجية مركزة + واجبات واختبارات تشخيصية بمنصة مدرستي';
-        if (s.p4 === 0 || s.pw < 30) action += ' + تكليف تعويضي لاستكمال أعمال الفترة';
+        if (s.p4 === 0 || s.pw < 30) action += ' + تكليف تعويضي لأعمال الفترة';
 
         let target = Math.min(60, Math.max(48, s.total + 10));
         return {
@@ -784,8 +885,8 @@ function getDiagnosisDetails(s) {
             target: `رفع المجموع إلى (${target}/60) فأعلى`
         };
     } else {
-        let level = s.total === 60 ? 'إتقان تام (الدرجة النهائية 60/60)' : (s.total >= 55 ? 'تميز مرتفع جداً' : 'إتقان متقدم ومستقر');
-        let role = s.total >= 58 ? 'قائد مجموعة تعلم أقران + مرشح للأولمبياد' : 'مشارك في حل مسائل التفكير العليا والقدرات';
+        let level = s.total === 60 ? 'إتقان تام (60/60)' : (s.total >= 55 ? 'تميز مرتفع جداً' : 'إتقان متقدم ومستقر');
+        let role = s.total >= 58 ? 'قائد مجموعة تعلم أقران + مرشح للأولمبياد' : 'مشارك في مسائل التفكير العليا والقدرات';
         return {
             type: 'enrichment',
             badge: '🌟 خطة إثرائية',
@@ -796,7 +897,6 @@ function getDiagnosisDetails(s) {
     }
 }
 
-// دالة التنسيق اللوني للخلية (أحمر للضعف وأخضر للدرجة الكاملة)
 function cellColorClass(val, max) {
     if (val === max) return 'score-full';
     if (val <= max / 2) return 'score-low';
@@ -840,7 +940,6 @@ function switchSubview(view) {
     document.getElementById('tab-enrichment').className = 'subview-btn' + (view === 'enrichment' ? ' active-enrichment' : '');
 }
 
-// دالة الجلب المباشر للبيانات من Google Sheets عبر Apps Script API
 async function fetchLiveData(isManual = false) {
     const toast = document.getElementById('syncToast');
     toast.style.display = 'flex';
@@ -953,7 +1052,6 @@ function renderTables(data, remedialList, enrichmentList) {
         </tr>
     `;
 
-    // جدول الخطة العلاجية الجماعية
     const remBody = document.querySelector('#remedialTable tbody');
     remBody.innerHTML = '';
     remedialList.forEach((s, idx) => {
@@ -973,7 +1071,6 @@ function renderTables(data, remedialList, enrichmentList) {
         `;
     });
 
-    // جدول الخطة الإثرائية الجماعية
     const enrBody = document.querySelector('#enrichmentTable tbody');
     enrBody.innerHTML = '';
     enrichmentList.forEach((s, idx) => {
@@ -994,7 +1091,7 @@ function renderTables(data, remedialList, enrichmentList) {
     });
 }
 
-// نافذة طباعة الخطة الجماعية للفصل (A4)
+// ================= نافذة طباعة الخطة الجماعية للفصل (مضبوطة لصفحة A4 واحدة دون قص) =================
 function openGroupPlanModal(type) {
     const data = allPeriodsData[currentPeriod][currentClass];
     const meta = classMeta[currentClass];
@@ -1002,35 +1099,34 @@ function openGroupPlanModal(type) {
 
     const title = type === 'remedial'
         ? `وثيقة الخطة العلاجية العامة (${meta.grade})`
-        : `وثيقة الخطة الإثرائية العامة ورعاية المتفوقين (${meta.grade})`;
+        : `وثيقة الخطة الإثرائية ورعاية المتفوقين (${meta.grade})`;
 
     const desc = type === 'remedial'
-        ? `بيان بأسماء الطلاب المدرجين بالمسار العلاجي لمقرر ${meta.course} وتفاصيل الإجراءات التربوية المعتمدة.`
+        ? `بيان بأسماء الطلاب المدرجين بالمسار العلاجي لمقرر ${meta.course} وتشخيص الفاقد والإجراءات التربوية المعتمدة.`
         : `بيان بأسماء الطلاب المدرجين بالمسار الإثرائي لمقرر ${meta.course} وبرامج تنمية المهارات العليا والقدرات.`;
 
     const rowsHTML = list.map((s, idx) => {
         const d = getDiagnosisDetails(s);
         return `
             <tr>
-                <td>${idx + 1}</td>
-                <td style="text-align:right; font-weight:800;">${s.name}</td>
-                <td>${s.p1}</td>
-                <td>${s.p2}</td>
-                <td>${s.p3}</td>
-                <td>${s.p4}</td>
-                <td style="font-weight:800;">${s.pw}/40</td>
-                <td style="font-weight:800;">${s.exam}/20</td>
-                <td style="font-weight:800;">${s.total}/60</td>
+                <td style="font-weight:800;">${idx + 1}</td>
+                <td style="text-align:right; font-weight:800; padding-right:6px;">${s.name}</td>
+                <td>
+                    <strong style="font-size:12px;">${s.pw} / 40</strong>
+                    <span class="sub-scores-line">م:${s.p1} | و:${s.p2} | مه:${s.p3} | مش:${s.p4}</span>
+                </td>
+                <td style="font-weight:800; font-size:12px; ${s.exam<=10?'color:#dc2626;':''}">${s.exam} / 20</td>
+                <td style="font-weight:800; font-size:12px;">${s.total} / 60</td>
                 <td style="text-align:right;">${d.reason}</td>
                 <td style="text-align:right;">${d.action}</td>
-                <td>${d.target}</td>
+                <td style="font-weight:700;">${d.target}</td>
             </tr>
         `;
     }).join('');
 
     document.getElementById('a4Content').innerHTML = `
         <div class="a4-header">
-            <div>
+            <div class="a4-header-right">
                 <h4>المملكة العربية السعودية - وزارة التعليم</h4>
                 <h4>إدارة التعليم بمحافظة الحريق</h4>
                 <h4>مدرسة ثانوية نعام</h4>
@@ -1039,26 +1135,32 @@ function openGroupPlanModal(type) {
                 <h2>${title}</h2>
                 <p>العام الدراسي 1448هـ / 2026م • المقرر: ${meta.course}</p>
             </div>
-            <div style="text-align:left; font-size:12px; font-weight:800;">
-                <div>العدد: (${list.length}) من (${data.length})</div>
+            <div class="a4-header-left">
+                <div>العدد بالمسار: (${list.length}) من (${data.length})</div>
                 <div>النطاق: ${meta.units}</div>
             </div>
         </div>
 
-        <p style="font-size:12.5px; font-weight:700; margin-bottom:10px; color:#1e293b;">• ${desc}</p>
+        <p style="font-size:11.5px; font-weight:700; margin-bottom:8px; color:#1e293b;">• ${desc}</p>
 
         <table class="a4-table">
+            <colgroup>
+                <col style="width: 4%;">
+                <col style="width: 23%;">
+                <col style="width: 14%;">
+                <col style="width: 7%;">
+                <col style="width: 7%;">
+                <col style="width: 17%;">
+                <col style="width: 18%;">
+                <col style="width: 10%;">
+            </colgroup>
             <thead>
                 <tr>
                     <th>م</th>
-                    <th style="text-align:right;">اسم الطالب</th>
-                    <th>مشاركة</th>
-                    <th>واجبات</th>
-                    <th>مهام</th>
-                    <th>مشروع</th>
-                    <th>أعمال (40)</th>
-                    <th>اختبار (20)</th>
-                    <th>المجموع (60)</th>
+                    <th style="text-align:right; padding-right:6px;">اسم الطالب</th>
+                    <th>أعمال الفترة (40)<br><small style="font-weight:600; font-size:9px;">(مشاركة|واجب|مهام|مشروع)</small></th>
+                    <th>الاختبار<br>(20)</th>
+                    <th>المجموع<br>(60)</th>
                     <th>التشخيص وفق الدرجات</th>
                     <th>الإجراء التربوي والرقمي المعتمد</th>
                     <th>المستهدف</th>
@@ -1075,10 +1177,11 @@ function openGroupPlanModal(type) {
         </div>
     `;
 
+    document.body.classList.add('modal-open');
     document.getElementById('printModal').classList.add('show');
 }
 
-// نافذة طباعة الخطة الفردية للطالب (A4)
+// ================= نافذة طباعة الخطة الفردية للطالب (A4) =================
 function openIndividualPlanModal(studentId) {
     const data = allPeriodsData[currentPeriod][currentClass];
     const s = data.find(x => x.id === studentId);
@@ -1091,7 +1194,7 @@ function openIndividualPlanModal(studentId) {
 
     document.getElementById('a4Content').innerHTML = `
         <div class="a4-header">
-            <div>
+            <div class="a4-header-right">
                 <h4>المملكة العربية السعودية - وزارة التعليم</h4>
                 <h4>إدارة التعليم بمحافظة الحريق</h4>
                 <h4>مدرسة ثانوية نعام</h4>
@@ -1100,18 +1203,18 @@ function openIndividualPlanModal(studentId) {
                 <h2>${planTypeTitle}</h2>
                 <p>العام الدراسي 1448هـ / 2026م</p>
             </div>
-            <div style="text-align:left; font-size:12px; font-weight:800;">
+            <div class="a4-header-left">
                 <div>الصف: ${meta.grade}</div>
                 <div>المقرر: ${meta.course}</div>
             </div>
         </div>
 
-        <div style="background:#f8fafc; border:1px solid #94a3b8; border-right:5px solid #1e3a8a; padding:12px 16px; border-radius:8px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="background:#f8fafc; border:1px solid #94a3b8; border-right:5px solid #1e3a8a; padding:10px 14px; border-radius:8px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
             <div>
-                <span style="font-size:12px; color:#475569; font-weight:700;">اسم الطالب الرباعي:</span>
-                <div style="font-size:16px; font-weight:800; color:#0f172a;">${s.name}</div>
+                <span style="font-size:11.5px; color:#475569; font-weight:700;">اسم الطالب الرباعي:</span>
+                <div style="font-size:15px; font-weight:800; color:#0f172a;">${s.name}</div>
             </div>
-            <div style="font-size:14px; font-weight:800; padding:6px 14px; border-radius:8px; background:${d.type==='remedial'?'#ffe4e6':'#dcfce7'}; color:${d.type==='remedial'?'#9f1239':'#166534'};">
+            <div style="font-size:13px; font-weight:800; padding:5px 12px; border-radius:8px; background:${d.type==='remedial'?'#ffe4e6':'#dcfce7'}; color:${d.type==='remedial'?'#9f1239':'#166534'};">
                 ${d.badge}
             </div>
         </div>
@@ -1123,7 +1226,7 @@ function openIndividualPlanModal(studentId) {
                     <th>الواجبات (10)</th>
                     <th>المهام الأدائية (10)</th>
                     <th>المشروع (10)</th>
-                    <th>مجموع أعمال الفترة (40)</th>
+                    <th>أعمال الفترة (40)</th>
                     <th>اختبار الفترة (20)</th>
                     <th>المجموع الكلي (60)</th>
                     <th>النسبة المئوية</th>
@@ -1131,13 +1234,13 @@ function openIndividualPlanModal(studentId) {
             </thead>
             <tbody>
                 <tr>
-                    <td>${s.p1}</td>
-                    <td>${s.p2}</td>
-                    <td>${s.p3}</td>
-                    <td>${s.p4}</td>
+                    <td style="font-weight:800;">${s.p1}</td>
+                    <td style="font-weight:800;">${s.p2}</td>
+                    <td style="font-weight:800;">${s.p3}</td>
+                    <td style="font-weight:800;">${s.p4}</td>
                     <td style="font-weight:800;">${s.pw} / 40</td>
                     <td style="font-weight:800;">${s.exam} / 20</td>
-                    <td style="font-weight:800; font-size:15px;">${s.total} / 60</td>
+                    <td style="font-weight:800; font-size:13px;">${s.total} / 60</td>
                     <td style="font-weight:800;">${Math.round((s.total/60)*100)}%</td>
                 </tr>
             </tbody>
@@ -1160,6 +1263,13 @@ function openIndividualPlanModal(studentId) {
             </div>
         </div>
 
+        <div class="a4-section">
+            <div class="a4-sec-head">3. ملاحظات المعلم والموجه الطلابي وولي الأمر</div>
+            <div class="a4-sec-body" style="min-height:45px;">
+                .........................................................................................................................................................................................................................
+            </div>
+        </div>
+
         <div class="a4-signatures">
             <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
             <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
@@ -1168,18 +1278,13 @@ function openIndividualPlanModal(studentId) {
         </div>
     `;
 
+    document.body.classList.add('modal-open');
     document.getElementById('printModal').classList.add('show');
 }
 
 function closePrintModal() {
     document.getElementById('printModal').classList.remove('show');
-    document.body.classList.remove('printing-modal');
-}
-
-function executeModalPrint() {
-    document.body.classList.add('printing-modal');
-    window.print();
-    setTimeout(() => document.body.classList.remove('printing-modal'), 500);
+    document.body.classList.remove('modal-open');
 }
 
 function renderCharts(data, a1, a2, a3, a4, a5) {
@@ -1241,7 +1346,6 @@ function renderCharts(data, a1, a2, a3, a4, a5) {
     });
 }
 
-// بدء التشغيل: جلب البيانات الحية فوراً من Google Sheets
 window.onload = () => fetchLiveData();
 </script>
 
