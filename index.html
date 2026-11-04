@@ -3,543 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحليل التربوي والإحصائي - ثانوية نعام</title>
-    <!-- استدعاء خط كايرو العربي ومكتبة الرسوم البيانية -->
+    <title>منظومة التحليل التربوي والربط الحي - ثانوية نعام</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-dark: #070b19;
-            --bg-card: rgba(17, 25, 48, 0.72);
-            --bg-card-hover: rgba(26, 38, 70, 0.85);
-            --border-glass: rgba(255, 255, 255, 0.1);
-            --border-highlight: rgba(56, 189, 248, 0.35);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-indigo: #6366f1;
-            --emerald: #10b981;
-            --emerald-bg: rgba(16, 185, 129, 0.15);
-            --amber: #f59e0b;
-            --amber-bg: rgba(245, 158, 11, 0.15);
-            --rose: #f43f5e;
-            --rose-bg: rgba(244, 63, 94, 0.18);
-            --purple: #a855f7;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #0284c7;
+            --emerald: #059669;
+            --emerald-bg: #ecfdf5;
+            --emerald-border: #a7f3d0;
+            --rose: #dc2626;
+            --rose-bg: #fef2f2;
+            --rose-border: #fecaca;
+            --amber: #d97706;
+            --amber-bg: #fffbeb;
+            --shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        body.dark-mode {
+            --bg-body: #090d16;
+            --bg-card: #111827;
+            --bg-subtle: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --primary: #3b82f6;
+            --primary-light: rgba(59, 130, 246, 0.15);
+            --accent: #38bdf8;
+            --emerald: #34d399;
+            --emerald-bg: rgba(16, 185, 129, 0.15);
+            --emerald-border: rgba(16, 185, 129, 0.35);
+            --rose: #fb7185;
+            --rose-bg: rgba(244, 63, 94, 0.15);
+            --rose-border: rgba(244, 63, 94, 0.35);
+            --amber: #fbbf24;
+            --amber-bg: rgba(245, 158, 11, 0.15);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: radial-gradient(circle at 15% 15%, #1e1b4b 0%, #0f172a 45%, #050811 100%);
-            color: var(--text-primary);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 24px 16px 50px;
-            -webkit-font-smoothing: antialiased;
+            padding: 20px 14px 60px;
+            transition: background-color 0.25s, color 0.25s;
         }
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1280px; margin: 0 auto; }
 
-        /* ترويسة الصفحة الفاخرة */
-        .header-banner {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
-            border: 1px solid var(--border-highlight);
-            border-radius: 24px;
-            padding: 28px 32px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        /* ترويسة النظام */
+        .header-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 5px solid var(--primary);
+            border-radius: 20px;
+            padding: 22px 28px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            position: relative;
-            overflow: hidden;
+            gap: 16px;
         }
 
-        .header-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .header-info h1 {
-            font-size: 26px;
+        .header-right .ministry-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
             font-weight: 800;
-            background: linear-gradient(to left, #ffffff, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 99px;
+            margin-bottom: 6px;
         }
 
-        .header-info .subtitle {
-            color: var(--text-secondary);
-            font-size: 15px;
-            font-weight: 500;
+        .header-right h1 {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .header-right p { font-size: 13.5px; color: var(--text-muted); font-weight: 600; }
+
+        .header-left {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
 
-        .badge-pill {
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #7dd3fc;
-            padding: 4px 14px;
-            border-radius: 99px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .header-meta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .meta-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
-            padding: 10px 18px;
-            border-radius: 14px;
+        .person-badge {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 12px;
             text-align: right;
         }
+        .person-badge span { display: block; font-size: 11px; color: var(--text-muted); font-weight: 700; }
+        .person-badge strong { font-size: 14px; color: var(--text-main); font-weight: 800; }
 
-        .meta-box span {
-            display: block;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .meta-box strong {
-            font-size: 15px;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        /* شريط اختيار الفصول والأدوات */
-        .controls-bar {
+        /* شريط الأدوات العلوي */
+        .top-utility-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            border: 1px solid var(--border-glass);
+            padding: 12px 18px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .period-switcher, .class-switcher, .subview-switcher {
+            display: flex;
+            gap: 6px;
+            background: var(--bg-subtle);
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             flex-wrap: wrap;
         }
 
-        .tab-btn {
+        .sw-btn {
             background: transparent;
             border: none;
-            color: var(--text-secondary);
-            padding: 10px 22px;
-            border-radius: 12px;
-            cursor: pointer;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 9px;
             font-family: 'Cairo', sans-serif;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
-            transition: all 0.25s ease;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sw-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(30, 58, 138, 0.25);
+        }
+
+        .utility-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .u-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            transition: 0.2s;
         }
+        .u-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .u-btn.sync-btn { background: #10b981; color: #fff; border-color: #059669; }
 
-        .tab-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .action-btns {
+        /* شريط التبويبات الفرعية */
+        .nav-bar-second {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .btn-action {
+        .subview-btn {
             background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            padding: 10px 18px;
-            border-radius: 12px;
-            cursor: pointer;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 9px 18px;
+            border-radius: 11px;
             font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
             transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .btn-action:hover {
-            border-color: var(--accent-blue);
-            background: var(--bg-card-hover);
-        }
+        .subview-btn.active-main { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .subview-btn.active-remedial { background: var(--rose); color: #fff; border-color: var(--rose); }
+        .subview-btn.active-enrichment { background: var(--emerald); color: #fff; border-color: var(--emerald); }
 
-        /* شبكة البطاقات الإحصائية السبعة */
+        /* بطاقات المؤشرات */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
             gap: 14px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .kpi-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 18px;
-            padding: 18px 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.2s, border-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            border-right: 4px solid var(--kpi-color, var(--primary));
         }
 
-        .kpi-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.22);
-        }
+        .kpi-title { font-size: 12.5px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .kpi-value { font-size: 24px; font-weight: 800; color: var(--text-main); }
+        .kpi-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
 
-        .kpi-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--card-color, var(--accent-blue));
-            opacity: 0.8;
-        }
-
-        .kpi-title {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .kpi-value {
-            font-size: 26px;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.1;
-        }
-
-        .kpi-sub {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-            font-weight: 500;
-        }
-
-        /* قسم التشخيص التربوي الذكي */
-        .insights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 18px;
-            margin-bottom: 24px;
-        }
-
-        .insight-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 18px;
-            padding: 18px 20px;
-            backdrop-filter: blur(12px);
-        }
-
-        .insight-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-            font-weight: 700;
-            font-size: 15px;
-        }
-
-        .student-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .s-tag {
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .tag-emerald { background: var(--emerald-bg); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .tag-rose { background: var(--rose-bg); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-        .tag-amber { background: var(--amber-bg); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-
-        /* الرسوم البيانية */
+        /* الرسوم البيانية والجداول */
         .charts-row {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: 18px;
+            margin-bottom: 20px;
         }
 
-        .chart-panel {
+        .card-panel {
             background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
             padding: 20px;
-            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
         }
 
-        .panel-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #e2e8f0;
+        .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .panel-title span {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* سجل الدرجات التفصيلي */
-        .table-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 22px;
-            backdrop-filter: blur(12px);
-        }
-
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .search-box {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid var(--border-glass);
-            color: #fff;
-            padding: 9px 16px;
-            border-radius: 12px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            width: 260px;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .search-box:focus {
-            border-color: var(--accent-blue);
-        }
-
-        .filter-pills {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .filter-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            color: var(--text-secondary);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .filter-pill.active {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--accent-blue);
-            border-color: rgba(56, 189, 248, 0.4);
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 6px;
-            text-align: center;
-        }
-
-        th {
-            color: var(--text-secondary);
-            font-weight: 700;
-            font-size: 13px;
-            padding: 12px 10px;
-            background: rgba(15, 23, 42, 0.6);
-            border-bottom: 2px solid var(--border-glass);
-            white-space: nowrap;
-        }
-
-        th.col-period {
-            background: rgba(99, 102, 241, 0.18);
-            color: #a5b4fc;
-            border-bottom-color: #6366f1;
-        }
-
-        th.col-exam {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fcd34d;
-            border-bottom-color: #f59e0b;
-        }
-
-        th.col-total {
-            background: rgba(16, 185, 129, 0.15);
-            color: #6ee7b7;
-            border-bottom-color: #10b981;
-        }
-
-        tbody tr {
-            background: rgba(255, 255, 255, 0.025);
-            transition: all 0.2s;
-        }
-
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.07);
-            transform: scale(1.003);
-        }
-
-        td {
-            padding: 12px 10px;
-            font-size: 14px;
-            font-weight: 600;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        td:first-child { border-radius: 0 10px 10px 0; }
-        td:last-child { border-radius: 10px 0 0 10px; }
-
-        .td-name {
-            text-align: right;
-            font-weight: 700;
-            color: #fff;
-            white-space: nowrap;
-        }
-
-        .score-badge {
-            display: inline-block;
-            min-width: 36px;
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-weight: 700;
-        }
-
-        .s-full { background: var(--emerald-bg); color: #34d399; }
-        .s-good { color: #e2e8f0; }
-        .s-warn { background: var(--amber-bg); color: #fbbf24; }
-        .s-low { background: var(--rose-bg); color: #fb7185; box-shadow: 0 0 10px rgba(244, 63, 94, 0.2); }
-
-        /* تمييز عامود أعمال الفترة والمجموع */
-        .td-period-work {
-            background: rgba(99, 102, 241, 0.08);
-            font-weight: 800;
-            color: #c7d2fe;
-            border-right: 1px dashed rgba(99, 102, 241, 0.3);
-            border-left: 1px dashed rgba(99, 102, 241, 0.3);
-        }
-
-        .td-total-cell {
-            background: rgba(16, 185, 129, 0.06);
-            min-width: 140px;
-        }
-
-        .total-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 10px;
         }
 
-        .progress-bar-bg {
-            width: 65px;
-            height: 7px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 99px;
-            overflow: hidden;
-        }
+        .panel-title { font-size: 16px; font-weight: 800; color: var(--text-main); }
 
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 99px;
-        }
-
-        .level-badge {
-            font-size: 12px;
-            padding: 3px 10px;
-            border-radius: 99px;
-            font-weight: 700;
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+        th {
+            background: var(--bg-subtle);
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 12.5px;
+            padding: 12px 8px;
+            border: 1px solid var(--border-color);
             white-space: nowrap;
         }
+        td {
+            padding: 10px 8px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        tbody tr:hover { background: var(--bg-subtle); }
+        .td-name { text-align: right; padding-right: 12px; font-weight: 800; white-space: nowrap; }
 
-        /* صف المتوسطات أسفل الجدول */
-        tfoot tr {
-            background: rgba(56, 189, 248, 0.12);
+        /* التمييز اللوني الذكي للدرجات */
+        .score-low {
+            background-color: var(--rose-bg) !important;
+            color: var(--rose) !important;
+            font-weight: 800 !important;
+        }
+        .score-full {
+            background-color: var(--emerald-bg) !important;
+            color: var(--emerald) !important;
+            font-weight: 800 !important;
+        }
+
+        .badge-remedial {
+            background: var(--rose-bg);
+            color: var(--rose);
+            border: 1px solid var(--rose-border);
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 12px;
             font-weight: 800;
-        }
-        tfoot td {
-            color: #38bdf8;
-            font-size: 14px;
-            border-top: 2px solid rgba(56, 189, 248, 0.3);
+            display: inline-block;
         }
 
-        @media (max-width: 960px) {
+        .badge-enrichment {
+            background: var(--emerald-bg);
+            color: var(--emerald);
+            border: 1px solid var(--emerald-border);
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-block;
+        }
+
+        .btn-doc {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(30, 58, 138, 0.25);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-doc:hover { background: var(--primary); color: #fff; }
+
+        tfoot td {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        /* نافذة المعاينة والطباعة الرسمية (A4) */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 9999;
+            padding: 20px 12px;
+            overflow-y: auto;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-box { width: 100%; max-width: 920px; margin: auto; }
+
+        .modal-bar {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .a4-printable {
+            background: #ffffff;
+            color: #0f172a;
+            border: 3px double #1e3a8a;
+            border-radius: 12px;
+            padding: 28px 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .a4-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+        .a4-header h4 { font-size: 12.5px; color: #1e3a8a; font-weight: 800; line-height: 1.6; }
+        .a4-title-box { text-align: center; }
+        .a4-title-box h2 { font-size: 19px; font-weight: 800; color: #0f172a; background: #f1f5f9; padding: 5px 20px; border-radius: 99px; border: 1px solid #cbd5e1; }
+        .a4-title-box p { font-size: 12px; color: #475569; font-weight: 700; margin-top: 4px; }
+
+        .a4-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+        .a4-table th, .a4-table td { border: 1px solid #94a3b8; padding: 7px 6px; font-size: 12.5px; color: #0f172a; text-align: center; }
+        .a4-table th { background: #e2e8f0; font-weight: 800; }
+
+        .a4-section { border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+        .a4-sec-head { background: #1e3a8a; color: #fff; padding: 6px 12px; font-size: 13px; font-weight: 800; }
+        .a4-sec-body { padding: 10px 14px; font-size: 12.5px; line-height: 1.7; color: #1e293b; font-weight: 600; }
+
+        .a4-signatures {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 2px solid #cbd5e1;
+            text-align: center;
+        }
+        .sig-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; }
+        .sig-card .role { font-size: 11.5px; color: #475569; font-weight: 800; }
+        .sig-card .name { font-size: 12.5px; color: #0f172a; font-weight: 800; margin: 4px 0 18px; }
+        .sig-card .line { font-size: 11px; color: #64748b; border-top: 1px dashed #94a3b8; padding-top: 4px; }
+
+        /* مؤشر التحميل المتجاوب */
+        #syncToast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10000;
+        }
+
+        @media (max-width: 900px) {
             .charts-row { grid-template-columns: 1fr; }
-            .header-banner { flex-direction: column; align-items: flex-start; }
+            .a4-signatures { grid-template-columns: 1fr 1fr; }
         }
 
         @media print {
-            body { background: #0f172a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .action-btns, .search-box, .filter-pills { display: none !important; }
+            @page { size: A4 portrait; margin: 10mm; }
+            body { background: #ffffff !important; padding: 0 !important; }
+            body.printing-modal .container { display: none !important; }
+            body.printing-modal .modal-overlay { position: static !important; background: none !important; padding: 0 !important; display: block !important; }
+            body.printing-modal .modal-bar { display: none !important; }
+            body.printing-modal .a4-printable { box-shadow: none !important; border: 2px solid #1e3a8a !important; padding: 16px !important; }
+            .no-print { display: none !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 </head>
@@ -547,381 +446,747 @@
 
 <div class="container">
     <!-- الترويسة -->
-    <div class="header-banner">
-        <div class="header-info">
-            <div style="margin-bottom: 8px;">
-                <span class="badge-pill">وزارة التعليم • إدارة التعليم بمحافظة الحريق</span>
-            </div>
-            <h1>لوحة التحليل التربوي والإحصائي لنتائج الرياضيات</h1>
-            <div class="subtitle">
-                <span>ثانوية نعام</span> • 
-                <span>الفترة الأولى</span> • 
-                <span>العام الدراسي 1448هـ / 2026م</span>
-            </div>
+    <div class="header-card">
+        <div class="header-right">
+            <span class="ministry-tag">وزارة التعليم • إدارة التعليم بمحافظة الحريق • ثانوية نعام</span>
+            <h1>منظومة التحليل التربوي والخطط العلاجية والإثرائية للرياضيات</h1>
+            <p>ربط سحابي حي مع Google Sheets • العام الدراسي 1448هـ / 2026م</p>
         </div>
-        <div class="header-meta">
-            <div class="meta-box">
+        <div class="header-left">
+            <div class="person-badge">
                 <span>معلم المادة</span>
                 <strong>أ. فيصل محمد مدخلي</strong>
             </div>
-            <div class="meta-box">
+            <div class="person-badge">
                 <span>مدير المدرسة</span>
                 <strong>أ. زيد الداود</strong>
             </div>
         </div>
     </div>
 
-    <!-- شريط الفصول والأزرار -->
-    <div class="controls-bar">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchClass('class1', this)">
-                <span>أول ثانوي (14 طالب)</span>
-            </button>
-            <button class="tab-btn" onclick="switchClass('class2', this)">
-                <span>ثاني ثانوي (18 طالب)</span>
-            </button>
-            <button class="tab-btn" onclick="switchClass('class3', this)">
-                <span>ثالث ثانوي (16 طالب)</span>
-            </button>
+    <!-- شريط الأدوات العلوي -->
+    <div class="top-utility-bar no-print">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <strong style="font-size:13.5px;">📅 الفترة الدراسية:</strong>
+            <div class="period-switcher">
+                <button class="sw-btn active" id="btn-p1" onclick="switchPeriod('p1')">الفترة الأولى (حالي)</button>
+                <button class="sw-btn" id="btn-p2" onclick="switchPeriod('p2')">الفترة الثانية</button>
+            </div>
         </div>
-        <div class="action-btns">
-            <button class="btn-action" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+
+        <div class="utility-actions">
+            <button class="u-btn sync-btn" onclick="fetchLiveData(true)">🔄 مزامنة الدرجات من الشيت الآن</button>
+            <button class="u-btn" onclick="toggleTheme()" id="themeBtn">🌙 الوضع الداكن</button>
+            <button class="u-btn" onclick="window.print()">🖨️ طباعة الشاشة</button>
         </div>
     </div>
 
-    <!-- بطاقات المؤشرات السبعة شاملة أعمال الفترة -->
-    <div class="kpi-grid">
-        <div class="kpi-card" style="--card-color: #38bdf8;">
-            <div class="kpi-title"><span>عدد الطلاب</span> <span>👥</span></div>
-            <div class="kpi-value" id="kpi-count">-</div>
-            <div class="kpi-sub">نسبة النجاح 100%</div>
-        </div>
-        <div class="kpi-card" style="--card-color: #10b981;">
-            <div class="kpi-title"><span>متوسط المجموع الكلي</span> <span>📊</span></div>
-            <div class="kpi-value" id="kpi-avg-total">-</div>
-            <div class="kpi-sub" id="kpi-avg-total-pct">من 60 درجة</div>
-        </div>
-        <div class="kpi-card" style="--card-color: #6366f1;">
-            <div class="kpi-title"><span>متوسط أعمال الفترة</span> <span>📁</span></div>
-            <div class="kpi-value" id="kpi-avg-period">-</div>
-            <div class="kpi-sub" id="kpi-avg-period-pct">من 40 درجة</div>
-        </div>
-        <div class="kpi-card" style="--card-color: #f59e0b;">
-            <div class="kpi-title"><span>متوسط اختبار الفترة</span> <span>📝</span></div>
-            <div class="kpi-value" id="kpi-avg-exam">-</div>
-            <div class="kpi-sub" id="kpi-avg-exam-pct">من 20 درجة</div>
-        </div>
-        <div class="kpi-card" style="--card-color: #a855f7;">
-            <div class="kpi-title"><span>الدرجة النهائية (60/60)</span> <span>🌟</span></div>
-            <div class="kpi-value" id="kpi-perfect">-</div>
-            <div class="kpi-sub" id="kpi-perfect-pct">تحقيق كامل المعايير</div>
-        </div>
-        <div class="kpi-card" style="--card-color: #14b8a6;">
-            <div class="kpi-title"><span>أعلى / أقل مجموع</span> <span>↕️</span></div>
-            <div class="kpi-value" id="kpi-minmax">-</div>
-            <div class="kpi-sub">المدى الإحصائي للدرجات</div>
-        </div>
-    </div>
+    <!-- المحتوى الفعال -->
+    <div id="mainPeriodContent">
+        <!-- شريط الفصول والتبويبات -->
+        <div class="nav-bar-second no-print">
+            <div class="class-switcher">
+                <button class="sw-btn active" onclick="switchClass('class1', this)">أول ثانوي</button>
+                <button class="sw-btn" onclick="switchClass('class2', this)">ثاني ثانوي</button>
+                <button class="sw-btn" onclick="switchClass('class3', this)">ثالث ثانوي</button>
+            </div>
 
-    <!-- التشخيص التربوي الذكي -->
-    <div class="insights-grid">
-        <div class="insight-card">
-            <div class="insight-header" style="color: #34d399;">
-                <span>🏆 كوكبة التميز والإتقان التام (60 / 60)</span>
+            <div class="subview-switcher">
+                <button class="subview-btn active-main" id="tab-overview" onclick="switchSubview('overview')">
+                    📊 سجل الدرجات والتحليل العام
+                </button>
+                <button class="subview-btn" id="tab-remedial" onclick="switchSubview('remedial')">
+                    🎯 الخطة العلاجية للفصل (<span id="count-rem-tab">0</span>)
+                </button>
+                <button class="subview-btn" id="tab-enrichment" onclick="switchSubview('enrichment')">
+                    🌟 الخطة الإثرائية للفصل (<span id="count-enr-tab">0</span>)
+                </button>
             </div>
-            <div class="student-tags" id="insight-perfect"></div>
         </div>
-        <div class="insight-card">
-            <div class="insight-header" style="color: #fbbf24;">
-                <span>📌 فاقد في أعمال الفترة (المشروع / الواجبات)</span>
-            </div>
-            <div class="student-tags" id="insight-period-gap"></div>
-        </div>
-        <div class="insight-card">
-            <div class="insight-header" style="color: #fb7185;">
-                <span>🎯 أولوية الخطة العلاجية (اختبار الفترة ≤ 10)</span>
-            </div>
-            <div class="student-tags" id="insight-exam-low"></div>
-        </div>
-    </div>
 
-    <!-- الرسوم البيانية -->
-    <div class="charts-row">
-        <div class="chart-panel">
-            <div class="panel-title">
-                <span>مقارنة تفصيلية: أعمال الفترة (40) مقابل اختبار الفترة (20) والمجموع (60)</span>
-                <span>تحليل الفجوة بين الأداء المستمر والاختبار التحريري</span>
+        <!-- البطاقات الإحصائية الستة -->
+        <div class="kpi-grid">
+            <div class="kpi-card" style="--kpi-color: #1e3a8a;">
+                <div class="kpi-title"><span>إجمالي طلاب الفصل</span> <span>👥</span></div>
+                <div class="kpi-value" id="kpi-total-students">-</div>
+                <div class="kpi-sub">موزعين بالكامل بين علاجي وإثرائي</div>
             </div>
-            <canvas id="barChart" height="145"></canvas>
-        </div>
-        <div class="chart-panel">
-            <div class="panel-title">
-                <span>رادار توازن المعايير التربوية</span>
-                <span>النسبة المئوية لتحقق كل معيار في الفصل</span>
+            <div class="kpi-card" style="--kpi-color: #0284c7;">
+                <div class="kpi-title"><span>متوسط المجموع (من 60)</span> <span>📈</span></div>
+                <div class="kpi-value" id="kpi-avg-total">-</div>
+                <div class="kpi-sub" id="kpi-avg-total-sub">-</div>
             </div>
-            <canvas id="radarChart" height="190"></canvas>
+            <div class="kpi-card" style="--kpi-color: #6366f1;">
+                <div class="kpi-title"><span>متوسط أعمال الفترة (40)</span> <span>📁</span></div>
+                <div class="kpi-value" id="kpi-avg-pw">-</div>
+                <div class="kpi-sub" id="kpi-avg-pw-sub">-</div>
+            </div>
+            <div class="kpi-card" style="--kpi-color: #d97706;">
+                <div class="kpi-title"><span>متوسط الاختبار (20)</span> <span>📝</span></div>
+                <div class="kpi-value" id="kpi-avg-exam">-</div>
+                <div class="kpi-sub" id="kpi-avg-exam-sub">-</div>
+            </div>
+            <div class="kpi-card" style="--kpi-color: #dc2626;">
+                <div class="kpi-title"><span>طلاب الخطة العلاجية</span> <span>🎯</span></div>
+                <div class="kpi-value" id="kpi-remedial-count" style="color:var(--rose);">-</div>
+                <div class="kpi-sub" id="kpi-remedial-sub">أقل من 48 أو تعثر بالاختبار/المشروع</div>
+            </div>
+            <div class="kpi-card" style="--kpi-color: #059669;">
+                <div class="kpi-title"><span>طلاب الخطة الإثرائية</span> <span>🌟</span></div>
+                <div class="kpi-value" id="kpi-enrichment-count" style="color:var(--emerald);">-</div>
+                <div class="kpi-sub" id="kpi-enrichment-sub">جميع الطلاب المجتازين لمعيار الإتقان</div>
+            </div>
         </div>
-    </div>
 
-    <!-- الجدول التفصيلي الشامل -->
-    <div class="table-panel">
-        <div class="table-toolbar">
-            <div class="panel-title" style="margin: 0;">
-                <span>📋 سجل الدرجات التفصيلي الشامل (شاملاً أعمال الفترة والمجموع)</span>
+        <!-- 1. شاشة العرض العام للدرجات -->
+        <div id="view-overview">
+            <div class="charts-row">
+                <div class="card-panel" style="margin-bottom:0;">
+                    <div class="panel-header">
+                        <span class="panel-title">مقارنة أعمال الفترة (40) باختبار الفترة (20) لكل طالب</span>
+                    </div>
+                    <canvas id="barChart" height="135"></canvas>
+                </div>
+                <div class="card-panel" style="margin-bottom:0;">
+                    <div class="panel-header">
+                        <span class="panel-title">توازن المعايير الخمسة للفصل</span>
+                    </div>
+                    <canvas id="radarChart" height="180"></canvas>
+                </div>
             </div>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث باسم الطالب..." oninput="filterTable()">
-                <div class="filter-pills">
-                    <button class="filter-pill active" onclick="setFilter('all', this)">الكل</button>
-                    <button class="filter-pill" onclick="setFilter('top', this)">الدرجة الكاملة (60)</button>
-                    <button class="filter-pill" onclick="setFilter('support', this)">بحاجة لدعم (< 45)</button>
+
+            <div class="card-panel" style="margin-top:20px;">
+                <div class="panel-header">
+                    <span class="panel-title">📋 كشف درجات الطلاب والتصنيف المعتمد (بيانات متزامنة مع Google Sheets)</span>
+                    <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="btn-doc" style="background:var(--rose-bg); color:var(--rose); border-color:var(--rose-border);" onclick="openGroupPlanModal('remedial')">
+                            🖨️ طباعة الخطة العلاجية العامة للفصل
+                        </button>
+                        <button class="btn-doc" style="background:var(--emerald-bg); color:var(--emerald); border-color:var(--emerald-border);" onclick="openGroupPlanModal('enrichment')">
+                            🖨️ طباعة الخطة الإثرائية العامة للفصل
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="mainTable">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th style="text-align:right;">اسم الطالب</th>
+                                <th>مشاركة (10)</th>
+                                <th>واجبات (10)</th>
+                                <th>مهام (10)</th>
+                                <th>مشروع (10)</th>
+                                <th style="background:rgba(99,102,241,0.12);">أعمال الفترة (40)</th>
+                                <th style="background:rgba(245,158,11,0.12);">الاختبار (20)</th>
+                                <th style="background:rgba(16,185,129,0.12);">المجموع (60)</th>
+                                <th>المسار التربوي المعتمد</th>
+                                <th class="no-print">وثيقة الطالب</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot></tfoot>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th>م</th>
-                        <th style="text-align: right;">اسم الطالب</th>
-                        <th>المشاركة<br><small>(10)</small></th>
-                        <th>الواجبات<br><small>(10)</small></th>
-                        <th>المهام الأدائية<br><small>(10)</small></th>
-                        <th>المشروع<br><small>(10)</small></th>
-                        <th class="col-period">أعمال الفترة<br><small>(40 درجة)</small></th>
-                        <th class="col-exam">اختبار الفترة<br><small>(20 درجة)</small></th>
-                        <th class="col-total">المجموع الكلي<br><small>(60 درجة)</small></th>
-                        <th>التقدير التربوي</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot></tfoot>
-            </table>
+        <!-- 2. شاشة الخطة العلاجية الجماعية -->
+        <div id="view-remedial" style="display:none;">
+            <div class="card-panel" style="border-top: 4px solid var(--rose);">
+                <div class="panel-header">
+                    <div>
+                        <h3 class="panel-title" style="color:var(--rose);">🎯 سجل الخطة العلاجية الشاملة لطلاب الفصل</h3>
+                        <p style="font-size:13px; color:var(--text-muted); font-weight:600; margin-top:4px;">
+                            المعيار: مجموع أقل من (48/60) أو اختبار (≤ 12/20) أو فاقد في المشروع/الواجبات.
+                        </p>
+                    </div>
+                    <button class="u-btn" style="background:var(--rose); color:#fff; border:none;" onclick="openGroupPlanModal('remedial')">
+                        🖨️ معاينة وطباعة وثيقة الخطة العلاجية العامة (A4)
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="remedialTable">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th style="text-align:right;">اسم الطالب</th>
+                                <th>أعمال الفترة (40)</th>
+                                <th>الاختبار (20)</th>
+                                <th>المجموع (60)</th>
+                                <th>تحديد موضع الفاقد</th>
+                                <th>الإجراء العلاجي المعتمد</th>
+                                <th>المستهدف</th>
+                                <th class="no-print">وثيقة فردية</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. شاشة الخطة الإثرائية الجماعية -->
+        <div id="view-enrichment" style="display:none;">
+            <div class="card-panel" style="border-top: 4px solid var(--emerald);">
+                <div class="panel-header">
+                    <div>
+                        <h3 class="panel-title" style="color:var(--emerald);">🌟 سجل الخطة الإثرائية الشاملة لطلاب الفصل</h3>
+                        <p style="font-size:13px; color:var(--text-muted); font-weight:600; margin-top:4px;">
+                            يشمل كافة الطلاب المتقنين والمتفوقين لتنمية مهارات التفكير العليا واختبارات القدرات.
+                        </p>
+                    </div>
+                    <button class="u-btn" style="background:var(--emerald); color:#fff; border:none;" onclick="openGroupPlanModal('enrichment')">
+                        🖨️ معاينة وطباعة وثيقة الخطة الإثرائية العامة (A4)
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="enrichmentTable">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th style="text-align:right;">اسم الطالب</th>
+                                <th>أعمال الفترة (40)</th>
+                                <th>الاختبار (20)</th>
+                                <th>المجموع (60)</th>
+                                <th>مستوى الإتقان</th>
+                                <th>البرنامج الإثرائي المعتمد</th>
+                                <th>الدور بالصف</th>
+                                <th class="no-print">وثيقة فردية</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- نافذة المعاينة والطباعة A4 -->
+<div class="modal-overlay" id="printModal" onclick="if(event.target===this) closePrintModal()">
+    <div class="modal-box">
+        <div class="modal-bar">
+            <span style="font-weight:700; font-size:14px;">📄 معاينة الوثيقة المعتمدة (جاهزة للطباعة A4 أو الحفظ كـ PDF)</span>
+            <div style="display:flex; gap:8px;">
+                <button class="u-btn" style="background:#10b981; color:#fff; border:none;" onclick="executeModalPrint()">🖨️ طباعة الوثيقة الآن (A4)</button>
+                <button class="u-btn" style="background:#ef4444; color:#fff; border:none;" onclick="closePrintModal()">✖ إغلاق</button>
+            </div>
+        </div>
+        <div class="a4-printable" id="a4Content"></div>
+    </div>
+</div>
+
+<!-- إشعار المزامنة -->
+<div id="syncToast">🔄 جاري المزامنة مع Google Sheets...</div>
+
 <script>
-// البيانات الرسمية الدقيقة لجميع الفصول شاملة عامود أعمال الفترة (pw)
-const classesData = {
-    class1: [
-        {id: 1, name: 'البراء بن عبد الرحمن بن عبد الله شديد', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 2, name: 'خالد سعد سعيد الأحمري', p1:5, p2:4, p3:10, p4:9, pw:28, exam:10, total:38},
-        {id: 3, name: 'زياد بن تركي بن حمد الضفيان', p1:8, p2:9, p3:10, p4:9, pw:36, exam:14, total:50},
-        {id: 4, name: 'سعد بن خالد بن رشيد بن جميد', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 5, name: 'سعد بن سلمان بن سعد القريني', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 6, name: 'سعد بن عبد الله بن عبد العزيز الحميدان', p1:6, p2:10, p3:10, p4:10, pw:36, exam:8, total:44},
-        {id: 7, name: 'سعود بن عبد العزيز بن سعود آل هلال', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 8, name: 'عامر بن عبد الله بن محمد الذواد', p1:9, p2:10, p3:10, p4:10, pw:39, exam:16, total:55},
-        {id: 9, name: 'عبد العزيز بن يحيى بن عبد الرحمن اليحيى', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 10, name: 'عبد الله بن علي بن عتقان الهجله المطيري', p1:9, p2:7, p3:10, p4:8, pw:34, exam:17, total:51},
-        {id: 11, name: 'عبد الملك بن تركي بن حمد الضفيان', p1:7, p2:9, p3:10, p4:7, pw:33, exam:14, total:47},
-        {id: 12, name: 'محمد بن راجح بن محمد العجمي', p1:8, p2:6, p3:10, p4:0, pw:24, exam:16, total:40},
-        {id: 13, name: 'محمد بن سعود بن عبد الله آل عثمان', p1:10, p2:10, p3:10, p4:9, pw:39, exam:20, total:59},
-        {id: 14, name: 'ناصر بن عبد الرحمن بن حمد ابو سلمان', p1:5, p2:7, p3:10, p4:0, pw:22, exam:4, total:26}
-    ],
-    class2: [
-        {id: 1, name: 'انس مشارى راشد آل مشاری', p1:8, p2:7, p3:10, p4:10, pw:35, exam:14, total:49},
-        {id: 2, name: 'ابراهیم زید ابراهيم أبو حبيش', p1:8, p2:10, p3:10, p4:9, pw:37, exam:10, total:47},
-        {id: 3, name: 'بدر فهد بن مهيدي ال مهيدي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 4, name: 'تميم عبد الله محمد التميمي', p1:8, p2:5, p3:10, p4:6, pw:29, exam:4, total:33},
-        {id: 5, name: 'راشد ماجد بن راشد آل ماجد', p1:5, p2:2, p3:10, p4:0, pw:17, exam:12, total:29},
-        {id: 6, name: 'سالم مبارك بن ناصر الحميدان', p1:10, p2:9, p3:10, p4:9, pw:38, exam:16, total:54},
-        {id: 7, name: 'سعود سامي بن سعود بن ضويان', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 8, name: 'سلمان محمد سلمان القريني', p1:7, p2:9, p3:7, p4:9, pw:32, exam:4, total:36},
-        {id: 9, name: 'عبد العزيز سعد عبد العزيز بن ضويان', p1:9, p2:10, p3:10, p4:9, pw:38, exam:10, total:48},
-        {id: 10, name: 'عبد العزيز سعود عبد الله العجلان', p1:8, p2:9, p3:10, p4:9, pw:36, exam:6, total:42},
-        {id: 11, name: 'عبد العزيز عبد الرحمن بن عايض البقمي', p1:10, p2:5, p3:10, p4:9, pw:34, exam:14, total:48},
-        {id: 12, name: 'عبد الله معلوي حسن آل الذيب', p1:9, p2:7, p3:10, p4:9, pw:35, exam:20, total:55},
-        {id: 13, name: 'عزام محمد عبد الله العجلان', p1:10, p2:9, p3:10, p4:10, pw:39, exam:20, total:59},
-        {id: 14, name: 'محمد رشید محمد ابورشید', p1:10, p2:9, p3:10, p4:10, pw:39, exam:17, total:56},
-        {id: 15, name: 'محمد سعد بن محمد العبودي', p1:7, p2:2, p3:8, p4:0, pw:17, exam:11, total:28},
-        {id: 16, name: 'محمد سعد سالم المهيدي', p1:8, p2:10, p3:8, p4:9, pw:35, exam:5, total:40},
-        {id: 17, name: 'محمد هزان محمد العثمان', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 18, name: 'نواف سعود راشد الحركان', p1:10, p2:9, p3:10, p4:10, pw:39, exam:17, total:56}
-    ],
-    class3: [
-        {id: 1, name: 'بندر بن عايض بن مسفر آل ربيع الاحمري', p1:5, p2:5, p3:10, p4:8, pw:28, exam:5, total:33},
-        {id: 2, name: 'ثامر بن علي بن عتقان الهجله المطيري', p1:5, p2:10, p3:9, p4:6, pw:30, exam:10, total:40},
-        {id: 3, name: 'حاتم بن سعد بن سعيد الاحمري', p1:5, p2:9, p3:8, p4:9, pw:31, exam:11, total:42},
-        {id: 4, name: 'خالد بن عبد الله بن حسين بن دريس', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 5, name: 'خالد بن محمد بن مشعان الجعفري العنزي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 6, name: 'ریان بن فهد بن عبد العزيز ال مسعود', p1:5, p2:9, p3:10, p4:9, pw:33, exam:9, total:42},
-        {id: 7, name: 'ريان بن محمد بن زيد الشبانات', p1:10, p2:4, p3:10, p4:9, pw:33, exam:17, total:50},
-        {id: 8, name: 'زياد بن سلمان بن مسعود آل عجلان القريني', p1:5, p2:10, p3:10, p4:9, pw:34, exam:7, total:41},
-        {id: 9, name: 'سعد بن منصور بن سعد الضويان', p1:10, p2:9, p3:10, p4:7, pw:36, exam:13, total:49},
-        {id: 10, name: 'سلطان بن فهد بن مقبل العضياني العتيبي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
-        {id: 11, name: 'عبد العزيز بن عبد الله بن عبد العزيز الحميدان', p1:5, p2:9, p3:9, p4:9, pw:32, exam:4, total:36},
-        {id: 12, name: 'عبد الله بن ابراهيم بن حمد الحميدان', p1:7, p2:10, p3:10, p4:9, pw:36, exam:7, total:43},
-        {id: 13, name: 'عبد الله بن عبد العزيز بن راشد آل مشاري', p1:7, p2:9, p3:10, p4:9, pw:35, exam:11, total:46},
-        {id: 14, name: 'فارس بن مبارك بن ناصر الحميدان', p1:7, p2:5, p3:10, p4:9, pw:31, exam:10, total:41},
-        {id: 15, name: 'محمد بن عبد العزيز بن محمد الرقيب التميمي', p1:5, p2:10, p3:8, p4:9, pw:32, exam:10, total:42},
-        {id: 16, name: 'مشعل بن خالد بن محمد البقمي', p1:10, p2:9, p3:10, p4:9, pw:38, exam:18, total:56}
-    ]
+// رابط تطبيق Google Apps Script الخاص بك
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbKahFg5bk53xhd5HvgLfs0Lmul_ETPgo1JSG6i24m-S7FNI0zoOsmYP9muBsq99c/exec";
+
+const classMeta = {
+    class1: { grade: 'الصف الأول الثانوي', course: 'رياضيات (1-1)', units: 'الفصل الأول (التبرير والبرهان) والفصل الثاني (التوازي والتعامد)' },
+    class2: { grade: 'الصف الثاني الثانوي', course: 'رياضيات (2-1)', units: 'الفصل الأول (الدوال والمتباينات) والفصل الثاني (المصفوفات)' },
+    class3: { grade: 'الصف الثالث الثانوي', course: 'رياضيات (3-1)', units: 'الفصل الأول (تحليل الدوال) والفصل الثاني (العلاقات والدوال الأسية واللوغاريتمية)' }
 };
 
+// البيانات الاحتياطية المدمجة (تعمل فوراً وتُستبدل تلقائياً ببيانات الشيت)
+let allPeriodsData = {
+    p1: {
+        class1: [
+            {id: 1, name: 'البراء بن عبد الرحمن بن عبد الله شديد', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 2, name: 'خالد سعد سعيد الأحمري', p1:5, p2:4, p3:10, p4:9, pw:28, exam:10, total:38},
+            {id: 3, name: 'زياد بن تركي بن حمد الضفيان', p1:8, p2:9, p3:10, p4:9, pw:36, exam:14, total:50},
+            {id: 4, name: 'سعد بن خالد بن رشيد بن جميد', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 5, name: 'سعد بن سلمان بن سعد القريني', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 6, name: 'سعد بن عبد الله بن عبد العزيز الحميدان', p1:6, p2:10, p3:10, p4:10, pw:36, exam:8, total:44},
+            {id: 7, name: 'سعود بن عبد العزيز بن سعود آل هلال', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 8, name: 'عامر بن عبد الله بن محمد الذواد', p1:9, p2:10, p3:10, p4:10, pw:39, exam:16, total:55},
+            {id: 9, name: 'عبد العزيز بن يحيى بن عبد الرحمن اليحيى', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 10, name: 'عبد الله بن علي بن عتقان الهجله المطيري', p1:9, p2:7, p3:10, p4:8, pw:34, exam:17, total:51},
+            {id: 11, name: 'عبد الملك بن تركي بن حمد الضفيان', p1:7, p2:9, p3:10, p4:7, pw:33, exam:14, total:47},
+            {id: 12, name: 'محمد بن راجح بن محمد العجمي', p1:8, p2:6, p3:10, p4:0, pw:24, exam:16, total:40},
+            {id: 13, name: 'محمد بن سعود بن عبد الله آل عثمان', p1:10, p2:10, p3:10, p4:9, pw:39, exam:20, total:59},
+            {id: 14, name: 'ناصر بن عبد الرحمن بن حمد ابو سلمان', p1:5, p2:7, p3:10, p4:0, pw:22, exam:4, total:26}
+        ],
+        class2: [
+            {id: 1, name: 'انس مشارى راشد آل مشاری', p1:8, p2:7, p3:10, p4:10, pw:35, exam:14, total:49},
+            {id: 2, name: 'ابراهیم زید ابراهيم أبو حبيش', p1:8, p2:10, p3:10, p4:9, pw:37, exam:10, total:47},
+            {id: 3, name: 'بدر فهد بن مهيدي ال مهيدي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 4, name: 'تميم عبد الله محمد التميمي', p1:8, p2:5, p3:10, p4:6, pw:29, exam:4, total:33},
+            {id: 5, name: 'راشد ماجد بن راشد آل ماجد', p1:5, p2:2, p3:10, p4:0, pw:17, exam:12, total:29},
+            {id: 6, name: 'سالم مبارك بن ناصر الحميدان', p1:10, p2:9, p3:10, p4:9, pw:38, exam:16, total:54},
+            {id: 7, name: 'سعود سامي بن سعود بن ضويان', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 8, name: 'سلمان محمد سلمان القريني', p1:7, p2:9, p3:7, p4:9, pw:32, exam:4, total:36},
+            {id: 9, name: 'عبد العزيز سعد عبد العزيز بن ضويان', p1:9, p2:10, p3:10, p4:9, pw:38, exam:10, total:48},
+            {id: 10, name: 'عبد العزيز سعود عبد الله العجلان', p1:8, p2:9, p3:10, p4:9, pw:36, exam:6, total:42},
+            {id: 11, name: 'عبد العزيز عبد الرحمن بن عايض البقمي', p1:10, p2:5, p3:10, p4:9, pw:34, exam:14, total:48},
+            {id: 12, name: 'عبد الله معلوي حسن آل الذيب', p1:9, p2:7, p3:10, p4:9, pw:35, exam:20, total:55},
+            {id: 13, name: 'عزام محمد عبد الله العجلان', p1:10, p2:9, p3:10, p4:10, pw:39, exam:20, total:59},
+            {id: 14, name: 'محمد رشید محمد ابورشید', p1:10, p2:9, p3:10, p4:10, pw:39, exam:17, total:56},
+            {id: 15, name: 'محمد سعد بن محمد العبودي', p1:7, p2:2, p3:8, p4:0, pw:17, exam:11, total:28},
+            {id: 16, name: 'محمد سعد سالم المهيدي', p1:8, p2:10, p3:8, p4:9, pw:35, exam:5, total:40},
+            {id: 17, name: 'محمد هزان محمد العثمان', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 18, name: 'نواف سعود راشد الحركان', p1:10, p2:9, p3:10, p4:10, pw:39, exam:17, total:56}
+        ],
+        class3: [
+            {id: 1, name: 'بندر بن عايض بن مسفر آل ربيع الاحمري', p1:5, p2:5, p3:10, p4:8, pw:28, exam:5, total:33},
+            {id: 2, name: 'ثامر بن علي بن عتقان الهجله المطيري', p1:5, p2:10, p3:9, p4:6, pw:30, exam:10, total:40},
+            {id: 3, name: 'حاتم بن سعد بن سعيد الاحمري', p1:5, p2:9, p3:8, p4:9, pw:31, exam:11, total:42},
+            {id: 4, name: 'خالد بن عبد الله بن حسين بن دريس', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 5, name: 'خالد بن محمد بن مشعان الجعفري العنزي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 6, name: 'ریان بن فهد بن عبد العزيز ال مسعود', p1:5, p2:9, p3:10, p4:9, pw:33, exam:9, total:42},
+            {id: 7, name: 'ريان بن محمد بن زيد الشبانات', p1:10, p2:4, p3:10, p4:9, pw:33, exam:17, total:50},
+            {id: 8, name: 'زياد بن سلمان بن مسعود آل عجلان القريني', p1:5, p2:10, p3:10, p4:9, pw:34, exam:7, total:41},
+            {id: 9, name: 'سعد بن منصور بن سعد الضويان', p1:10, p2:9, p3:10, p4:7, pw:36, exam:13, total:49},
+            {id: 10, name: 'سلطان بن فهد بن مقبل العضياني العتيبي', p1:10, p2:10, p3:10, p4:10, pw:40, exam:20, total:60},
+            {id: 11, name: 'عبد العزيز بن عبد الله بن عبد العزيز الحميدان', p1:5, p2:9, p3:9, p4:9, pw:32, exam:4, total:36},
+            {id: 12, name: 'عبد الله بن ابراهيم بن حمد الحميدان', p1:7, p2:10, p3:10, p4:9, pw:36, exam:7, total:43},
+            {id: 13, name: 'عبد الله بن عبد العزيز بن راشد آل مشاري', p1:7, p2:9, p3:10, p4:9, pw:35, exam:11, total:46},
+            {id: 14, name: 'فارس بن مبارك بن ناصر الحميدان', p1:7, p2:5, p3:10, p4:9, pw:31, exam:10, total:41},
+            {id: 15, name: 'محمد بن عبد العزيز بن محمد الرقيب التميمي', p1:5, p2:10, p3:8, p4:9, pw:32, exam:10, total:42},
+            {id: 16, name: 'مشعل بن خالد بن محمد البقمي', p1:10, p2:9, p3:10, p4:9, pw:38, exam:18, total:56}
+        ]
+    },
+    p2: { class1: [], class2: [], class3: [] }
+};
+
+let currentPeriod = 'p1';
 let currentClass = 'class1';
-let currentFilter = 'all';
+let currentSubview = 'overview';
 let barChart, radarChart;
 
-function formatScore(val, max) {
-    const ratio = val / max;
-    let cls = 's-good';
-    if (val === max) cls = 's-full';
-    else if (ratio <= 0.5) cls = 's-low';
-    else if (ratio <= 0.7) cls = 's-warn';
-    return `<span class="score-badge ${cls}">${val}</span>`;
+// معيار الفرز الحاسم للخطة العلاجية مقابل الإثرائية
+function isRemedial(s) {
+    return (s.total < 48 || s.exam <= 12 || s.p4 === 0 || s.pw < 30);
 }
 
-function getLevelBadge(total) {
-    if (total >= 54) return `<span class="level-badge" style="background: rgba(16,185,129,0.18); color:#34d399;">ممتاز مرتفع</span>`;
-    if (total >= 48) return `<span class="level-badge" style="background: rgba(56,189,248,0.18); color:#38bdf8;">جيد جداً</span>`;
-    if (total >= 39) return `<span class="level-badge" style="background: rgba(245,158,11,0.18); color:#fbbf24;">جيد</span>`;
-    return `<span class="level-badge" style="background: rgba(244,63,94,0.2); color:#fb7185;">بحاجة لدعم</span>`;
+// تشخيص فاقد الطالب وفق درجاته
+function getDiagnosisDetails(s) {
+    if (isRemedial(s)) {
+        let reasons = [];
+        if (s.exam <= 12) reasons.push(`تدني الاختبار التحريري (${s.exam}/20)`);
+        if (s.p4 === 0) reasons.push(`عدم تسليم المشروع (0/10)`);
+        if (s.p2 <= 6) reasons.push(`نقص الواجبات (${s.p2}/10)`);
+        if (s.p1 <= 6) reasons.push(`ضعف المشاركة (${s.p1}/10)`);
+        if (reasons.length === 0) reasons.push(`المجموع الكلي دون مستوى الإتقان (${s.total}/60)`);
+
+        let action = 'أوراق عمل علاجية مركزة + واجبات واختبارات تشخيصية بمنصة مدرستي';
+        if (s.p4 === 0 || s.pw < 30) action += ' + تكليف تعويضي لاستكمال أعمال الفترة';
+
+        let target = Math.min(60, Math.max(48, s.total + 10));
+        return {
+            type: 'remedial',
+            badge: '🎯 خطة علاجية',
+            reason: reasons.join(' + '),
+            action: action,
+            target: `رفع المجموع إلى (${target}/60) فأعلى`
+        };
+    } else {
+        let level = s.total === 60 ? 'إتقان تام (الدرجة النهائية 60/60)' : (s.total >= 55 ? 'تميز مرتفع جداً' : 'إتقان متقدم ومستقر');
+        let role = s.total >= 58 ? 'قائد مجموعة تعلم أقران + مرشح للأولمبياد' : 'مشارك في حل مسائل التفكير العليا والقدرات';
+        return {
+            type: 'enrichment',
+            badge: '🌟 خطة إثرائية',
+            reason: level,
+            action: 'تدريبات المهارات العليا وأسئلة القدرات والتحصيلي + أنشطة إثرائية بمنصة مدرستي',
+            target: role
+        };
+    }
+}
+
+// دالة التنسيق اللوني للخلية (أحمر للضعف وأخضر للدرجة الكاملة)
+function cellColorClass(val, max) {
+    if (val === max) return 'score-full';
+    if (val <= max / 2) return 'score-low';
+    return '';
 }
 
 function shortName(fullName) {
-    const parts = fullName.trim().split(/\s+/);
-    if (parts.length <= 2) return fullName;
-    return `${parts[0]} ${parts[parts.length - 1]}`;
+    const p = fullName.trim().split(/\s+/);
+    return p.length <= 2 ? fullName : `${p[0]} ${p[p.length - 1]}`;
 }
 
-function switchClass(classId, btn) {
-    currentClass = classId;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    document.getElementById('themeBtn').innerText = isDark ? '☀️ الوضع الفاتح (أبيض)' : '🌙 الوضع الداكن';
     updateDashboard();
 }
 
-function setFilter(filterType, btn) {
-    currentFilter = filterType;
-    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    renderTable();
+function switchPeriod(p) {
+    currentPeriod = p;
+    document.getElementById('btn-p1').classList.toggle('active', p === 'p1');
+    document.getElementById('btn-p2').classList.toggle('active', p === 'p2');
+    fetchLiveData();
 }
 
-function filterTable() {
-    renderTable();
+function switchClass(cls, btn) {
+    currentClass = cls;
+    document.querySelectorAll('.class-switcher .sw-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    fetchLiveData();
+}
+
+function switchSubview(view) {
+    currentSubview = view;
+    document.getElementById('view-overview').style.display = view === 'overview' ? 'block' : 'none';
+    document.getElementById('view-remedial').style.display = view === 'remedial' ? 'block' : 'none';
+    document.getElementById('view-enrichment').style.display = view === 'enrichment' ? 'block' : 'none';
+
+    document.getElementById('tab-overview').className = 'subview-btn' + (view === 'overview' ? ' active-main' : '');
+    document.getElementById('tab-remedial').className = 'subview-btn' + (view === 'remedial' ? ' active-remedial' : '');
+    document.getElementById('tab-enrichment').className = 'subview-btn' + (view === 'enrichment' ? ' active-enrichment' : '');
+}
+
+// دالة الجلب المباشر للبيانات من Google Sheets عبر Apps Script API
+async function fetchLiveData(isManual = false) {
+    const toast = document.getElementById('syncToast');
+    toast.style.display = 'flex';
+    toast.innerText = '🔄 جاري جلب أحدث النتائج من Google Sheets...';
+
+    try {
+        const url = `${GOOGLE_SCRIPT_URL}?period=${currentPeriod}&class=${currentClass}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.status === "success" && result.data && result.data.length > 0) {
+            allPeriodsData[currentPeriod][currentClass] = result.data;
+            toast.innerText = '✅ تم تحديث وتزامن البيانات بنجاح!';
+        } else {
+            toast.innerText = 'ℹ️ تم استخدام البيانات المخزنة محلياً.';
+        }
+    } catch (e) {
+        toast.innerText = '⚠️ تعذر الاتصال بالشيت، يتم عرض أحدث نسخة محفوظة.';
+    }
+
+    setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    updateDashboard();
 }
 
 function updateDashboard() {
-    const data = classesData[currentClass];
+    const data = allPeriodsData[currentPeriod][currentClass] || [];
     const count = data.length;
 
-    let sumP1 = 0, sumP2 = 0, sumP3 = 0, sumP4 = 0, sumPW = 0, sumExam = 0, sumTotal = 0;
-    let perfectList = [], periodGapList = [], examLowList = [];
-    let maxScore = 0, minScore = 60;
+    if (count === 0) {
+        document.getElementById('kpi-total-students').innerText = '0';
+        document.querySelector('#mainTable tbody').innerHTML = '<tr><td colspan="11">لا توجد بيانات مسجلة في هذا القسم بعد.</td></tr>';
+        return;
+    }
+
+    let sumP1=0, sumP2=0, sumP3=0, sumP4=0, sumPW=0, sumExam=0, sumTotal=0;
+    let remedialList = [], enrichmentList = [];
 
     data.forEach(s => {
         sumP1 += s.p1; sumP2 += s.p2; sumP3 += s.p3; sumP4 += s.p4;
         sumPW += s.pw; sumExam += s.exam; sumTotal += s.total;
-        if (s.total > maxScore) maxScore = s.total;
-        if (s.total < minScore) minScore = s.total;
-
-        if (s.total === 60) perfectList.push(shortName(s.name));
-        if (s.p4 === 0 || s.pw < 30) periodGapList.push(`${shortName(s.name)} (${s.pw}/40)`);
-        if (s.exam <= 10) examLowList.push(`${shortName(s.name)} (${s.exam}/20)`);
+        if (isRemedial(s)) remedialList.push(s);
+        else enrichmentList.push(s);
     });
 
     const avgTotal = (sumTotal / count).toFixed(1);
     const avgPW = (sumPW / count).toFixed(1);
     const avgExam = (sumExam / count).toFixed(1);
 
-    // تحديث البطاقات العليا
-    document.getElementById('kpi-count').innerText = `${count} طالباً`;
-    document.getElementById('kpi-avg-total').innerText = `${avgTotal}`;
-    document.getElementById('kpi-avg-total-pct').innerText = `بنسبة إتقان ${((avgTotal/60)*100).toFixed(1)}%`;
-    
-    document.getElementById('kpi-avg-period').innerText = `${avgPW}`;
-    document.getElementById('kpi-avg-period-pct').innerText = `من 40 (${((avgPW/40)*100).toFixed(1)}%)`;
+    document.getElementById('kpi-total-students').innerText = `${count} طالباً`;
+    document.getElementById('kpi-avg-total').innerText = avgTotal;
+    document.getElementById('kpi-avg-total-sub').innerText = `نسبة الإتقان العام ${((avgTotal/60)*100).toFixed(1)}%`;
+    document.getElementById('kpi-avg-pw').innerText = avgPW;
+    document.getElementById('kpi-avg-pw-sub').innerText = `من 40 (${((avgPW/40)*100).toFixed(1)}%)`;
+    document.getElementById('kpi-avg-exam').innerText = avgExam;
+    document.getElementById('kpi-avg-exam-sub').innerText = `من 20 (${((avgExam/20)*100).toFixed(1)}%)`;
 
-    document.getElementById('kpi-avg-exam').innerText = `${avgExam}`;
-    document.getElementById('kpi-avg-exam-pct').innerText = `من 20 (${((avgExam/20)*100).toFixed(1)}%)`;
+    document.getElementById('kpi-remedial-count').innerText = `${remedialList.length} طلاب`;
+    document.getElementById('kpi-remedial-sub').innerText = `يمثلون ${Math.round((remedialList.length/count)*100)}% من الفصل`;
+    document.getElementById('kpi-enrichment-count').innerText = `${enrichmentList.length} طالباً`;
+    document.getElementById('kpi-enrichment-sub').innerText = `يمثلون ${Math.round((enrichmentList.length/count)*100)}% من الفصل`;
 
-    document.getElementById('kpi-perfect').innerText = `${perfectList.length} طلاب`;
-    document.getElementById('kpi-perfect-pct').innerText = `يمثلون ${((perfectList.length/count)*100).toFixed(0)}% من الفصل`;
+    document.getElementById('count-rem-tab').innerText = remedialList.length;
+    document.getElementById('count-enr-tab').innerText = enrichmentList.length;
 
-    document.getElementById('kpi-minmax').innerText = `${maxScore} / ${minScore}`;
-
-    // تحديث التشخيص التربوي
-    document.getElementById('insight-perfect').innerHTML = perfectList.length
-        ? perfectList.map(n => `<span class="s-tag tag-emerald">★ ${n}</span>`).join('')
-        : `<span class="s-tag tag-amber">لا يوجد درجة كاملة</span>`;
-
-    document.getElementById('insight-period-gap').innerHTML = periodGapList.length
-        ? periodGapList.map(n => `<span class="s-tag tag-amber">${n}</span>`).join('')
-        : `<span class="s-tag tag-emerald">جميع الطلاب ملتزمون بأعمال الفترة ممتازة</span>`;
-
-    document.getElementById('insight-exam-low').innerHTML = examLowList.length
-        ? examLowList.map(n => `<span class="s-tag tag-rose">${n}</span>`).join('')
-        : `<span class="s-tag tag-emerald">أداء ممتاز في الاختبار للجميع</span>`;
-
-    renderTable();
+    renderTables(data, remedialList, enrichmentList);
     renderCharts(data, sumP1/count, sumP2/count, sumP3/count, sumP4/count, (sumExam/count)/2);
 }
 
-function renderTable() {
-    const data = classesData[currentClass];
-    const searchQuery = document.getElementById('searchInput').value.trim();
-    const tbody = document.querySelector('#dataTable tbody');
-    const tfoot = document.querySelector('#dataTable tfoot');
-    tbody.innerHTML = '';
+function renderTables(data, remedialList, enrichmentList) {
+    const mainBody = document.querySelector('#mainTable tbody');
+    const mainFoot = document.querySelector('#mainTable tfoot');
+    mainBody.innerHTML = '';
 
-    const filtered = data.filter(s => {
-        const matchesSearch = s.name.includes(searchQuery);
-        if (!matchesSearch) return false;
-        if (currentFilter === 'top') return s.total === 60;
-        if (currentFilter === 'support') return s.total < 45;
-        return true;
-    });
+    data.forEach(s => {
+        const diag = getDiagnosisDetails(s);
+        const badgeHTML = diag.type === 'remedial'
+            ? `<span class="badge-remedial">🎯 خطة علاجية</span>`
+            : `<span class="badge-enrichment">🌟 خطة إثرائية</span>`;
 
-    filtered.forEach(s => {
-        const pct = Math.round((s.total / 60) * 100);
-        const barColor = s.total >= 50 ? '#10b981' : (s.total >= 40 ? '#38bdf8' : '#f43f5e');
-
-        tbody.innerHTML += `
+        mainBody.innerHTML += `
             <tr>
-                <td style="color: var(--text-secondary);">${s.id}</td>
+                <td>${s.id}</td>
                 <td class="td-name">${s.name}</td>
-                <td>${formatScore(s.p1, 10)}</td>
-                <td>${formatScore(s.p2, 10)}</td>
-                <td>${formatScore(s.p3, 10)}</td>
-                <td>${formatScore(s.p4, 10)}</td>
-                <td class="td-period-work">${formatScore(s.pw, 40)}</td>
-                <td>${formatScore(s.exam, 20)}</td>
-                <td class="td-total-cell">
-                    <div class="total-wrapper">
-                        <span style="font-weight:800; font-size:15px; min-width:28px;">${s.total}</span>
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width:${pct}%; background:${barColor};"></div>
-                        </div>
-                    </div>
-                </td>
-                <td>${getLevelBadge(s.total)}</td>
+                <td class="${cellColorClass(s.p1, 10)}">${s.p1}</td>
+                <td class="${cellColorClass(s.p2, 10)}">${s.p2}</td>
+                <td class="${cellColorClass(s.p3, 10)}">${s.p3}</td>
+                <td class="${cellColorClass(s.p4, 10)}">${s.p4}</td>
+                <td class="${cellColorClass(s.pw, 40)}" style="font-weight:800;">${s.pw}</td>
+                <td class="${cellColorClass(s.exam, 20)}" style="font-weight:800;">${s.exam}</td>
+                <td class="${cellColorClass(s.total, 60)}" style="font-size:15px; font-weight:800;">${s.total}</td>
+                <td>${badgeHTML}</td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">📄 وثيقة الطالب</button></td>
             </tr>
         `;
     });
 
-    // حساب المتوسطات لصف التذييل
     const c = data.length;
-    const avg = key => (data.reduce((a, b) => a + b[key], 0) / c).toFixed(1);
-    tfoot.innerHTML = `
+    const avg = k => (data.reduce((a,b)=>a+b[k],0)/c).toFixed(1);
+    mainFoot.innerHTML = `
         <tr>
-            <td colspan="2" style="text-align: right; padding-right: 16px;">📊 المتوسط الحسابي للفصل</td>
+            <td colspan="2" style="text-align:right; padding-right:12px;">📊 المتوسط الحسابي العام للفصل</td>
             <td>${avg('p1')}</td>
             <td>${avg('p2')}</td>
             <td>${avg('p3')}</td>
             <td>${avg('p4')}</td>
-            <td style="color:#a5b4fc; font-size:15px;">${avg('pw')} / 40</td>
-            <td style="color:#fcd34d; font-size:15px;">${avg('exam')} / 20</td>
-            <td style="color:#34d399; font-size:16px;">${avg('total')} / 60</td>
-            <td>—</td>
+            <td>${avg('pw')} / 40</td>
+            <td>${avg('exam')} / 20</td>
+            <td>${avg('total')} / 60</td>
+            <td colspan="2">${remedialList.length} علاجي | ${enrichmentList.length} إثرائي</td>
         </tr>
     `;
+
+    // جدول الخطة العلاجية الجماعية
+    const remBody = document.querySelector('#remedialTable tbody');
+    remBody.innerHTML = '';
+    remedialList.forEach((s, idx) => {
+        const d = getDiagnosisDetails(s);
+        remBody.innerHTML += `
+            <tr>
+                <td>${idx + 1}</td>
+                <td class="td-name">${s.name}</td>
+                <td>${s.pw} / 40</td>
+                <td class="score-low">${s.exam} / 20</td>
+                <td class="score-low">${s.total} / 60</td>
+                <td style="color:var(--rose); text-align:right;">${d.reason}</td>
+                <td style="text-align:right; font-weight:600;">${d.action}</td>
+                <td>${d.target}</td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ خطة فردية</button></td>
+            </tr>
+        `;
+    });
+
+    // جدول الخطة الإثرائية الجماعية
+    const enrBody = document.querySelector('#enrichmentTable tbody');
+    enrBody.innerHTML = '';
+    enrichmentList.forEach((s, idx) => {
+        const d = getDiagnosisDetails(s);
+        enrBody.innerHTML += `
+            <tr>
+                <td>${idx + 1}</td>
+                <td class="td-name">${s.name}</td>
+                <td>${s.pw} / 40</td>
+                <td class="score-full">${s.exam} / 20</td>
+                <td class="score-full">${s.total} / 60</td>
+                <td style="color:var(--emerald);">${d.reason}</td>
+                <td style="text-align:right; font-weight:600;">${d.action}</td>
+                <td style="text-align:right;">${d.target}</td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ خطة فردية</button></td>
+            </tr>
+        `;
+    });
+}
+
+// نافذة طباعة الخطة الجماعية للفصل (A4)
+function openGroupPlanModal(type) {
+    const data = allPeriodsData[currentPeriod][currentClass];
+    const meta = classMeta[currentClass];
+    const list = data.filter(s => type === 'remedial' ? isRemedial(s) : !isRemedial(s));
+
+    const title = type === 'remedial'
+        ? `وثيقة الخطة العلاجية العامة (${meta.grade})`
+        : `وثيقة الخطة الإثرائية العامة ورعاية المتفوقين (${meta.grade})`;
+
+    const desc = type === 'remedial'
+        ? `بيان بأسماء الطلاب المدرجين بالمسار العلاجي لمقرر ${meta.course} وتفاصيل الإجراءات التربوية المعتمدة.`
+        : `بيان بأسماء الطلاب المدرجين بالمسار الإثرائي لمقرر ${meta.course} وبرامج تنمية المهارات العليا والقدرات.`;
+
+    const rowsHTML = list.map((s, idx) => {
+        const d = getDiagnosisDetails(s);
+        return `
+            <tr>
+                <td>${idx + 1}</td>
+                <td style="text-align:right; font-weight:800;">${s.name}</td>
+                <td>${s.p1}</td>
+                <td>${s.p2}</td>
+                <td>${s.p3}</td>
+                <td>${s.p4}</td>
+                <td style="font-weight:800;">${s.pw}/40</td>
+                <td style="font-weight:800;">${s.exam}/20</td>
+                <td style="font-weight:800;">${s.total}/60</td>
+                <td style="text-align:right;">${d.reason}</td>
+                <td style="text-align:right;">${d.action}</td>
+                <td>${d.target}</td>
+            </tr>
+        `;
+    }).join('');
+
+    document.getElementById('a4Content').innerHTML = `
+        <div class="a4-header">
+            <div>
+                <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                <h4>إدارة التعليم بمحافظة الحريق</h4>
+                <h4>مدرسة ثانوية نعام</h4>
+            </div>
+            <div class="a4-title-box">
+                <h2>${title}</h2>
+                <p>العام الدراسي 1448هـ / 2026م • المقرر: ${meta.course}</p>
+            </div>
+            <div style="text-align:left; font-size:12px; font-weight:800;">
+                <div>العدد: (${list.length}) من (${data.length})</div>
+                <div>النطاق: ${meta.units}</div>
+            </div>
+        </div>
+
+        <p style="font-size:12.5px; font-weight:700; margin-bottom:10px; color:#1e293b;">• ${desc}</p>
+
+        <table class="a4-table">
+            <thead>
+                <tr>
+                    <th>م</th>
+                    <th style="text-align:right;">اسم الطالب</th>
+                    <th>مشاركة</th>
+                    <th>واجبات</th>
+                    <th>مهام</th>
+                    <th>مشروع</th>
+                    <th>أعمال (40)</th>
+                    <th>اختبار (20)</th>
+                    <th>المجموع (60)</th>
+                    <th>التشخيص وفق الدرجات</th>
+                    <th>الإجراء التربوي والرقمي المعتمد</th>
+                    <th>المستهدف</th>
+                </tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+        </table>
+
+        <div class="a4-signatures">
+            <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
+        </div>
+    `;
+
+    document.getElementById('printModal').classList.add('show');
+}
+
+// نافذة طباعة الخطة الفردية للطالب (A4)
+function openIndividualPlanModal(studentId) {
+    const data = allPeriodsData[currentPeriod][currentClass];
+    const s = data.find(x => x.id === studentId);
+    const meta = classMeta[currentClass];
+    const d = getDiagnosisDetails(s);
+
+    const planTypeTitle = d.type === 'remedial'
+        ? 'وثيقة خطة علاجية فردية لطالب'
+        : 'وثيقة خطة إثرائية فردية لطالب متقن/متميز';
+
+    document.getElementById('a4Content').innerHTML = `
+        <div class="a4-header">
+            <div>
+                <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                <h4>إدارة التعليم بمحافظة الحريق</h4>
+                <h4>مدرسة ثانوية نعام</h4>
+            </div>
+            <div class="a4-title-box">
+                <h2>${planTypeTitle}</h2>
+                <p>العام الدراسي 1448هـ / 2026م</p>
+            </div>
+            <div style="text-align:left; font-size:12px; font-weight:800;">
+                <div>الصف: ${meta.grade}</div>
+                <div>المقرر: ${meta.course}</div>
+            </div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #94a3b8; border-right:5px solid #1e3a8a; padding:12px 16px; border-radius:8px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <span style="font-size:12px; color:#475569; font-weight:700;">اسم الطالب الرباعي:</span>
+                <div style="font-size:16px; font-weight:800; color:#0f172a;">${s.name}</div>
+            </div>
+            <div style="font-size:14px; font-weight:800; padding:6px 14px; border-radius:8px; background:${d.type==='remedial'?'#ffe4e6':'#dcfce7'}; color:${d.type==='remedial'?'#9f1239':'#166534'};">
+                ${d.badge}
+            </div>
+        </div>
+
+        <table class="a4-table">
+            <thead>
+                <tr>
+                    <th>المشاركة (10)</th>
+                    <th>الواجبات (10)</th>
+                    <th>المهام الأدائية (10)</th>
+                    <th>المشروع (10)</th>
+                    <th>مجموع أعمال الفترة (40)</th>
+                    <th>اختبار الفترة (20)</th>
+                    <th>المجموع الكلي (60)</th>
+                    <th>النسبة المئوية</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${s.p1}</td>
+                    <td>${s.p2}</td>
+                    <td>${s.p3}</td>
+                    <td>${s.p4}</td>
+                    <td style="font-weight:800;">${s.pw} / 40</td>
+                    <td style="font-weight:800;">${s.exam} / 20</td>
+                    <td style="font-weight:800; font-size:15px;">${s.total} / 60</td>
+                    <td style="font-weight:800;">${Math.round((s.total/60)*100)}%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="a4-section">
+            <div class="a4-sec-head">1. التشخيص التربوي الدقيق وفق درجات الطالب الحية</div>
+            <div class="a4-sec-body">
+                • <strong>نتيجة الفرز والتشخيص:</strong> ${d.reason}.<br>
+                • <strong>النطاق المنهجي المقرر:</strong> ${meta.units}.
+            </div>
+        </div>
+
+        <div class="a4-section">
+            <div class="a4-sec-head">2. الإجراءات المعتمدة (المعلم • منصة مدرستي • أوراق العمل)</div>
+            <div class="a4-sec-body">
+                ☐ ${d.action}.<br>
+                ☐ تسليم الطالب تدريبات موجهة من إعداد معلم المادة ومتابعة إنجازها أسبوعياً.<br>
+                ☐ <strong>المستهدف في الفترة القادمة:</strong> ${d.target}.
+            </div>
+        </div>
+
+        <div class="a4-signatures">
+            <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+            <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
+        </div>
+    `;
+
+    document.getElementById('printModal').classList.add('show');
+}
+
+function closePrintModal() {
+    document.getElementById('printModal').classList.remove('show');
+    document.body.classList.remove('printing-modal');
+}
+
+function executeModalPrint() {
+    document.body.classList.add('printing-modal');
+    window.print();
+    setTimeout(() => document.body.classList.remove('printing-modal'), 500);
 }
 
 function renderCharts(data, a1, a2, a3, a4, a5) {
+    const isDark = document.body.classList.contains('dark-mode');
+    const textColor = isDark ? '#cbd5e1' : '#334155';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+
     const labels = data.map(d => shortName(d.name));
     const pwData = data.map(d => d.pw);
     const examData = data.map(d => d.exam);
@@ -930,88 +1195,54 @@ function renderCharts(data, a1, a2, a3, a4, a5) {
     if (radarChart) radarChart.destroy();
 
     Chart.defaults.font.family = 'Cairo';
-    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.color = textColor;
 
-    const ctxBar = document.getElementById('barChart').getContext('2d');
-    barChart = new Chart(ctxBar, {
+    barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [
-                {
-                    label: 'أعمال الفترة (من 40)',
-                    data: pwData,
-                    backgroundColor: 'rgba(99, 102, 241, 0.85)',
-                    borderColor: '#818cf8',
-                    borderWidth: 1,
-                    borderRadius: 5
-                },
-                {
-                    label: 'اختبار الفترة (من 20)',
-                    data: examData,
-                    backgroundColor: 'rgba(16, 185, 129, 0.85)',
-                    borderColor: '#34d399',
-                    borderWidth: 1,
-                    borderRadius: 5
-                }
+                { label: 'أعمال الفترة (40)', data: pwData, backgroundColor: '#4f46e5', borderRadius: 4 },
+                { label: 'اختبار الفترة (20)', data: examData, backgroundColor: '#10b981', borderRadius: 4 }
             ]
         },
         options: {
             responsive: true,
             scales: {
-                x: { stacked: true, grid: { display: false }, ticks: { color: '#cbd5e1', font: { size: 11, weight: '600' } } },
-                y: { stacked: true, beginAtZero: true, max: 60, grid: { color: 'rgba(255,255,255,0.06)' } }
-            },
-            plugins: {
-                legend: { position: 'top', labels: { color: '#f8fafc', font: { size: 12, weight: '700' } } },
-                tooltip: {
-                    callbacks: {
-                        afterBody: function(context) {
-                            const idx = context[0].dataIndex;
-                            return `المجموع الكلي: ${data[idx].total} / 60`;
-                        }
-                    }
-                }
+                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 11 } } },
+                y: { stacked: true, beginAtZero: true, max: 60, grid: { color: gridColor } }
             }
         }
     });
 
-    const ctxRadar = document.getElementById('radarChart').getContext('2d');
-    radarChart = new Chart(ctxRadar, {
+    radarChart = new Chart(document.getElementById('radarChart').getContext('2d'), {
         type: 'radar',
         data: {
-            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام الأدائية (10)', 'المشروع (10)', 'الاختبار (معياري من 10)'],
+            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام (10)', 'المشروع (10)', 'الاختبار (من 10)'],
             datasets: [{
-                label: 'متوسط إتقان المعيار',
+                label: 'متوسط إتقان الفصل',
                 data: [a1.toFixed(1), a2.toFixed(1), a3.toFixed(1), a4.toFixed(1), a5.toFixed(1)],
-                backgroundColor: 'rgba(56, 189, 248, 0.22)',
-                borderColor: '#38bdf8',
-                pointBackgroundColor: '#10b981',
-                pointBorderColor: '#fff',
-                pointRadius: 4,
-                borderWidth: 2.5
+                backgroundColor: 'rgba(2, 132, 199, 0.2)',
+                borderColor: '#0284c7',
+                pointBackgroundColor: '#059669',
+                borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             scales: {
                 r: {
-                    beginAtZero: true,
-                    max: 10,
-                    ticks: { display: false },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                    angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-                    pointLabels: { color: '#f8fafc', font: { size: 12, weight: '700' } }
+                    beginAtZero: true, max: 10, ticks: { display: false },
+                    grid: { color: gridColor }, angleLines: { color: gridColor },
+                    pointLabels: { color: textColor, font: { size: 12, weight: '800' } }
                 }
-            },
-            plugins: {
-                legend: { labels: { color: '#f8fafc', font: { size: 12, weight: '700' } } }
             }
         }
     });
 }
 
-window.onload = () => updateDashboard();
+// بدء التشغيل: جلب البيانات الحية فوراً من Google Sheets
+window.onload = () => fetchLiveData();
 </script>
 
 </body>
