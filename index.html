@@ -228,7 +228,7 @@
         .subview-btn.active-remedial { background: var(--rose); color: #fff; border-color: var(--rose); }
         .subview-btn.active-enrichment { background: var(--emerald); color: #fff; border-color: var(--emerald); }
 
-        /* بطاقات المؤشرات */
+        /* بطاقات المؤشرات الستة */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -249,12 +249,54 @@
         .kpi-value { font-size: 22px; font-weight: 800; color: var(--text-main); }
         .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
 
-        /* الرسوم البيانية والجداول */
-        .charts-row {
+        /* ================= شبكة الرسوم البيانية الرباعية الاحترافية ================= */
+        .charts-suite-top {
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chart-card-header {
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--bg-subtle);
+            padding-bottom: 8px;
+        }
+
+        .chart-card-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chart-card-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .chart-canvas-wrap {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 210px;
         }
 
         .card-panel {
@@ -277,6 +319,127 @@
 
         .panel-title { font-size: 15.5px; font-weight: 800; color: var(--text-main); }
 
+        /* أزرار التبديل بين البطاقات والجدول في الجوال */
+        .mobile-view-toggle {
+            display: none;
+            background: var(--bg-subtle);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        .mv-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .mv-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(30, 58, 138, 0.2);
+        }
+
+        /* ================= تصميم بطاقات الطلاب الذكية للجوال (Zero Horizontal Scroll) ================= */
+        .mobile-cards-container {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .student-m-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--primary);
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .student-m-card.remedial-card { border-right-color: var(--rose); }
+        .student-m-card.enrichment-card { border-right-color: var(--emerald); }
+
+        .smc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .smc-name {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .smc-id {
+            display: inline-block;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .smc-total-pill {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 14px;
+            padding: 4px 10px;
+            border-radius: 10px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .smc-scores-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+            background: var(--bg-subtle);
+            padding: 8px 6px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .smc-score-item span {
+            display: block;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .smc-score-item strong {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .smc-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 6px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        /* ================= الجداول التقليدية ================= */
         .table-responsive {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -303,7 +466,6 @@
         }
         tbody tr:hover { background: var(--bg-subtle); }
 
-        /* تثبيت عمود اسم الطالب في الجوال والآيباد عند التمرير الأفقي */
         .td-name, th.th-name {
             text-align: right;
             padding-right: 10px;
@@ -377,7 +539,7 @@
         /* عناصر شاشة التحليل الإحصائي التفصيلي */
         .stats-deep-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
             gap: 12px;
             margin-bottom: 18px;
         }
@@ -440,7 +602,6 @@
             font-weight: 700;
         }
 
-        /* تصميم ورقة الـ A4 المضبوطة هندسياً لصفحة واحدة */
         .a4-printable {
             background: #ffffff;
             color: #0f172a;
@@ -555,7 +716,29 @@
         /* ================= توافق الأجهزة اللوحية والجوالات (Mobile-First) ================= */
         @media (max-width: 1024px) {
             .kpi-grid { grid-template-columns: repeat(3, 1fr); }
-            .charts-row { grid-template-columns: 1fr; }
+            .charts-suite-top { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .charts-suite-top { grid-template-columns: 1fr; }
+            /* تفعيل أزرار التبديل والبطاقات الذكية في الجوال */
+            .mobile-view-toggle { display: flex; }
+            body.mobile-cards-active #mainTableWrapper { display: none; }
+            body.mobile-cards-active #mobileCardsWrapper { display: grid; }
+
+            /* تحسين الجدول المدمج في الجوال في حال اختاره المستخدم بحيث لا يأخذ الاسم مساحة كبيرة */
+            .td-name, th.th-name {
+                white-space: normal !important;
+                min-width: 105px !important;
+                max-width: 112px !important;
+                font-size: 11.5px !important;
+                line-height: 1.25 !important;
+                padding: 6px 6px !important;
+            }
+            th, td {
+                padding: 7px 5px;
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 640px) {
@@ -567,7 +750,7 @@
             .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .kpi-card { padding: 10px 12px; border-radius: 12px; }
             .kpi-value { font-size: 18px; }
-            .card-panel { padding: 14px 12px; border-radius: 14px; }
+            .card-panel, .chart-card { padding: 14px 12px; border-radius: 14px; }
             .panel-title { font-size: 14px; }
             .subview-switcher, .class-switcher { width: 100%; }
             .a4-printable { padding: 12px 10px; }
@@ -588,15 +771,19 @@
                 margin: 0 !important;
                 width: 100% !important;
             }
-            .no-print, #syncToast {
+            .no-print, #syncToast, .mobile-view-toggle, #mobileCardsWrapper {
                 display: none !important;
+            }
+            #mainTableWrapper {
+                display: block !important;
             }
             .td-name, th.th-name {
                 position: static !important;
                 box-shadow: none !important;
+                white-space: nowrap !important;
+                max-width: none !important;
             }
 
-            /* عزل تام للوثائق المفتوحة داخل النافذة المنبثقة */
             body.modal-open .container {
                 display: none !important;
             }
@@ -653,7 +840,7 @@
         }
     </style>
 </head>
-<body>
+<body class="mobile-cards-active">
 
 <div class="container">
     <!-- الترويسة -->
@@ -703,7 +890,7 @@
 
             <div class="subview-switcher">
                 <button class="subview-btn active-main" id="tab-overview" onclick="switchSubview('overview')">
-                    📋 سجل الدرجات العام
+                    📋 سجل الدرجات والرسوم البيانية
                 </button>
                 <button class="subview-btn" id="tab-analysis" onclick="switchSubview('analysis')">
                     📈 التحليل الإحصائي التفصيلي
@@ -717,7 +904,7 @@
             </div>
         </div>
 
-        <!-- البطاقات الإحصائية الستة (تظهر 2×3 في الجوال) -->
+        <!-- البطاقات الإحصائية الستة -->
         <div class="kpi-grid">
             <div class="kpi-card" style="--kpi-color: #1e3a8a;">
                 <div class="kpi-title"><span>عدد الطلاب</span> <span>👥</span></div>
@@ -751,24 +938,54 @@
             </div>
         </div>
 
-        <!-- 1. شاشة العرض العام للدرجات -->
+        <!-- 1. شاشة العرض العام للدرجات والرسوم البيانية الأربعة -->
         <div id="view-overview">
-            <div class="charts-row">
-                <div class="card-panel" style="margin-bottom:0;">
-                    <div class="panel-header">
-                        <span class="panel-title">مقارنة أعمال الفترة (40) باختبار الفترة (20) لكل طالب</span>
+            <!-- صف الرسوم التحليلية الثلاثة العلوية -->
+            <div class="charts-suite-top">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-title"><span>🍩 توزيع التقديرات الوزارية</span></div>
+                        <div class="chart-card-sub">تصنيف الطلاب وفق سلم اللائحة من 60 درجة</div>
                     </div>
-                    <canvas id="barChart" height="135"></canvas>
+                    <div class="chart-canvas-wrap">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
                 </div>
-                <div class="card-panel" style="margin-bottom:0;">
-                    <div class="panel-header">
-                        <span class="panel-title">رادار توازن المعايير الخمسة للفصل</span>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-title"><span>📊 مدرج فئات الدرجات والتمركز</span></div>
+                        <div class="chart-card-sub">عدد الطلاب في كل شريحة تحصيلية</div>
                     </div>
-                    <canvas id="radarChart" height="180"></canvas>
+                    <div class="chart-canvas-wrap">
+                        <canvas id="distBarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-title"><span>🕸️ رادار كفاءة المعايير الخمسة</span></div>
+                        <div class="chart-card-sub">درجة إتقان المشاركة والواجبات والمهام والاختبار</div>
+                    </div>
+                    <div class="chart-canvas-wrap">
+                        <canvas id="radarChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div class="card-panel" style="margin-top:18px;">
+            <!-- الرسم الرابع: المقارنة الفردية الشاملة -->
+            <div class="card-panel">
+                <div class="panel-header" style="margin-bottom:8px;">
+                    <div>
+                        <span class="panel-title">📈 المخطط التراكمي المقارن: أعمال الفترة (40) مقابل اختبار الفترة (20) لكل طالب</span>
+                        <div style="font-size:11.5px; color:var(--text-muted); font-weight:600;">يكشف الفجوة الفردية بين التقويم المستمر والاختبار التحريري</div>
+                    </div>
+                </div>
+                <canvas id="barChart" height="105"></canvas>
+            </div>
+
+            <!-- كشف الدرجات الشامل (مع محول العرض الذكي للجوال) -->
+            <div class="card-panel">
                 <div class="panel-header">
                     <span class="panel-title" id="mainTableTitle">📋 كشف درجات الطلاب والتصنيف التربوي المعتمد</span>
                     <div class="no-print" style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -784,7 +1001,17 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
+                <!-- زر التبديل الخاص بالجوال فقط -->
+                <div class="mobile-view-toggle no-print">
+                    <button class="mv-btn active" id="mvBtnCards" onclick="setMobileListMode('cards')">📱 عرض البطاقات المدمجة (مثالي للجوال)</button>
+                    <button class="mv-btn" id="mvBtnTable" onclick="setMobileListMode('table')">📋 عرض الجدول المدمج</button>
+                </div>
+
+                <!-- 1. حاوية البطاقات الذكية للجوال (بدون تمرير أفقي) -->
+                <div class="mobile-cards-container" id="mobileCardsWrapper"></div>
+
+                <!-- 2. حاوية الجدول الكامل للآيباد والكمبيوتر (أو عند اختياره بالجوال) -->
+                <div class="table-responsive" id="mainTableWrapper">
                     <table id="mainTable">
                         <thead>
                             <tr>
@@ -809,7 +1036,7 @@
             </div>
         </div>
 
-        <!-- 2. شاشة التحليل الإحصائي التفصيلي للصف (Data Analyst View) -->
+        <!-- 2. شاشة التحليل الإحصائي التفصيلي للصف -->
         <div id="view-analysis" style="display:none;">
             <div class="card-panel" style="border-top: 4px solid var(--purple);">
                 <div class="panel-header">
@@ -1008,7 +1235,20 @@ let allPeriodsData = {
 let currentPeriod = 'p1';
 let currentClass = 'class1';
 let currentSubview = 'overview';
-let barChart, radarChart;
+let barChart, radarChart, doughnutChart, distBarChart;
+
+// التبديل بين البطاقات المدمجة والجدول في الجوال
+function setMobileListMode(mode) {
+    if (mode === 'cards') {
+        document.body.classList.add('mobile-cards-active');
+        document.getElementById('mvBtnCards').classList.add('active');
+        document.getElementById('mvBtnTable').classList.remove('active');
+    } else {
+        document.body.classList.remove('mobile-cards-active');
+        document.getElementById('mvBtnCards').classList.remove('active');
+        document.getElementById('mvBtnTable').classList.add('active');
+    }
+}
 
 // سلم التقديرات الرسمي المعتمد من وزارة التعليم (محول إلى 60 درجة)
 function getMinistryGrade(total) {
@@ -1060,18 +1300,15 @@ function getDiagnosisDetails(s) {
     }
 }
 
-// محرك التحليل الإحصائي الوصفي والاستدلالي للصف
 function computeClassStatistics(data) {
     const n = data.length;
     const totals = data.map(d => d.total).sort((a, b) => a - b);
     const sumTotal = totals.reduce((a, b) => a + b, 0);
     const mean = sumTotal / n;
 
-    // الوسيط الحسابي
     const mid = Math.floor(n / 2);
     const median = n % 2 !== 0 ? totals[mid] : (totals[mid - 1] + totals[mid]) / 2;
 
-    // الانحراف المعياري
     const variance = totals.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / n;
     const stdDev = Math.sqrt(variance);
 
@@ -1079,7 +1316,6 @@ function computeClassStatistics(data) {
     const minScore = totals[0];
     const range = maxScore - minScore;
 
-    // متوسطات المعايير ونسب الإتقان المئوية
     const avgP1 = data.reduce((a, b) => a + b.p1, 0) / n;
     const avgP2 = data.reduce((a, b) => a + b.p2, 0) / n;
     const avgP3 = data.reduce((a, b) => a + b.p3, 0) / n;
@@ -1099,19 +1335,17 @@ function computeClassStatistics(data) {
     const strongestCriterion = sortedCriteria[0];
     const weakestCriterion = sortedCriteria[sortedCriteria.length - 1];
 
-    // الفجوة بين أعمال الفترة والاختبار
     const pwPct = (avgPW / 40) * 100;
     const examPct = (avgExam / 20) * 100;
     const gapPct = pwPct - examPct;
 
-    // توزيع التقديرات وفق لائحة تقويم الطالب بوزارة التعليم
     const bands = [
-        { title: 'ممتاز (أ+ / أ)', rangeText: '90% - 100% (54 - 60 درجة)', color: '#059669', bg: '#ecfdf5', students: data.filter(s => s.total >= 54) },
-        { title: 'جيد جداً (ب+ / ب)', rangeText: '80% - أقل من 90% (48 - 53.9)', color: '#0284c7', bg: '#eff6ff', students: data.filter(s => s.total >= 48 && s.total < 54) },
-        { title: 'جيد (ج+ / ج)', rangeText: '70% - أقل من 80% (42 - 47.9)', color: '#6366f1', bg: '#eef2ff', students: data.filter(s => s.total >= 42 && s.total < 48) },
-        { title: 'مقبول مرتفع (د+)', rangeText: '60% - أقل من 70% (36 - 41.9)', color: '#d97706', bg: '#fffbeb', students: data.filter(s => s.total >= 36 && s.total < 42) },
-        { title: 'مقبول (د)', rangeText: '50% - أقل من 60% (30 - 35.9)', color: '#ea580c', bg: '#fff7ed', students: data.filter(s => s.total >= 30 && s.total < 36) },
-        { title: 'ضعيف / غير مجتاز (هـ)', rangeText: 'أقل من 50% (أقل من 30 درجة)', color: '#dc2626', bg: '#fef2f2', students: data.filter(s => s.total < 30) }
+        { title: 'ممتاز (أ+ / أ)', shortTitle: 'ممتاز (54-60)', rangeText: '90% - 100% (54 - 60 درجة)', color: '#10b981', bg: '#ecfdf5', students: data.filter(s => s.total >= 54) },
+        { title: 'جيد جداً (ب+ / ب)', shortTitle: 'جيد جداً (48-53)', rangeText: '80% - أقل من 90% (48 - 53.9)', color: '#3b82f6', bg: '#eff6ff', students: data.filter(s => s.total >= 48 && s.total < 54) },
+        { title: 'جيد (ج+ / ج)', shortTitle: 'جيد (42-47)', rangeText: '70% - أقل من 80% (42 - 47.9)', color: '#8b5cf6', bg: '#eef2ff', students: data.filter(s => s.total >= 42 && s.total < 48) },
+        { title: 'مقبول مرتفع (د+)', shortTitle: 'مقبول+ (36-41)', rangeText: '60% - أقل من 70% (36 - 41.9)', color: '#f59e0b', bg: '#fffbeb', students: data.filter(s => s.total >= 36 && s.total < 42) },
+        { title: 'مقبول (د)', shortTitle: 'مقبول (30-35)', rangeText: '50% - أقل من 60% (30 - 35.9)', color: '#f97316', bg: '#fff7ed', students: data.filter(s => s.total >= 30 && s.total < 36) },
+        { title: 'ضعيف / غير مجتاز (هـ)', shortTitle: 'ضعيف (<30)', rangeText: 'أقل من 50% (أقل من 30 درجة)', color: '#ef4444', bg: '#fef2f2', students: data.filter(s => s.total < 30) }
     ];
 
     const passCount = data.filter(s => s.total >= 30).length;
@@ -1213,6 +1447,7 @@ function updateDashboard() {
     if (count === 0) {
         document.getElementById('kpi-total-students').innerText = '0';
         document.querySelector('#mainTable tbody').innerHTML = '<tr><td colspan="12">لم يتم رصد درجات هذه الفترة في Google Sheets حتى الآن.</td></tr>';
+        document.getElementById('mobileCardsWrapper').innerHTML = '<div style="text-align:center; padding:20px;">لم يتم رصد درجات هذه الفترة حتى الآن.</div>';
         return;
     }
 
@@ -1221,7 +1456,7 @@ function updateDashboard() {
     const enrichmentList = data.filter(s => !isRemedial(s));
 
     document.getElementById('kpi-total-students').innerText = `${count} طالباً`;
-    document.getElementById('kpi-pass-rate').innerText = `نسبة النجاح ${stats.passRate}%`;
+    document.getElementById('kpi-pass-rate').innerText = `نسبة الاجتياز ${stats.passRate}%`;
     document.getElementById('kpi-avg-total').innerText = `${stats.mean.toFixed(1)} / 60`;
     document.getElementById('kpi-avg-total-sub').innerText = `إتقان عام ${((stats.mean/60)*100).toFixed(1)}%`;
     document.getElementById('kpi-avg-pw').innerText = `${stats.avgPW.toFixed(1)} / 40`;
@@ -1237,15 +1472,17 @@ function updateDashboard() {
     document.getElementById('count-rem-tab').innerText = remedialList.length;
     document.getElementById('count-enr-tab').innerText = enrichmentList.length;
 
-    renderTables(data, remedialList, enrichmentList, stats);
+    renderTablesAndMobileCards(data, remedialList, enrichmentList, stats);
     renderOnScreenAnalysis(stats, meta, pName);
-    renderCharts(data, stats.avgP1, stats.avgP2, stats.avgP3, stats.avgP4, stats.avgExam / 2);
+    renderAllFourCharts(data, stats);
 }
 
-function renderTables(data, remedialList, enrichmentList, stats) {
+function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
     const mainBody = document.querySelector('#mainTable tbody');
     const mainFoot = document.querySelector('#mainTable tfoot');
+    const mobileCardsBox = document.getElementById('mobileCardsWrapper');
     mainBody.innerHTML = '';
+    mobileCardsBox.innerHTML = '';
 
     data.forEach(s => {
         const diag = getDiagnosisDetails(s);
@@ -1254,6 +1491,7 @@ function renderTables(data, remedialList, enrichmentList, stats) {
             ? `<span class="badge-remedial">🎯 علاجي</span>`
             : `<span class="badge-enrichment">🌟 إثرائي</span>`;
 
+        // 1. صف الجدول
         mainBody.innerHTML += `
             <tr>
                 <td>${s.id}</td>
@@ -1270,11 +1508,41 @@ function renderTables(data, remedialList, enrichmentList, stats) {
                 <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">📄 بطاقة الطالب</button></td>
             </tr>
         `;
+
+        // 2. البطاقة الذكية للجوال (تعرض جميع التفاصيل بدون أي سحب أفقي)
+        mobileCardsBox.innerHTML += `
+            <div class="student-m-card ${diag.type === 'remedial' ? 'remedial-card' : 'enrichment-card'}">
+                <div class="smc-top">
+                    <div class="smc-name">
+                        <span class="smc-id">#${s.id}</span>
+                        ${s.name}
+                    </div>
+                    <div class="smc-total-pill" style="color:${gradeObj.color};">
+                        ${s.total} <small style="font-size:11px; font-weight:700;">/ 60</small>
+                    </div>
+                </div>
+                <div class="smc-scores-grid">
+                    <div class="smc-score-item"><span>مشاركة</span><strong style="${s.p1<=5?'color:var(--rose)':''}">${s.p1}</strong></div>
+                    <div class="smc-score-item"><span>واجبات</span><strong style="${s.p2<=5?'color:var(--rose)':''}">${s.p2}</strong></div>
+                    <div class="smc-score-item"><span>مهام</span><strong>${s.p3}</strong></div>
+                    <div class="smc-score-item"><span>مشروع</span><strong style="${s.p4===0?'color:var(--rose)':''}">${s.p4}</strong></div>
+                    <div class="smc-score-item" style="border-right:1px solid var(--border-color);"><span>الأعمال</span><strong style="color:var(--primary);">${s.pw}/40</strong></div>
+                    <div class="smc-score-item"><span>الاختبار</span><strong style="${s.exam<=10?'color:var(--rose)':'color:var(--emerald)'}">${s.exam}/20</strong></div>
+                </div>
+                <div class="smc-bottom">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        ${badgeHTML}
+                        <span style="font-size:11.5px; font-weight:800; color:${gradeObj.color};">• ${gradeObj.label}</span>
+                    </div>
+                    <button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">📄 وثيقة الخطة</button>
+                </div>
+            </div>
+        `;
     });
 
     mainFoot.innerHTML = `
         <tr>
-            <td colspan="2" style="text-align:right; padding-right:10px;">📊 المتوسط الحسابي العام للفصل</td>
+            <td colspan="2" style="text-align:right; padding-right:10px;">📊 المتوسط العام للفصل</td>
             <td>${stats.avgP1.toFixed(1)}</td>
             <td>${stats.avgP2.toFixed(1)}</td>
             <td>${stats.avgP3.toFixed(1)}</td>
@@ -1327,7 +1595,139 @@ function renderTables(data, remedialList, enrichmentList, stats) {
     });
 }
 
-// عرض التحليل الإحصائي داخل تبويب الموقع
+// ================= رسم المخططات البيانية الأربعة الاحترافية =================
+function renderAllFourCharts(data, stats) {
+    const isDark = document.body.classList.contains('dark-mode');
+    const textColor = isDark ? '#cbd5e1' : '#334155';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
+
+    if (doughnutChart) doughnutChart.destroy();
+    if (distBarChart) distBarChart.destroy();
+    if (radarChart) radarChart.destroy();
+    if (barChart) barChart.destroy();
+
+    Chart.defaults.font.family = 'Cairo';
+    Chart.defaults.color = textColor;
+
+    // 1. المخطط الحلقي لتوزيع التقديرات الوزارية (Doughnut Chart)
+    const activeBands = stats.bands.filter(b => b.students.length > 0);
+    doughnutChart = new Chart(document.getElementById('doughnutChart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: activeBands.map(b => `${b.shortTitle} (${b.students.length})`),
+            datasets: [{
+                data: activeBands.map(b => b.students.length),
+                backgroundColor: activeBands.map(b => b.color),
+                borderWidth: 2,
+                borderColor: isDark ? '#111827' : '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '62%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: textColor, font: { size: 11, weight: '700' }, padding: 10, boxWidth: 12 }
+                }
+            }
+        }
+    });
+
+    // 2. مدرج توزيع فئات الدرجات (Horizontal Bar Distribution)
+    distBarChart = new Chart(document.getElementById('distBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: stats.bands.map(b => b.shortTitle),
+            datasets: [{
+                label: 'عدد الطلاب',
+                data: stats.bands.map(b => b.students.length),
+                backgroundColor: stats.bands.map(b => b.color),
+                borderRadius: 6,
+                barThickness: 18
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { beginAtZero: true, ticks: { stepSize: 1, color: textColor }, grid: { color: gridColor } },
+                y: { grid: { display: false }, ticks: { color: textColor, font: { size: 11, weight: '700' } } }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 3. رادار كفاءة المعايير التربوية الخمسة (Radar Chart)
+    radarChart = new Chart(document.getElementById('radarChart').getContext('2d'), {
+        type: 'radar',
+        data: {
+            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام (10)', 'المشروع (10)', 'الاختبار (من 10)'],
+            datasets: [{
+                label: 'متوسط إتقان المعيار',
+                data: [
+                    stats.avgP1.toFixed(1),
+                    stats.avgP2.toFixed(1),
+                    stats.avgP3.toFixed(1),
+                    stats.avgP4.toFixed(1),
+                    (stats.avgExam / 2).toFixed(1)
+                ],
+                backgroundColor: 'rgba(2, 132, 199, 0.22)',
+                borderColor: '#0284c7',
+                pointBackgroundColor: '#10b981',
+                pointRadius: 4,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true, max: 10, ticks: { display: false },
+                    grid: { color: gridColor }, angleLines: { color: gridColor },
+                    pointLabels: { color: textColor, font: { size: 11, weight: '800' } }
+                }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // 4. المخطط التراكمي المقارن لكل طالب (Stacked Bar Chart)
+    const labels = data.map(d => shortName(d.name));
+    barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'أعمال الفترة (من 40)', data: data.map(d => d.pw), backgroundColor: '#4f46e5', borderRadius: 4 },
+                { label: 'اختبار الفترة (من 20)', data: data.map(d => d.exam), backgroundColor: '#10b981', borderRadius: 4 }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 10.5 } } },
+                y: { stacked: true, beginAtZero: true, max: 60, grid: { color: gridColor } }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        afterBody: function(ctx) {
+                            const idx = ctx[0].dataIndex;
+                            return `المجموع الكلي: ${data[idx].total} / 60`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 function renderOnScreenAnalysis(stats, meta, pName) {
     const container = document.getElementById('onScreenAnalysisContent');
     const bandsRows = stats.bands.map(b => {
@@ -1396,7 +1796,7 @@ function renderOnScreenAnalysis(stats, meta, pName) {
     `;
 }
 
-// ================= 1. طباعة وثيقة التحليل الإحصائي التفصيلي للصف (A4) =================
+// ================= 1. طباعة وثيقة التحليل الإحصائي التفصيلي للصف (A4 شاملة المؤشرات البصرية) =================
 function openAnalysisReportModal() {
     const data = allPeriodsData[currentPeriod][currentClass];
     const meta = classMeta[currentClass];
@@ -1414,7 +1814,12 @@ function openAnalysisReportModal() {
                 <td style="text-align:right; font-weight:800; color:${b.color};">${b.title}</td>
                 <td>${b.rangeText}</td>
                 <td style="font-weight:800;">${b.students.length}</td>
-                <td style="font-weight:800;">${pct}%</td>
+                <td>
+                    <div style="font-weight:800; margin-bottom:2px;">${pct}%</div>
+                    <div style="width:100%; height:6px; background:#e2e8f0; border-radius:99px; overflow:hidden;">
+                        <div style="width:${pct}%; height:100%; background:${b.color};"></div>
+                    </div>
+                </td>
                 <td style="text-align:right;">${names}</td>
             </tr>
         `;
@@ -1425,7 +1830,9 @@ function openAnalysisReportModal() {
             <td style="text-align:right; font-weight:800;">${c.name}</td>
             <td>${c.max}</td>
             <td style="font-weight:800;">${c.avg.toFixed(2)}</td>
-            <td style="font-weight:800; color:${c.pct >= 80 ? '#059669' : '#d97706'};">${c.pct.toFixed(1)}%</td>
+            <td>
+                <span style="font-weight:800; color:${c.pct >= 80 ? '#059669' : '#d97706'};">${c.pct.toFixed(1)}%</span>
+            </td>
             <td>${c.pct >= 85 ? 'إتقان مرتفع جداً' : (c.pct >= 75 ? 'إتقان جيد' : 'يحتاج لتعزيز وتدريب')}</td>
         </tr>
     `).join('');
@@ -1479,22 +1886,22 @@ function openAnalysisReportModal() {
             </div>
 
             <div class="a4-section">
-                <div class="a4-sec-head">ثانياً: مصفوفة توزيع التقديرات وفق لائحة تقويم الطالب المعتمدة بوزارة التعليم</div>
+                <div class="a4-sec-head">ثانياً: مصفوفة توزيع التقديرات والتمثيل البياني وفق لائحة تقويم الطالب المعتمدة</div>
                 <div class="a4-sec-body" style="padding:6px;">
                     <table class="a4-table" style="margin-bottom:0;">
                         <colgroup>
                             <col style="width:18%;">
-                            <col style="width:22%;">
-                            <col style="width:8%;">
-                            <col style="width:10%;">
-                            <col style="width:42%;">
+                            <col style="width:21%;">
+                            <col style="width:7%;">
+                            <col style="width:13%;">
+                            <col style="width:41%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th style="text-align:right;">التقدير الوزاري</th>
                                 <th>النطاق المعياري (من 60)</th>
                                 <th>العدد</th>
-                                <th>النسبة</th>
+                                <th>النسبة والتمثيل</th>
                                 <th style="text-align:right;">أسماء الطلاب ودرجاتهم</th>
                             </tr>
                         </thead>
@@ -1637,7 +2044,6 @@ function openGroupPlanModal(type) {
     document.getElementById('printModal').classList.add('show');
 }
 
-// دالة بناء كود بطاقة A4 فردية لطالب واحد (تستخدم للطباعة الفردية وللطباعة المجمعة)
 function buildStudentCardHTML(s, meta, pName, isBatch = false) {
     const d = getDiagnosisDetails(s);
     const g = getMinistryGrade(s.total);
@@ -1752,7 +2158,7 @@ function openIndividualPlanModal(studentId) {
     document.getElementById('printModal').classList.add('show');
 }
 
-// ================= 4. طباعة جميع البطاقات الفردية لطلاب المسار دفعة واحدة (كل طالب في صفحة A4 مستقلة) =================
+// ================= 4. طباعة جميع البطاقات الفردية لطلاب المسار دفعة واحدة =================
 function openBatchIndividualModal(type) {
     const data = allPeriodsData[currentPeriod][currentClass];
     const meta = classMeta[currentClass];
@@ -1773,65 +2179,6 @@ function closePrintModal() {
     document.getElementById('printModal').classList.remove('show');
     document.body.classList.remove('modal-open');
     document.title = DEFAULT_PAGE_TITLE;
-}
-
-function renderCharts(data, a1, a2, a3, a4, a5) {
-    const isDark = document.body.classList.contains('dark-mode');
-    const textColor = isDark ? '#cbd5e1' : '#334155';
-    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)';
-
-    const labels = data.map(d => shortName(d.name));
-    const pwData = data.map(d => d.pw);
-    const examData = data.map(d => d.exam);
-
-    if (barChart) barChart.destroy();
-    if (radarChart) radarChart.destroy();
-
-    Chart.defaults.font.family = 'Cairo';
-    Chart.defaults.color = textColor;
-
-    barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                { label: 'أعمال الفترة (40)', data: pwData, backgroundColor: '#4f46e5', borderRadius: 4 },
-                { label: 'اختبار الفترة (20)', data: examData, backgroundColor: '#10b981', borderRadius: 4 }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 10.5 } } },
-                y: { stacked: true, beginAtZero: true, max: 60, grid: { color: gridColor } }
-            }
-        }
-    });
-
-    radarChart = new Chart(document.getElementById('radarChart').getContext('2d'), {
-        type: 'radar',
-        data: {
-            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام (10)', 'المشروع (10)', 'الاختبار (من 10)'],
-            datasets: [{
-                label: 'متوسط إتقان الفصل',
-                data: [a1.toFixed(1), a2.toFixed(1), a3.toFixed(1), a4.toFixed(1), a5.toFixed(1)],
-                backgroundColor: 'rgba(2, 132, 199, 0.2)',
-                borderColor: '#0284c7',
-                pointBackgroundColor: '#059669',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                r: {
-                    beginAtZero: true, max: 10, ticks: { display: false },
-                    grid: { color: gridColor }, angleLines: { color: gridColor },
-                    pointLabels: { color: textColor, font: { size: 11.5, weight: '800' } }
-                }
-            }
-        }
-    });
 }
 
 window.onload = () => fetchLiveData();
