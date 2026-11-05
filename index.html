@@ -246,7 +246,7 @@
         }
 
         .kpi-title { font-size: 12px; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .kpi-value { font-size: 22px; font-weight: 800; color: var(--text-main); }
+        .kpi-value { font-size: 21px; font-weight: 800; color: var(--text-main); }
         .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
 
         /* ================= شبكة الرسوم البيانية الرباعية الاحترافية ================= */
@@ -293,10 +293,13 @@
         .chart-canvas-wrap {
             position: relative;
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 210px;
+            height: 230px;
+        }
+
+        .stacked-canvas-wrap {
+            position: relative;
+            width: 100%;
+            height: 310px;
         }
 
         .card-panel {
@@ -350,7 +353,7 @@
             box-shadow: 0 2px 6px rgba(30, 58, 138, 0.2);
         }
 
-        /* ================= تصميم بطاقات الطلاب الذكية للجوال (Zero Horizontal Scroll) ================= */
+        /* ================= تصميم بطاقات الطلاب الذكية للجوال ================= */
         .mobile-cards-container {
             display: none;
             grid-template-columns: 1fr;
@@ -680,6 +683,50 @@
         .a4-sec-head { background: #1e3a8a; color: #fff; padding: 4px 10px; font-size: 11.5px; font-weight: 800; }
         .a4-sec-body { padding: 7px 10px; font-size: 11px; line-height: 1.55; color: #1e293b; font-weight: 600; }
 
+        /* شبكة الرسوم البيانية المطبوعة داخل تقرير الـ A4 */
+        .a4-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .a4-chart-box {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            background: #ffffff;
+        }
+        .a4-chart-box h5 {
+            font-size: 10px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+        .a4-chart-box img {
+            max-width: 100%;
+            height: 125px;
+            object-fit: contain;
+        }
+        .a4-wide-chart-box {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 6px 10px;
+            text-align: center;
+            background: #ffffff;
+        }
+        .a4-wide-chart-box h5 {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+        .a4-wide-chart-box img {
+            width: 100%;
+            max-height: 155px;
+            object-fit: contain;
+        }
+
         .a4-signatures {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -721,12 +768,10 @@
 
         @media (max-width: 768px) {
             .charts-suite-top { grid-template-columns: 1fr; }
-            /* تفعيل أزرار التبديل والبطاقات الذكية في الجوال */
             .mobile-view-toggle { display: flex; }
             body.mobile-cards-active #mainTableWrapper { display: none; }
             body.mobile-cards-active #mobileCardsWrapper { display: grid; }
 
-            /* تحسين الجدول المدمج في الجوال في حال اختاره المستخدم بحيث لا يأخذ الاسم مساحة كبيرة */
             .td-name, th.th-name {
                 white-space: normal !important;
                 min-width: 105px !important;
@@ -756,6 +801,7 @@
             .a4-printable { padding: 12px 10px; }
             .a4-header { grid-template-columns: 1fr; text-align: center; gap: 4px; }
             .a4-header-left { text-align: center; }
+            .a4-charts-grid { grid-template-columns: 1fr; }
         }
 
         /* ================= قوانين الطباعة الصارمة لمتصفح الآيباد والجوال والكمبيوتر ================= */
@@ -828,6 +874,11 @@
             body.modal-open .a4-header-left {
                 text-align: left !important;
             }
+            body.modal-open .a4-charts-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
             body.modal-open .a4-table tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
@@ -873,7 +924,7 @@
         </div>
 
         <div class="utility-actions">
-            <button class="u-btn analysis-btn" onclick="openAnalysisReportModal()">📊 طباعة تحليل نتائج الصف (A4)</button>
+            <button class="u-btn analysis-btn" onclick="openAnalysisReportModal()">📊 طباعة تحليل نتائج الصف الشامل (A4)</button>
             <button class="u-btn sync-btn" onclick="fetchLiveData(true)">🔄 مزامنة الشيت</button>
             <button class="u-btn" onclick="toggleTheme()" id="themeBtn">🌙 داكن</button>
         </div>
@@ -893,7 +944,7 @@
                     📋 سجل الدرجات والرسوم البيانية
                 </button>
                 <button class="subview-btn" id="tab-analysis" onclick="switchSubview('analysis')">
-                    📈 التحليل الإحصائي التفصيلي
+                    📈 التحليل الإحصائي والترتيب
                 </button>
                 <button class="subview-btn" id="tab-remedial" onclick="switchSubview('remedial')">
                     🎯 الخطة العلاجية (<span id="count-rem-tab">0</span>)
@@ -965,7 +1016,7 @@
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <div class="chart-card-title"><span>🕸️ رادار كفاءة المعايير الخمسة</span></div>
-                        <div class="chart-card-sub">درجة إتقان المشاركة والواجبات والمهام والاختبار</div>
+                        <div class="chart-card-sub">نسبة إتقان المعايير (الاختبار من 20 والأعمال من 10)</div>
                     </div>
                     <div class="chart-canvas-wrap">
                         <canvas id="radarChart"></canvas>
@@ -973,24 +1024,26 @@
                 </div>
             </div>
 
-            <!-- الرسم الرابع: المقارنة الفردية الشاملة -->
+            <!-- الرسم الرابع: المقارنة الفردية الشاملة (محلول بالكامل بارتفاع واضح) -->
             <div class="card-panel">
                 <div class="panel-header" style="margin-bottom:8px;">
                     <div>
                         <span class="panel-title">📈 المخطط التراكمي المقارن: أعمال الفترة (40) مقابل اختبار الفترة (20) لكل طالب</span>
-                        <div style="font-size:11.5px; color:var(--text-muted); font-weight:600;">يكشف الفجوة الفردية بين التقويم المستمر والاختبار التحريري</div>
+                        <div style="font-size:11.5px; color:var(--text-muted); font-weight:600;">يعرض جميع طلاب الفصل كاملاً لمقارنة التقويم المستمر بالاختبار التحريري</div>
                     </div>
                 </div>
-                <canvas id="barChart" height="105"></canvas>
+                <div class="stacked-canvas-wrap">
+                    <canvas id="barChart"></canvas>
+                </div>
             </div>
 
-            <!-- كشف الدرجات الشامل (مع محول العرض الذكي للجوال) -->
+            <!-- كشف الدرجات الشامل -->
             <div class="card-panel">
                 <div class="panel-header">
                     <span class="panel-title" id="mainTableTitle">📋 كشف درجات الطلاب والتصنيف التربوي المعتمد</span>
                     <div class="no-print" style="display:flex; gap:6px; flex-wrap:wrap;">
                         <button class="btn-doc" style="background:var(--purple-bg); color:var(--purple); border-color:var(--purple);" onclick="openAnalysisReportModal()">
-                            📊 طباعة تقرير تحليل الصف
+                            📊 طباعة تقرير تحليل الصف (شامل الرسوم والترتيب)
                         </button>
                         <button class="btn-doc" style="background:var(--rose-bg); color:var(--rose); border-color:var(--rose-border);" onclick="openGroupPlanModal('remedial')">
                             🖨️ الخطة العلاجية العامة
@@ -1007,10 +1060,10 @@
                     <button class="mv-btn" id="mvBtnTable" onclick="setMobileListMode('table')">📋 عرض الجدول المدمج</button>
                 </div>
 
-                <!-- 1. حاوية البطاقات الذكية للجوال (بدون تمرير أفقي) -->
+                <!-- 1. حاوية البطاقات الذكية للجوال -->
                 <div class="mobile-cards-container" id="mobileCardsWrapper"></div>
 
-                <!-- 2. حاوية الجدول الكامل للآيباد والكمبيوتر (أو عند اختياره بالجوال) -->
+                <!-- 2. حاوية الجدول الكامل -->
                 <div class="table-responsive" id="mainTableWrapper">
                     <table id="mainTable">
                         <thead>
@@ -1036,18 +1089,18 @@
             </div>
         </div>
 
-        <!-- 2. شاشة التحليل الإحصائي التفصيلي للصف -->
+        <!-- 2. شاشة التحليل الإحصائي التفصيلي والترتيب التنازلي للصف -->
         <div id="view-analysis" style="display:none;">
             <div class="card-panel" style="border-top: 4px solid var(--purple);">
                 <div class="panel-header">
                     <div>
-                        <h3 class="panel-title" style="color:var(--purple);">📈 التقرير الإحصائي والتربوي التفصيلي لنتائج الصف</h3>
+                        <h3 class="panel-title" style="color:var(--purple);">📈 التقرير الإحصائي والتربوي التفصيلي وترتيب طلاب الصف</h3>
                         <p style="font-size:12.5px; color:var(--text-muted); font-weight:600; margin-top:3px;">
-                            تحليل وصفي واستدلالي شامل وفق سلم التقديرات الرسمي في لائحة تقويم الطالب بوزارة التعليم.
+                            تحليل وصفي واستدلالي شامل مع ترتيب الطلاب تنازلياً حسب الدرجات وفق لائحة تقويم الطالب بوزارة التعليم.
                         </p>
                     </div>
                     <button class="u-btn analysis-btn" onclick="openAnalysisReportModal()">
-                        🖨️ معاينة وطباعة وثيقة تحليل النتائج المعتمدة (A4)
+                        🖨️ معاينة وطباعة وثيقة التحليل الشاملة بالرسوم والترتيب (A4)
                     </button>
                 </div>
 
@@ -1237,7 +1290,6 @@ let currentClass = 'class1';
 let currentSubview = 'overview';
 let barChart, radarChart, doughnutChart, distBarChart;
 
-// التبديل بين البطاقات المدمجة والجدول في الجوال
 function setMobileListMode(mode) {
     if (mode === 'cards') {
         document.body.classList.add('mobile-cards-active');
@@ -1250,7 +1302,25 @@ function setMobileListMode(mode) {
     }
 }
 
-// سلم التقديرات الرسمي المعتمد من وزارة التعليم (محول إلى 60 درجة)
+// دالة ذكية لاختصار الأسماء العربية تحافظ على الأسماء المركبة (عبد الله، عبد العزيز، آل، أبو، بن)
+function shortName(fullName) {
+    const p = fullName.trim().split(/\s+/);
+    if (p.length <= 2) return fullName;
+
+    let first = p[0];
+    if (first === 'عبد' && p.length > 1) {
+        first = p[0] + ' ' + p[1];
+    }
+
+    let last = p[p.length - 1];
+    const preLast = p[p.length - 2];
+    if (['آل', 'ال', 'أبو', 'ابو', 'بن'].includes(preLast)) {
+        last = preLast + ' ' + last;
+    }
+
+    return `${first} ${last}`;
+}
+
 function getMinistryGrade(total) {
     if (total >= 57) return { label: 'ممتاز مرتفع (أ+)', cat: 'excellent', color: '#059669' };
     if (total >= 54) return { label: 'ممتاز (أ)', cat: 'excellent', color: '#10b981' };
@@ -1339,13 +1409,19 @@ function computeClassStatistics(data) {
     const examPct = (avgExam / 20) * 100;
     const gapPct = pwPct - examPct;
 
+    // ترتيب الطلاب تنازلياً حسب المجموع الكلي (ثم درجة الاختبار عند التساوي)
+    const rankedStudents = [...data].sort((a, b) => {
+        if (b.total !== a.total) return b.total - a.total;
+        return b.exam - a.exam;
+    });
+
     const bands = [
-        { title: 'ممتاز (أ+ / أ)', shortTitle: 'ممتاز (54-60)', rangeText: '90% - 100% (54 - 60 درجة)', color: '#10b981', bg: '#ecfdf5', students: data.filter(s => s.total >= 54) },
-        { title: 'جيد جداً (ب+ / ب)', shortTitle: 'جيد جداً (48-53)', rangeText: '80% - أقل من 90% (48 - 53.9)', color: '#3b82f6', bg: '#eff6ff', students: data.filter(s => s.total >= 48 && s.total < 54) },
-        { title: 'جيد (ج+ / ج)', shortTitle: 'جيد (42-47)', rangeText: '70% - أقل من 80% (42 - 47.9)', color: '#8b5cf6', bg: '#eef2ff', students: data.filter(s => s.total >= 42 && s.total < 48) },
-        { title: 'مقبول مرتفع (د+)', shortTitle: 'مقبول+ (36-41)', rangeText: '60% - أقل من 70% (36 - 41.9)', color: '#f59e0b', bg: '#fffbeb', students: data.filter(s => s.total >= 36 && s.total < 42) },
-        { title: 'مقبول (د)', shortTitle: 'مقبول (30-35)', rangeText: '50% - أقل من 60% (30 - 35.9)', color: '#f97316', bg: '#fff7ed', students: data.filter(s => s.total >= 30 && s.total < 36) },
-        { title: 'ضعيف / غير مجتاز (هـ)', shortTitle: 'ضعيف (<30)', rangeText: 'أقل من 50% (أقل من 30 درجة)', color: '#ef4444', bg: '#fef2f2', students: data.filter(s => s.total < 30) }
+        { title: 'ممتاز (أ+ / أ)', shortTitle: 'ممتاز (54-60)', rangeText: '90% - 100% (54 - 60 درجة)', color: '#10b981', bg: '#ecfdf5', students: rankedStudents.filter(s => s.total >= 54) },
+        { title: 'جيد جداً (ب+ / ب)', shortTitle: 'جيد جداً (48-53)', rangeText: '80% - أقل من 90% (48 - 53.9)', color: '#3b82f6', bg: '#eff6ff', students: rankedStudents.filter(s => s.total >= 48 && s.total < 54) },
+        { title: 'جيد (ج+ / ج)', shortTitle: 'جيد (42-47)', rangeText: '70% - أقل من 80% (42 - 47.9)', color: '#8b5cf6', bg: '#eef2ff', students: rankedStudents.filter(s => s.total >= 42 && s.total < 48) },
+        { title: 'مقبول مرتفع (د+)', shortTitle: 'مقبول+ (36-41)', rangeText: '60% - أقل من 70% (36 - 41.9)', color: '#f59e0b', bg: '#fffbeb', students: rankedStudents.filter(s => s.total >= 36 && s.total < 42) },
+        { title: 'مقبول (د)', shortTitle: 'مقبول (30-35)', rangeText: '50% - أقل من 60% (30 - 35.9)', color: '#f97316', bg: '#fff7ed', students: rankedStudents.filter(s => s.total >= 30 && s.total < 36) },
+        { title: 'ضعيف / غير مجتاز (هـ)', shortTitle: 'ضعيف (<30)', rangeText: 'أقل من 50% (أقل من 30 درجة)', color: '#ef4444', bg: '#fef2f2', students: rankedStudents.filter(s => s.total < 30) }
     ];
 
     const passCount = data.filter(s => s.total >= 30).length;
@@ -1358,7 +1434,7 @@ function computeClassStatistics(data) {
         avgP1, avgP2, avgP3, avgP4, avgPW, avgExam,
         pwPct, examPct, gapPct,
         criteriaList, strongestCriterion, weakestCriterion,
-        bands, passCount, passRate, homogeneityText
+        bands, rankedStudents, passCount, passRate, homogeneityText
     };
 }
 
@@ -1371,11 +1447,6 @@ function cellColorClass(val, max) {
     if (val === max) return 'score-full';
     if (val <= max / 2) return 'score-low';
     return '';
-}
-
-function shortName(fullName) {
-    const p = fullName.trim().split(/\s+/);
-    return p.length <= 2 ? fullName : `${p[0]} ${p[p.length - 1]}`;
 }
 
 function toggleTheme() {
@@ -1457,11 +1528,11 @@ function updateDashboard() {
 
     document.getElementById('kpi-total-students').innerText = `${count} طالباً`;
     document.getElementById('kpi-pass-rate').innerText = `نسبة الاجتياز ${stats.passRate}%`;
-    document.getElementById('kpi-avg-total').innerText = `${stats.mean.toFixed(1)} / 60`;
+    document.getElementById('kpi-avg-total').innerText = `${stats.mean.toFixed(1)} من 60`;
     document.getElementById('kpi-avg-total-sub').innerText = `إتقان عام ${((stats.mean/60)*100).toFixed(1)}%`;
-    document.getElementById('kpi-avg-pw').innerText = `${stats.avgPW.toFixed(1)} / 40`;
+    document.getElementById('kpi-avg-pw').innerText = `${stats.avgPW.toFixed(1)} من 40`;
     document.getElementById('kpi-avg-pw-sub').innerText = `إتقان ${stats.pwPct.toFixed(1)}%`;
-    document.getElementById('kpi-avg-exam').innerText = `${stats.avgExam.toFixed(1)} / 20`;
+    document.getElementById('kpi-avg-exam').innerText = `${stats.avgExam.toFixed(1)} من 20`;
     document.getElementById('kpi-avg-exam-sub').innerText = `إتقان ${stats.examPct.toFixed(1)}%`;
 
     document.getElementById('kpi-remedial-count').innerText = `${remedialList.length} طلاب`;
@@ -1491,7 +1562,6 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
             ? `<span class="badge-remedial">🎯 علاجي</span>`
             : `<span class="badge-enrichment">🌟 إثرائي</span>`;
 
-        // 1. صف الجدول
         mainBody.innerHTML += `
             <tr>
                 <td>${s.id}</td>
@@ -1509,7 +1579,6 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
             </tr>
         `;
 
-        // 2. البطاقة الذكية للجوال (تعرض جميع التفاصيل بدون أي سحب أفقي)
         mobileCardsBox.innerHTML += `
             <div class="student-m-card ${diag.type === 'remedial' ? 'remedial-card' : 'enrichment-card'}">
                 <div class="smc-top">
@@ -1518,7 +1587,7 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
                         ${s.name}
                     </div>
                     <div class="smc-total-pill" style="color:${gradeObj.color};">
-                        ${s.total} <small style="font-size:11px; font-weight:700;">/ 60</small>
+                        ${s.total} <small style="font-size:11px; font-weight:700;">من 60</small>
                     </div>
                 </div>
                 <div class="smc-scores-grid">
@@ -1547,9 +1616,9 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
             <td>${stats.avgP2.toFixed(1)}</td>
             <td>${stats.avgP3.toFixed(1)}</td>
             <td>${stats.avgP4.toFixed(1)}</td>
-            <td>${stats.avgPW.toFixed(1)} / 40</td>
-            <td>${stats.avgExam.toFixed(1)} / 20</td>
-            <td>${stats.mean.toFixed(1)} / 60</td>
+            <td>${stats.avgPW.toFixed(1)} من 40</td>
+            <td>${stats.avgExam.toFixed(1)} من 20</td>
+            <td>${stats.mean.toFixed(1)} من 60</td>
             <td colspan="3">الانحراف المعياري: ${stats.stdDev.toFixed(2)} | الوسيط: ${stats.median}</td>
         </tr>
     `;
@@ -1563,9 +1632,9 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
             <tr>
                 <td>${idx + 1}</td>
                 <td class="td-name">${s.name}</td>
-                <td>${s.pw} / 40</td>
-                <td class="score-low">${s.exam} / 20</td>
-                <td class="score-low">${s.total} / 60</td>
+                <td>${s.pw} من 40</td>
+                <td class="score-low">${s.exam} من 20</td>
+                <td class="score-low">${s.total} من 60</td>
                 <td style="color:var(--rose); text-align:right;">${d.reason}</td>
                 <td style="text-align:right; font-weight:600;">${d.action}</td>
                 <td>${d.target}</td>
@@ -1583,9 +1652,9 @@ function renderTablesAndMobileCards(data, remedialList, enrichmentList, stats) {
             <tr>
                 <td>${idx + 1}</td>
                 <td class="td-name">${s.name}</td>
-                <td>${s.pw} / 40</td>
-                <td class="score-full">${s.exam} / 20</td>
-                <td class="score-full">${s.total} / 60</td>
+                <td>${s.pw} من 40</td>
+                <td class="score-full">${s.exam} من 20</td>
+                <td class="score-full">${s.total} من 60</td>
                 <td style="color:var(--emerald);">${d.reason}</td>
                 <td style="text-align:right; font-weight:600;">${d.action}</td>
                 <td style="text-align:right;">${d.target}</td>
@@ -1623,13 +1692,14 @@ function renderAllFourCharts(data, stats) {
             }]
         },
         options: {
+            animation: false,
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '62%',
+            cutout: '60%',
             plugins: {
                 legend: {
                     position: 'bottom',
-                    labels: { color: textColor, font: { size: 11, weight: '700' }, padding: 10, boxWidth: 12 }
+                    labels: { color: textColor, font: { size: 11, weight: '700' }, padding: 8, boxWidth: 12 }
                 }
             }
         }
@@ -1649,6 +1719,7 @@ function renderAllFourCharts(data, stats) {
             }]
         },
         options: {
+            animation: false,
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
@@ -1662,19 +1733,26 @@ function renderAllFourCharts(data, stats) {
         }
     });
 
-    // 3. رادار كفاءة المعايير التربوية الخمسة (Radar Chart)
+    // 3. رادار كفاءة المعايير التربوية الخمسة (الاختبار من 20 درجة وبنسبة إتقان مئوية 100%)
+    const rawRadarMeans = [
+        `${stats.avgP1.toFixed(1)} من 10`,
+        `${stats.avgP2.toFixed(1)} من 10`,
+        `${stats.avgP3.toFixed(1)} من 10`,
+        `${stats.avgP4.toFixed(1)} من 10`,
+        `${stats.avgExam.toFixed(1)} من 20`
+    ];
     radarChart = new Chart(document.getElementById('radarChart').getContext('2d'), {
         type: 'radar',
         data: {
-            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام (10)', 'المشروع (10)', 'الاختبار (من 10)'],
+            labels: ['المشاركة (10)', 'الواجبات (10)', 'المهام (10)', 'المشروع (10)', 'اختبار الفترة (20)'],
             datasets: [{
-                label: 'متوسط إتقان المعيار',
+                label: 'نسبة إتقان المعيار (%)',
                 data: [
-                    stats.avgP1.toFixed(1),
-                    stats.avgP2.toFixed(1),
-                    stats.avgP3.toFixed(1),
-                    stats.avgP4.toFixed(1),
-                    (stats.avgExam / 2).toFixed(1)
+                    ((stats.avgP1 / 10) * 100).toFixed(1),
+                    ((stats.avgP2 / 10) * 100).toFixed(1),
+                    ((stats.avgP3 / 10) * 100).toFixed(1),
+                    ((stats.avgP4 / 10) * 100).toFixed(1),
+                    ((stats.avgExam / 20) * 100).toFixed(1)
                 ],
                 backgroundColor: 'rgba(2, 132, 199, 0.22)',
                 borderColor: '#0284c7',
@@ -1684,42 +1762,86 @@ function renderAllFourCharts(data, stats) {
             }]
         },
         options: {
+            animation: false,
             responsive: true,
             maintainAspectRatio: false,
             scales: {
                 r: {
-                    beginAtZero: true, max: 10, ticks: { display: false },
+                    beginAtZero: true, max: 100, ticks: { display: false },
                     grid: { color: gridColor }, angleLines: { color: gridColor },
                     pointLabels: { color: textColor, font: { size: 11, weight: '800' } }
                 }
             },
-            plugins: { legend: { display: false } }
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            return `الإتقان: ${ctx.raw}% (المتوسط: ${rawRadarMeans[ctx.dataIndex]})`;
+                        }
+                    }
+                }
+            }
         }
     });
 
-    // 4. المخطط التراكمي المقارن لكل طالب (Stacked Bar Chart)
+    // 4. المخطط التراكمي المقارن لكل طالب (يعرض جميع الطلاب بارتفاع كامل وبدون حذف أي اسم)
     const labels = data.map(d => shortName(d.name));
     barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [
-                { label: 'أعمال الفترة (من 40)', data: data.map(d => d.pw), backgroundColor: '#4f46e5', borderRadius: 4 },
-                { label: 'اختبار الفترة (من 20)', data: data.map(d => d.exam), backgroundColor: '#10b981', borderRadius: 4 }
+                {
+                    label: 'أعمال الفترة (من 40)',
+                    data: data.map(d => d.pw),
+                    backgroundColor: '#4f46e5',
+                    borderRadius: 4,
+                    maxBarThickness: 38
+                },
+                {
+                    label: 'اختبار الفترة (من 20)',
+                    data: data.map(d => d.exam),
+                    backgroundColor: '#10b981',
+                    borderRadius: 4,
+                    maxBarThickness: 38
+                }
             ]
         },
         options: {
+            animation: false,
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
-                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 10.5 } } },
-                y: { stacked: true, beginAtZero: true, max: 60, grid: { color: gridColor } }
+                x: {
+                    stacked: true,
+                    grid: { display: false },
+                    ticks: {
+                        color: textColor,
+                        autoSkip: false,
+                        maxRotation: 40,
+                        minRotation: 25,
+                        font: { weight: '700', size: 11 }
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    max: 60,
+                    ticks: { stepSize: 10, color: textColor, font: { weight: '700' } },
+                    grid: { color: gridColor }
+                }
             },
             plugins: {
+                legend: {
+                    position: 'top',
+                    labels: { color: textColor, font: { size: 12, weight: '800' } }
+                },
                 tooltip: {
                     callbacks: {
                         afterBody: function(ctx) {
                             const idx = ctx[0].dataIndex;
-                            return `المجموع الكلي: ${data[idx].total} / 60`;
+                            return `المجموع الكلي: ${data[idx].total} من 60`;
                         }
                     }
                 }
@@ -1749,16 +1871,37 @@ function renderOnScreenAnalysis(stats, meta, pName) {
         `;
     }).join('');
 
+    const rankedRows = stats.rankedStudents.map((s, idx) => {
+        const g = getMinistryGrade(s.total);
+        const d = getDiagnosisDetails(s);
+        return `
+            <tr>
+                <td style="font-weight:900; color:var(--primary);">${idx + 1}</td>
+                <td class="td-name">${s.name}</td>
+                <td>${s.p1}</td>
+                <td>${s.p2}</td>
+                <td>${s.p3}</td>
+                <td>${s.p4}</td>
+                <td style="font-weight:800;">${s.pw} من 40</td>
+                <td style="font-weight:800;">${s.exam} من 20</td>
+                <td style="font-weight:900; font-size:14.5px; color:${g.color};">${s.total} من 60</td>
+                <td>${Math.round((s.total/60)*100)}%</td>
+                <td style="color:${g.color}; font-weight:800;">${g.label}</td>
+                <td>${d.type === 'remedial' ? '<span class="badge-remedial">🎯 علاجي</span>' : '<span class="badge-enrichment">🌟 إثرائي</span>'}</td>
+            </tr>
+        `;
+    }).join('');
+
     container.innerHTML = `
         <div class="stats-deep-grid">
             <div class="deep-box">
                 <div class="lbl">المتوسط الحسابي (μ)</div>
-                <div class="val">${stats.mean.toFixed(2)} <small style="font-size:13px;">/ 60</small></div>
+                <div class="val">${stats.mean.toFixed(2)} <small style="font-size:13px;">من 60</small></div>
                 <div class="desc">بنسبة تحصيل ${((stats.mean/60)*100).toFixed(1)}%</div>
             </div>
             <div class="deep-box">
                 <div class="lbl">الوسيط الحسابي (Median)</div>
-                <div class="val">${stats.median} <small style="font-size:13px;">/ 60</small></div>
+                <div class="val">${stats.median} <small style="font-size:13px;">من 60</small></div>
                 <div class="desc">نقطة تمركز نصف طلاب الصف</div>
             </div>
             <div class="deep-box">
@@ -1778,8 +1921,8 @@ function renderOnScreenAnalysis(stats, meta, pName) {
             </div>
         </div>
 
-        <h4 style="margin-bottom:10px; font-size:14.5px;">📊 توزيع الطلاب وفق سلم التقديرات الرسمي (لائحة تقويم الطالب بوزارة التعليم):</h4>
-        <div class="table-responsive" style="margin-bottom:16px;">
+        <h4 style="margin-bottom:10px; font-size:14.5px;">📊 أولاً: توزيع الطلاب وفق سلم التقديرات الرسمي (لائحة تقويم الطالب بوزارة التعليم):</h4>
+        <div class="table-responsive" style="margin-bottom:20px;">
             <table>
                 <thead>
                     <tr>
@@ -1793,10 +1936,33 @@ function renderOnScreenAnalysis(stats, meta, pName) {
                 <tbody>${bandsRows}</tbody>
             </table>
         </div>
+
+        <h4 style="margin-bottom:10px; font-size:14.5px;">🏆 ثانياً: بيان ترتيب طلاب الفصل تنازلياً حسب الدرجات (من الأعلى إلى الأقل):</h4>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الترتيب</th>
+                        <th class="th-name">اسم الطالب</th>
+                        <th>مشاركة (10)</th>
+                        <th>واجبات (10)</th>
+                        <th>مهام (10)</th>
+                        <th>مشروع (10)</th>
+                        <th>الأعمال (40)</th>
+                        <th>الاختبار (20)</th>
+                        <th>المجموع (60)</th>
+                        <th>النسبة</th>
+                        <th>التقدير الوزاري</th>
+                        <th>المسار</th>
+                    </tr>
+                </thead>
+                <tbody>${rankedRows}</tbody>
+            </table>
+        </div>
     `;
 }
 
-// ================= 1. طباعة وثيقة التحليل الإحصائي التفصيلي للصف (A4 شاملة المؤشرات البصرية) =================
+// ================= 1. طباعة وثيقة التحليل الإحصائي التفصيلي للصف (صفحتان A4: صفحة للتحليل والرسوم البيانية + صفحة لترتيب الطلاب) =================
 function openAnalysisReportModal() {
     const data = allPeriodsData[currentPeriod][currentClass];
     const meta = classMeta[currentClass];
@@ -1805,6 +1971,12 @@ function openAnalysisReportModal() {
 
     const fileTitle = `تقرير تحليل النتائج التفصيلي - ${meta.grade} - ${pName}`;
     setDocumentPrintTitle(fileTitle);
+
+    // تحويل الرسوم البيانية الأربعة الحية إلى صور عالية الدقة لتضمينها في الطباعة
+    const imgDoughnut = doughnutChart ? doughnutChart.toBase64Image() : '';
+    const imgDist = distBarChart ? distBarChart.toBase64Image() : '';
+    const imgRadar = radarChart ? radarChart.toBase64Image() : '';
+    const imgStacked = barChart ? barChart.toBase64Image() : '';
 
     const bandsTableRows = stats.bands.map(b => {
         const pct = ((b.students.length / stats.n) * 100).toFixed(1);
@@ -1816,7 +1988,7 @@ function openAnalysisReportModal() {
                 <td style="font-weight:800;">${b.students.length}</td>
                 <td>
                     <div style="font-weight:800; margin-bottom:2px;">${pct}%</div>
-                    <div style="width:100%; height:6px; background:#e2e8f0; border-radius:99px; overflow:hidden;">
+                    <div style="width:100%; height:5px; background:#e2e8f0; border-radius:99px; overflow:hidden;">
                         <div style="width:${pct}%; height:100%; background:${b.color};"></div>
                     </div>
                 </td>
@@ -1829,16 +2001,42 @@ function openAnalysisReportModal() {
         <tr>
             <td style="text-align:right; font-weight:800;">${c.name}</td>
             <td>${c.max}</td>
-            <td style="font-weight:800;">${c.avg.toFixed(2)}</td>
-            <td>
-                <span style="font-weight:800; color:${c.pct >= 80 ? '#059669' : '#d97706'};">${c.pct.toFixed(1)}%</span>
-            </td>
+            <td style="font-weight:800;">${c.avg.toFixed(2)} من ${c.max}</td>
+            <td><span style="font-weight:800; color:${c.pct >= 80 ? '#059669' : '#d97706'};">${c.pct.toFixed(1)}%</span></td>
             <td>${c.pct >= 85 ? 'إتقان مرتفع جداً' : (c.pct >= 75 ? 'إتقان جيد' : 'يحتاج لتعزيز وتدريب')}</td>
         </tr>
     `).join('');
 
+    const rankedTableRows = stats.rankedStudents.map((s, idx) => {
+        const g = getMinistryGrade(s.total);
+        const d = getDiagnosisDetails(s);
+        const pct = Math.round((s.total / 60) * 100);
+        return `
+            <tr>
+                <td style="font-weight:900; color:#1e3a8a;">${idx + 1}</td>
+                <td style="text-align:right; font-weight:800; padding-right:5px;">${s.name}</td>
+                <td>${s.p1}</td>
+                <td>${s.p2}</td>
+                <td>${s.p3}</td>
+                <td style="${s.p4===0?'color:#dc2626; font-weight:800;':''}">${s.p4}</td>
+                <td style="font-weight:800;">${s.pw} / 40</td>
+                <td style="font-weight:800; ${s.exam<=10?'color:#dc2626;':''}">${s.exam} / 20</td>
+                <td style="font-weight:900; font-size:11.5px; color:${g.color};">${s.total} / 60</td>
+                <td>
+                    <div style="font-weight:800; font-size:10px;">${pct}%</div>
+                    <div style="width:100%; height:4px; background:#e2e8f0; border-radius:99px; overflow:hidden;">
+                        <div style="width:${pct}%; height:100%; background:${g.color};"></div>
+                    </div>
+                </td>
+                <td style="font-weight:800; color:${g.color};">${g.label}</td>
+                <td style="font-weight:800; color:${d.type==='remedial'?'#dc2626':'#059669'};">${d.type==='remedial'?'خطة علاجية':'خطة إثرائية'}</td>
+            </tr>
+        `;
+    }).join('');
+
     document.getElementById('a4Container').innerHTML = `
-        <div class="a4-printable">
+        <!-- الصفحة الأولى: المؤشرات والرسوم البيانية ومصفوفة التقديرات والمعايير -->
+        <div class="a4-printable batch-page">
             <div class="a4-header">
                 <div class="a4-header-right">
                     <h4>المملكة العربية السعودية - وزارة التعليم</h4>
@@ -1846,7 +2044,7 @@ function openAnalysisReportModal() {
                     <h4>مدرسة ثانوية نعام</h4>
                 </div>
                 <div class="a4-title-box">
-                    <h2>تقرير تحليل النتائج الإحصائي والتربوي التفصيلي</h2>
+                    <h2>تقرير تحليل النتائج الإحصائي والتربوي التفصيلي (1 / 2)</h2>
                     <p>${meta.grade} • ${pName} • المقرر: ${meta.course} • العام 1448هـ</p>
                 </div>
                 <div class="a4-header-left">
@@ -1857,7 +2055,7 @@ function openAnalysisReportModal() {
 
             <div class="a4-section">
                 <div class="a4-sec-head">أولاً: مؤشرات الإحصاء الوصفي والاستدلالي لأداء الفصل (من 60 درجة)</div>
-                <div class="a4-sec-body" style="padding:6px;">
+                <div class="a4-sec-body" style="padding:5px;">
                     <table class="a4-table" style="margin-bottom:0;">
                         <thead>
                             <tr>
@@ -1872,9 +2070,9 @@ function openAnalysisReportModal() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="font-weight:800; font-size:12px;">${stats.mean.toFixed(2)} / 60</td>
+                                <td style="font-weight:800; font-size:11.5px;">${stats.mean.toFixed(2)} من 60</td>
                                 <td style="font-weight:800;">${((stats.mean/60)*100).toFixed(1)}%</td>
-                                <td style="font-weight:800;">${stats.median} / 60</td>
+                                <td style="font-weight:800;">${stats.median} من 60</td>
                                 <td style="font-weight:800;">${stats.stdDev.toFixed(2)}</td>
                                 <td style="font-weight:800;">${stats.maxScore} / ${stats.minScore}</td>
                                 <td style="font-weight:800;">${stats.range} درجة</td>
@@ -1886,22 +2084,46 @@ function openAnalysisReportModal() {
             </div>
 
             <div class="a4-section">
-                <div class="a4-sec-head">ثانياً: مصفوفة توزيع التقديرات والتمثيل البياني وفق لائحة تقويم الطالب المعتمدة</div>
+                <div class="a4-sec-head">ثانياً: التمثيل البياني البصري لنتائج الفصل والمعايير الخمسة</div>
                 <div class="a4-sec-body" style="padding:6px;">
+                    <div class="a4-charts-grid">
+                        <div class="a4-chart-box">
+                            <h5>توزيع التقديرات الوزارية</h5>
+                            <img src="${imgDoughnut}" alt="توزيع التقديرات">
+                        </div>
+                        <div class="a4-chart-box">
+                            <h5>مدرج فئات الدرجات</h5>
+                            <img src="${imgDist}" alt="مدرج الدرجات">
+                        </div>
+                        <div class="a4-chart-box">
+                            <h5>رادار كفاءة المعايير الخمسة</h5>
+                            <img src="${imgRadar}" alt="رادار المعايير">
+                        </div>
+                    </div>
+                    <div class="a4-wide-chart-box">
+                        <h5>المخطط التراكمي المقارن: أعمال الفترة (40) مقابل اختبار الفترة (20) لجميع طلاب الفصل</h5>
+                        <img src="${imgStacked}" alt="المخطط التراكمي">
+                    </div>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">ثالثاً: مصفوفة توزيع التقديرات وفق لائحة تقويم الطالب بوزارة التعليم</div>
+                <div class="a4-sec-body" style="padding:5px;">
                     <table class="a4-table" style="margin-bottom:0;">
                         <colgroup>
                             <col style="width:18%;">
                             <col style="width:21%;">
                             <col style="width:7%;">
-                            <col style="width:13%;">
-                            <col style="width:41%;">
+                            <col style="width:12%;">
+                            <col style="width:42%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th style="text-align:right;">التقدير الوزاري</th>
                                 <th>النطاق المعياري (من 60)</th>
                                 <th>العدد</th>
-                                <th>النسبة والتمثيل</th>
+                                <th>النسبة</th>
                                 <th style="text-align:right;">أسماء الطلاب ودرجاتهم</th>
                             </tr>
                         </thead>
@@ -1910,10 +2132,10 @@ function openAnalysisReportModal() {
                 </div>
             </div>
 
-            <div class="a4-section">
-                <div class="a4-sec-head">ثالثاً: تحليل كفاءة المعايير التربوية الخمسة ومؤشر الفجوة التحصيلية</div>
-                <div class="a4-sec-body" style="padding:6px;">
-                    <table class="a4-table" style="margin-bottom:6px;">
+            <div class="a4-section" style="margin-bottom:0;">
+                <div class="a4-sec-head">رابعاً: تحليل كفاءة المعايير التربوية الخمسة ومؤشر الفجوة التحصيلية</div>
+                <div class="a4-sec-body" style="padding:5px;">
+                    <table class="a4-table" style="margin-bottom:4px;">
                         <thead>
                             <tr>
                                 <th style="text-align:right;">معيار التقويم</th>
@@ -1925,11 +2147,76 @@ function openAnalysisReportModal() {
                         </thead>
                         <tbody>${criteriaRows}</tbody>
                     </table>
-                    <div style="font-size:10.5px; line-height:1.5;">
-                        • <strong>نقطة القوة الأبرز في الصف:</strong> معيار (${stats.strongestCriterion.name}) بنسبة إتقان (${stats.strongestCriterion.pct.toFixed(1)}%).<br>
-                        • <strong>المعيار الأكثر احتياجاً للدعم:</strong> معيار (${stats.weakestCriterion.name}) بنسبة إتقان (${stats.weakestCriterion.pct.toFixed(1)}%).<br>
-                        • <strong>تحليل الفجوة بين أعمال الفترة والاختبار:</strong> بلغ متوسط إتقان أعمال الفترة (${stats.pwPct.toFixed(1)}%) مقابل (${stats.examPct.toFixed(1)}%) في الاختبار التحريري بفجوة قدرها (${stats.gapPct.toFixed(1)}%)، مما يوجه التدخل العلاجي نحو التدريب التحريري المركز للطلاب المدرجين في المسار العلاجي.
+                    <div style="font-size:10px; line-height:1.45;">
+                        • <strong>نقطة القوة الأبرز:</strong> (${stats.strongestCriterion.name}) بإتقان (${stats.strongestCriterion.pct.toFixed(1)}%) | <strong>المعيار الأكثر احتياجاً للدعم:</strong> (${stats.weakestCriterion.name}) بإتقان (${stats.weakestCriterion.pct.toFixed(1)}%).
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة الثانية: بيان ترتيب الطلاب تنازلياً حسب الدرجات والاعتماد الرسمي -->
+        <div class="a4-printable batch-page">
+            <div class="a4-header">
+                <div class="a4-header-right">
+                    <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                    <h4>إدارة التعليم بمنطقة الرياض</h4>
+                    <h4>مدرسة ثانوية نعام</h4>
+                </div>
+                <div class="a4-title-box">
+                    <h2>بيان ترتيب الطلاب تنازلياً حسب الدرجات (2 / 2)</h2>
+                    <p>${meta.grade} • ${pName} • المقرر: ${meta.course} • العام 1448هـ</p>
+                </div>
+                <div class="a4-header-left">
+                    <div>أعلى درجة: (${stats.maxScore} من 60)</div>
+                    <div>متوسط الصف: (${stats.mean.toFixed(1)} من 60)</div>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">خامساً: القائمة التنازلية الشاملة لطلاب الفصل مرتبين حسب المجموع الكلي (من الأول إلى الأخير)</div>
+                <div class="a4-sec-body" style="padding:6px;">
+                    <table class="a4-table" style="margin-bottom:0;">
+                        <colgroup>
+                            <col style="width: 5%;">
+                            <col style="width: 25%;">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 8%;">
+                            <col style="width: 8%;">
+                            <col style="width: 8%;">
+                            <col style="width: 7%;">
+                            <col style="width: 8%;">
+                            <col style="width: 7%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>الترتيب</th>
+                                <th style="text-align:right; padding-right:5px;">اسم الطالب</th>
+                                <th>مشاركة (10)</th>
+                                <th>واجبات (10)</th>
+                                <th>مهام (10)</th>
+                                <th>مشروع (10)</th>
+                                <th>الأعمال (40)</th>
+                                <th>الاختبار (20)</th>
+                                <th>المجموع (60)</th>
+                                <th>النسبة</th>
+                                <th>التقدير الوزاري</th>
+                                <th>المسار</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rankedTableRows}</tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">سادساً: الخلاصة التربوية والتوصيات الإجرائية للفترة القادمة</div>
+                <div class="a4-sec-body">
+                    1. <strong>المسار الإثرائي (${stats.n - data.filter(s=>isRemedial(s)).length} طلاب):</strong> تكليف الطلاب المتصدرين في قائمة الترتيب أعلاه بقيادة مجموعات تعلم الأقران، وإسناد تدريبات المهارات العليا والقدرات عبر منصة مدرستي.<br>
+                    2. <strong>المسار العلاجي (${data.filter(s=>isRemedial(s)).length} طلاب):</strong> تنفيذ خطط دعم مركزة للطلاب الذين تقل درجاتهم في الاختبار التحريري عن (12 من 20) أو مجموعهم عن (48 من 60) عبر أوراق العمل المرفقة والاختبارات التشخيصية القصيرة.<br>
+                    3. <strong>تحليل الفجوة التحصيلية:</strong> بلغ متوسط إتقان أعمال الفترة (${stats.pwPct.toFixed(1)}%) مقابل (${stats.examPct.toFixed(1)}%) في الاختبار التحريري، مما يؤكد أهمية استمرار التقويم القبلي والبعدي لرفع ثبات المفاهيم الرياضية.
                 </div>
             </div>
 
@@ -2099,9 +2386,9 @@ function buildStudentCardHTML(s, meta, pName, isBatch = false) {
                         <td style="font-weight:800;">${s.p2}</td>
                         <td style="font-weight:800;">${s.p3}</td>
                         <td style="font-weight:800;">${s.p4}</td>
-                        <td style="font-weight:800;">${s.pw} / 40</td>
-                        <td style="font-weight:800;">${s.exam} / 20</td>
-                        <td style="font-weight:800; font-size:13px;">${s.total} / 60</td>
+                        <td style="font-weight:800;">${s.pw} من 40</td>
+                        <td style="font-weight:800;">${s.exam} من 20</td>
+                        <td style="font-weight:800; font-size:13px;">${s.total} من 60</td>
                         <td style="font-weight:800;">${Math.round((s.total/60)*100)}%</td>
                     </tr>
                 </tbody>
