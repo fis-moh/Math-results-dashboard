@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظومة التحليل التربوي والربط الحي - ثانوية نعام</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>منظومة التحليل التربوي والخطط العلاجية والإثرائية - ثانوية نعام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -25,6 +25,8 @@
             --rose-border: #fecaca;
             --amber: #d97706;
             --amber-bg: #fffbeb;
+            --purple: #7c3aed;
+            --purple-bg: #f5f3ff;
             --shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
         }
 
@@ -46,6 +48,8 @@
             --rose-border: rgba(244, 63, 94, 0.35);
             --amber: #fbbf24;
             --amber-bg: rgba(245, 158, 11, 0.15);
+            --purple: #a78bfa;
+            --purple-bg: rgba(139, 92, 246, 0.15);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
 
@@ -56,8 +60,9 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px 14px 60px;
+            padding: 16px 12px 60px;
             transition: background-color 0.25s, color 0.25s;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container { max-width: 1280px; margin: 0 auto; }
@@ -68,14 +73,14 @@
             border: 1px solid var(--border-color);
             border-top: 5px solid var(--primary);
             border-radius: 20px;
-            padding: 22px 28px;
-            margin-bottom: 18px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
         }
 
         .header-right .ministry-tag {
@@ -90,30 +95,31 @@
         }
 
         .header-right h1 {
-            font-size: 23px;
+            font-size: 21px;
             font-weight: 800;
             color: var(--text-main);
             margin-bottom: 4px;
+            line-height: 1.35;
         }
 
-        .header-right p { font-size: 13.5px; color: var(--text-muted); font-weight: 600; }
+        .header-right p { font-size: 13px; color: var(--text-muted); font-weight: 600; }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .person-badge {
             background: var(--bg-subtle);
             border: 1px solid var(--border-color);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 12px;
             text-align: right;
         }
         .person-badge span { display: block; font-size: 11px; color: var(--text-muted); font-weight: 700; }
-        .person-badge strong { font-size: 14px; color: var(--text-main); font-weight: 800; }
+        .person-badge strong { font-size: 13.5px; color: var(--text-main); font-weight: 800; }
 
         /* شريط الأدوات العلوي */
         .top-utility-bar {
@@ -123,11 +129,11 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 12px 18px;
-            margin-bottom: 18px;
+            padding: 10px 16px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow);
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .period-switcher, .class-switcher, .subview-switcher {
@@ -137,20 +143,28 @@
             padding: 5px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            flex-wrap: wrap;
+            overflow-x: auto;
+            max-width: 100%;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
+        .period-switcher::-webkit-scrollbar,
+        .class-switcher::-webkit-scrollbar,
+        .subview-switcher::-webkit-scrollbar { display: none; }
 
         .sw-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px 16px;
+            padding: 7px 14px;
             border-radius: 9px;
             font-family: 'Cairo', sans-serif;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .sw-btn.active {
@@ -165,86 +179,91 @@
             background: var(--bg-subtle);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 14px;
+            padding: 7px 13px;
             border-radius: 10px;
             font-family: 'Cairo', sans-serif;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
             transition: 0.2s;
+            white-space: nowrap;
         }
         .u-btn:hover { border-color: var(--primary); color: var(--primary); }
         .u-btn.sync-btn { background: #10b981; color: #fff; border-color: #059669; }
+        .u-btn.analysis-btn { background: var(--purple); color: #fff; border-color: var(--purple); }
 
         /* شريط التبويبات الفرعية */
         .nav-bar-second {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .subview-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 9px 18px;
-            border-radius: 11px;
+            padding: 8px 15px;
+            border-radius: 10px;
             font-family: 'Cairo', sans-serif;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .subview-btn.active-main { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .subview-btn.active-analysis { background: var(--purple); color: #fff; border-color: var(--purple); }
         .subview-btn.active-remedial { background: var(--rose); color: #fff; border-color: var(--rose); }
         .subview-btn.active-enrichment { background: var(--emerald); color: #fff; border-color: var(--emerald); }
 
         /* بطاقات المؤشرات */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .kpi-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 16px;
+            padding: 14px;
             box-shadow: var(--shadow);
             border-right: 4px solid var(--kpi-color, var(--primary));
         }
 
-        .kpi-title { font-size: 12.5px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .kpi-value { font-size: 24px; font-weight: 800; color: var(--text-main); }
-        .kpi-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+        .kpi-title { font-size: 12px; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .kpi-value { font-size: 22px; font-weight: 800; color: var(--text-main); }
+        .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
 
         /* الرسوم البيانية والجداول */
         .charts-row {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
-            gap: 18px;
-            margin-bottom: 20px;
+            gap: 16px;
+            margin-bottom: 18px;
         }
 
         .card-panel {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 18px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .panel-header {
@@ -256,28 +275,47 @@
             gap: 10px;
         }
 
-        .panel-title { font-size: 16px; font-weight: 800; color: var(--text-main); }
+        .panel-title { font-size: 15.5px; font-weight: 800; color: var(--text-main); }
 
-        .table-responsive { overflow-x: auto; }
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
         table { width: 100%; border-collapse: collapse; text-align: center; }
         th {
             background: var(--bg-subtle);
             color: var(--text-main);
             font-weight: 800;
-            font-size: 12.5px;
-            padding: 12px 8px;
+            font-size: 12px;
+            padding: 11px 8px;
             border: 1px solid var(--border-color);
             white-space: nowrap;
         }
         td {
-            padding: 10px 8px;
+            padding: 9px 8px;
             font-size: 13px;
             font-weight: 700;
             border: 1px solid var(--border-color);
             color: var(--text-main);
         }
         tbody tr:hover { background: var(--bg-subtle); }
-        .td-name { text-align: right; padding-right: 12px; font-weight: 800; white-space: nowrap; }
+
+        /* تثبيت عمود اسم الطالب في الجوال والآيباد عند التمرير الأفقي */
+        .td-name, th.th-name {
+            text-align: right;
+            padding-right: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+            position: sticky;
+            right: 0;
+            z-index: 2;
+        }
+        td.td-name { background: var(--bg-card); box-shadow: -2px 0 5px rgba(0,0,0,0.04); }
+        th.th-name { background: var(--bg-subtle); z-index: 3; }
+        tbody tr:hover td.td-name { background: var(--bg-subtle); }
 
         .score-low {
             background-color: var(--rose-bg) !important;
@@ -294,35 +332,38 @@
             background: var(--rose-bg);
             color: var(--rose);
             border: 1px solid var(--rose-border);
-            padding: 4px 10px;
+            padding: 3px 9px;
             border-radius: 99px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .badge-enrichment {
             background: var(--emerald-bg);
             color: var(--emerald);
             border: 1px solid var(--emerald-border);
-            padding: 4px 10px;
+            padding: 3px 9px;
             border-radius: 99px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .btn-doc {
             background: var(--primary-light);
             color: var(--primary);
             border: 1px solid rgba(30, 58, 138, 0.25);
-            padding: 5px 12px;
+            padding: 5px 10px;
             border-radius: 8px;
             font-family: 'Cairo', sans-serif;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.2s;
+            white-space: nowrap;
         }
         .btn-doc:hover { background: var(--primary); color: #fff; }
 
@@ -330,20 +371,47 @@
             background: var(--primary-light);
             color: var(--primary);
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
         }
+
+        /* عناصر شاشة التحليل الإحصائي التفصيلي */
+        .stats-deep-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .deep-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+        }
+        .deep-box .lbl { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+        .deep-box .val { font-size: 22px; font-weight: 900; color: var(--primary); margin: 4px 0; }
+        .deep-box .desc { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+        .dist-bar-wrap {
+            width: 100%;
+            background: var(--border-color);
+            height: 10px;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+        .dist-bar-fill { height: 100%; border-radius: 99px; }
 
         /* ================= نافذة المعاينة والطباعة الرسمية (A4) ================= */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.82);
             backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
             align-items: flex-start;
             z-index: 9999;
-            padding: 20px 12px;
+            padding: 16px 10px;
             overflow-y: auto;
         }
         .modal-overlay.show { display: flex; }
@@ -352,7 +420,7 @@
         .modal-bar {
             background: #1e293b;
             color: #fff;
-            padding: 12px 18px;
+            padding: 12px 16px;
             border-radius: 12px;
             margin-bottom: 12px;
             display: flex;
@@ -362,69 +430,79 @@
             gap: 10px;
         }
 
+        .doc-filename-badge {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         /* تصميم ورقة الـ A4 المضبوطة هندسياً لصفحة واحدة */
         .a4-printable {
             background: #ffffff;
             color: #0f172a;
             border: 2px solid #1e3a8a;
             border-radius: 10px;
-            padding: 20px 24px;
+            padding: 18px 22px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             width: 100%;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .a4-header {
             display: grid;
-            grid-template-columns: 1.1fr 1.8fr 1.1fr;
+            grid-template-columns: 1.15fr 1.7fr 1.15fr;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 10px;
-            margin-bottom: 12px;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
-        .a4-header-right h4 { font-size: 12px; color: #1e3a8a; font-weight: 800; line-height: 1.5; }
+        .a4-header-right h4 { font-size: 11.5px; color: #1e3a8a; font-weight: 800; line-height: 1.45; }
         .a4-title-box { text-align: center; }
         .a4-title-box h2 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             color: #0f172a;
             background: #f1f5f9;
-            padding: 5px 14px;
+            padding: 4px 14px;
             border-radius: 99px;
             border: 1px solid #cbd5e1;
             display: inline-block;
         }
-        .a4-title-box p { font-size: 11px; color: #475569; font-weight: 700; margin-top: 4px; }
-        .a4-header-left { text-align: left; font-size: 11.5px; font-weight: 800; color: #1e293b; line-height: 1.6; }
+        .a4-title-box p { font-size: 10.5px; color: #475569; font-weight: 700; margin-top: 3px; }
+        .a4-header-left { text-align: left; font-size: 11px; font-weight: 800; color: #1e293b; line-height: 1.5; }
 
-        /* جدول وثيقة A4 مثبت العرض لمنع قص أي عمود */
         .a4-table {
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .a4-table th, .a4-table td {
             border: 1px solid #94a3b8;
-            padding: 5px 4px;
-            font-size: 11px;
+            padding: 4.5px 4px;
+            font-size: 10.5px;
             color: #0f172a;
             text-align: center;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            line-height: 1.35;
+            line-height: 1.3;
         }
         .a4-table th {
             background: #e2e8f0;
             font-weight: 800;
-            font-size: 11px;
+            font-size: 10.5px;
             white-space: normal;
         }
 
         .sub-scores-line {
             display: block;
-            font-size: 9.5px;
+            font-size: 9px;
             color: #475569;
             font-weight: 700;
             margin-top: 2px;
@@ -433,56 +511,75 @@
         .a4-section {
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            margin-bottom: 10px;
+            margin-bottom: 9px;
             overflow: hidden;
             page-break-inside: avoid;
             break-inside: avoid;
         }
-        .a4-sec-head { background: #1e3a8a; color: #fff; padding: 5px 12px; font-size: 12px; font-weight: 800; }
-        .a4-sec-body { padding: 8px 12px; font-size: 11.5px; line-height: 1.6; color: #1e293b; font-weight: 600; }
+        .a4-sec-head { background: #1e3a8a; color: #fff; padding: 4px 10px; font-size: 11.5px; font-weight: 800; }
+        .a4-sec-body { padding: 7px 10px; font-size: 11px; line-height: 1.55; color: #1e293b; font-weight: 600; }
 
         .a4-signatures {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            margin-top: 12px;
-            padding-top: 10px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 2px solid #cbd5e1;
             text-align: center;
             page-break-inside: avoid;
             break-inside: avoid;
         }
-        .sig-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px; }
-        .sig-card .role { font-size: 11px; color: #475569; font-weight: 800; }
-        .sig-card .name { font-size: 11.5px; color: #0f172a; font-weight: 800; margin: 3px 0 14px; }
-        .sig-card .line { font-size: 10px; color: #64748b; border-top: 1px dashed #94a3b8; padding-top: 3px; }
+        .sig-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px; }
+        .sig-card .role { font-size: 10.5px; color: #475569; font-weight: 800; }
+        .sig-card .name { font-size: 11px; color: #0f172a; font-weight: 800; margin: 2px 0 12px; }
+        .sig-card .line { font-size: 9.5px; color: #64748b; border-top: 1px dashed #94a3b8; padding-top: 2px; }
 
         #syncToast {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 16px;
+            left: 16px;
             background: #1e293b;
             color: #fff;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12.5px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: none;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             z-index: 10000;
         }
 
-        @media (max-width: 900px) {
+        /* ================= توافق الأجهزة اللوحية والجوالات (Mobile-First) ================= */
+        @media (max-width: 1024px) {
+            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
             .charts-row { grid-template-columns: 1fr; }
         }
 
-        /* ================= قوانين الطباعة الصارمة لمتصفح الآيباد (Safari) ================= */
+        @media (max-width: 640px) {
+            body { padding: 10px 8px 50px; }
+            .header-card { padding: 14px 16px; border-radius: 16px; }
+            .header-right h1 { font-size: 17px; }
+            .header-left { width: 100%; justify-content: space-between; }
+            .person-badge { flex: 1; text-align: center; padding: 6px 10px; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .kpi-card { padding: 10px 12px; border-radius: 12px; }
+            .kpi-value { font-size: 18px; }
+            .card-panel { padding: 14px 12px; border-radius: 14px; }
+            .panel-title { font-size: 14px; }
+            .subview-switcher, .class-switcher { width: 100%; }
+            .a4-printable { padding: 12px 10px; }
+            .a4-header { grid-template-columns: 1fr; text-align: center; gap: 4px; }
+            .a4-header-left { text-align: center; }
+        }
+
+        /* ================= قوانين الطباعة الصارمة لمتصفح الآيباد والجوال والكمبيوتر ================= */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 7mm;
+                margin: 6mm;
             }
             html, body {
                 background: #ffffff !important;
@@ -494,7 +591,12 @@
             .no-print, #syncToast {
                 display: none !important;
             }
+            .td-name, th.th-name {
+                position: static !important;
+                box-shadow: none !important;
+            }
 
+            /* عزل تام للوثائق المفتوحة داخل النافذة المنبثقة */
             body.modal-open .container {
                 display: none !important;
             }
@@ -520,23 +622,28 @@
                 border-radius: 6px !important;
                 padding: 12px 14px !important;
                 width: 100% !important;
+                margin: 0 !important;
+            }
+            body.modal-open .a4-printable.batch-page {
+                page-break-after: always !important;
+                break-after: page !important;
+                margin-bottom: 0 !important;
+            }
+            body.modal-open .a4-printable.batch-page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            body.modal-open .a4-header {
+                display: grid !important;
+                grid-template-columns: 1.15fr 1.7fr 1.15fr !important;
+                text-align: right !important;
+            }
+            body.modal-open .a4-header-left {
+                text-align: left !important;
             }
             body.modal-open .a4-table tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-            }
-
-            body:not(.modal-open) .charts-row {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
-            }
-            body:not(.modal-open) table {
-                table-layout: auto !important;
-                width: 100% !important;
-            }
-            body:not(.modal-open) th, body:not(.modal-open) td {
-                padding: 5px 4px !important;
-                font-size: 10.5px !important;
             }
 
             * {
@@ -570,18 +677,18 @@
 
     <!-- شريط الأدوات العلوي -->
     <div class="top-utility-bar no-print">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <strong style="font-size:13.5px;">📅 الفترة الدراسية:</strong>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong style="font-size:13px;">📅 الفترة:</strong>
             <div class="period-switcher">
-                <button class="sw-btn active" id="btn-p1" onclick="switchPeriod('p1')">الفترة الأولى (حالي)</button>
+                <button class="sw-btn active" id="btn-p1" onclick="switchPeriod('p1')">الفترة الأولى</button>
                 <button class="sw-btn" id="btn-p2" onclick="switchPeriod('p2')">الفترة الثانية</button>
             </div>
         </div>
 
         <div class="utility-actions">
-            <button class="u-btn sync-btn" onclick="fetchLiveData(true)">🔄 مزامنة الدرجات من الشيت الآن</button>
-            <button class="u-btn" onclick="toggleTheme()" id="themeBtn">🌙 الوضع الداكن</button>
-            <button class="u-btn" onclick="window.print()">🖨️ طباعة الشاشة</button>
+            <button class="u-btn analysis-btn" onclick="openAnalysisReportModal()">📊 طباعة تحليل نتائج الصف (A4)</button>
+            <button class="u-btn sync-btn" onclick="fetchLiveData(true)">🔄 مزامنة الشيت</button>
+            <button class="u-btn" onclick="toggleTheme()" id="themeBtn">🌙 داكن</button>
         </div>
     </div>
 
@@ -589,55 +696,58 @@
     <div id="mainPeriodContent">
         <div class="nav-bar-second no-print">
             <div class="class-switcher">
-                <button class="sw-btn active" onclick="switchClass('class1', this)">أول ثانوي</button>
-                <button class="sw-btn" onclick="switchClass('class2', this)">ثاني ثانوي</button>
-                <button class="sw-btn" onclick="switchClass('class3', this)">ثالث ثانوي</button>
+                <button class="sw-btn active" onclick="switchClass('class1', this)">الصف الأول الثانوي</button>
+                <button class="sw-btn" onclick="switchClass('class2', this)">الصف الثاني الثانوي</button>
+                <button class="sw-btn" onclick="switchClass('class3', this)">الصف الثالث الثانوي</button>
             </div>
 
             <div class="subview-switcher">
                 <button class="subview-btn active-main" id="tab-overview" onclick="switchSubview('overview')">
-                    📊 سجل الدرجات والتحليل العام
+                    📋 سجل الدرجات العام
+                </button>
+                <button class="subview-btn" id="tab-analysis" onclick="switchSubview('analysis')">
+                    📈 التحليل الإحصائي التفصيلي
                 </button>
                 <button class="subview-btn" id="tab-remedial" onclick="switchSubview('remedial')">
-                    🎯 الخطة العلاجية للفصل (<span id="count-rem-tab">0</span>)
+                    🎯 الخطة العلاجية (<span id="count-rem-tab">0</span>)
                 </button>
                 <button class="subview-btn" id="tab-enrichment" onclick="switchSubview('enrichment')">
-                    🌟 الخطة الإثرائية للفصل (<span id="count-enr-tab">0</span>)
+                    🌟 الخطة الإثرائية (<span id="count-enr-tab">0</span>)
                 </button>
             </div>
         </div>
 
-        <!-- البطاقات الإحصائية الستة -->
+        <!-- البطاقات الإحصائية الستة (تظهر 2×3 في الجوال) -->
         <div class="kpi-grid">
             <div class="kpi-card" style="--kpi-color: #1e3a8a;">
-                <div class="kpi-title"><span>إجمالي طلاب الفصل</span> <span>👥</span></div>
+                <div class="kpi-title"><span>عدد الطلاب</span> <span>👥</span></div>
                 <div class="kpi-value" id="kpi-total-students">-</div>
-                <div class="kpi-sub">موزعين بالكامل بين علاجي وإثرائي</div>
+                <div class="kpi-sub" id="kpi-pass-rate">نسبة الاجتياز -</div>
             </div>
             <div class="kpi-card" style="--kpi-color: #0284c7;">
-                <div class="kpi-title"><span>متوسط المجموع (من 60)</span> <span>📈</span></div>
+                <div class="kpi-title"><span>متوسط المجموع</span> <span>📈</span></div>
                 <div class="kpi-value" id="kpi-avg-total">-</div>
                 <div class="kpi-sub" id="kpi-avg-total-sub">-</div>
             </div>
             <div class="kpi-card" style="--kpi-color: #6366f1;">
-                <div class="kpi-title"><span>متوسط أعمال الفترة (40)</span> <span>📁</span></div>
+                <div class="kpi-title"><span>أعمال الفترة (40)</span> <span>📁</span></div>
                 <div class="kpi-value" id="kpi-avg-pw">-</div>
                 <div class="kpi-sub" id="kpi-avg-pw-sub">-</div>
             </div>
             <div class="kpi-card" style="--kpi-color: #d97706;">
-                <div class="kpi-title"><span>متوسط الاختبار (20)</span> <span>📝</span></div>
+                <div class="kpi-title"><span>اختبار الفترة (20)</span> <span>📝</span></div>
                 <div class="kpi-value" id="kpi-avg-exam">-</div>
                 <div class="kpi-sub" id="kpi-avg-exam-sub">-</div>
             </div>
             <div class="kpi-card" style="--kpi-color: #dc2626;">
-                <div class="kpi-title"><span>طلاب الخطة العلاجية</span> <span>🎯</span></div>
+                <div class="kpi-title"><span>الخطة العلاجية</span> <span>🎯</span></div>
                 <div class="kpi-value" id="kpi-remedial-count" style="color:var(--rose);">-</div>
-                <div class="kpi-sub" id="kpi-remedial-sub">أقل من 48 أو تعثر بالاختبار/المشروع</div>
+                <div class="kpi-sub" id="kpi-remedial-sub">-</div>
             </div>
             <div class="kpi-card" style="--kpi-color: #059669;">
-                <div class="kpi-title"><span>طلاب الخطة الإثرائية</span> <span>🌟</span></div>
+                <div class="kpi-title"><span>الخطة الإثرائية</span> <span>🌟</span></div>
                 <div class="kpi-value" id="kpi-enrichment-count" style="color:var(--emerald);">-</div>
-                <div class="kpi-sub" id="kpi-enrichment-sub">جميع الطلاب المجتازين لمعيار الإتقان</div>
+                <div class="kpi-sub" id="kpi-enrichment-sub">-</div>
             </div>
         </div>
 
@@ -652,21 +762,24 @@
                 </div>
                 <div class="card-panel" style="margin-bottom:0;">
                     <div class="panel-header">
-                        <span class="panel-title">توازن المعايير الخمسة للفصل</span>
+                        <span class="panel-title">رادار توازن المعايير الخمسة للفصل</span>
                     </div>
                     <canvas id="radarChart" height="180"></canvas>
                 </div>
             </div>
 
-            <div class="card-panel" style="margin-top:20px;">
+            <div class="card-panel" style="margin-top:18px;">
                 <div class="panel-header">
-                    <span class="panel-title">📋 كشف درجات الطلاب والتصنيف المعتمد (بيانات متزامنة مع Google Sheets)</span>
-                    <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <span class="panel-title" id="mainTableTitle">📋 كشف درجات الطلاب والتصنيف التربوي المعتمد</span>
+                    <div class="no-print" style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button class="btn-doc" style="background:var(--purple-bg); color:var(--purple); border-color:var(--purple);" onclick="openAnalysisReportModal()">
+                            📊 طباعة تقرير تحليل الصف
+                        </button>
                         <button class="btn-doc" style="background:var(--rose-bg); color:var(--rose); border-color:var(--rose-border);" onclick="openGroupPlanModal('remedial')">
-                            🖨️ طباعة الخطة العلاجية العامة للفصل
+                            🖨️ الخطة العلاجية العامة
                         </button>
                         <button class="btn-doc" style="background:var(--emerald-bg); color:var(--emerald); border-color:var(--emerald-border);" onclick="openGroupPlanModal('enrichment')">
-                            🖨️ طباعة الخطة الإثرائية العامة للفصل
+                            🖨️ الخطة الإثرائية العامة
                         </button>
                     </div>
                 </div>
@@ -676,7 +789,7 @@
                         <thead>
                             <tr>
                                 <th>م</th>
-                                <th style="text-align:right;">اسم الطالب</th>
+                                <th class="th-name">اسم الطالب</th>
                                 <th>مشاركة (10)</th>
                                 <th>واجبات (10)</th>
                                 <th>مهام (10)</th>
@@ -684,8 +797,9 @@
                                 <th style="background:rgba(99,102,241,0.12);">أعمال الفترة (40)</th>
                                 <th style="background:rgba(245,158,11,0.12);">الاختبار (20)</th>
                                 <th style="background:rgba(16,185,129,0.12);">المجموع (60)</th>
-                                <th>المسار التربوي المعتمد</th>
-                                <th class="no-print">وثيقة الطالب</th>
+                                <th>التقدير الوزاري</th>
+                                <th>المسار المعتمد</th>
+                                <th class="no-print">بطاقة الطالب</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -695,33 +809,57 @@
             </div>
         </div>
 
-        <!-- 2. شاشة الخطة العلاجية الجماعية -->
+        <!-- 2. شاشة التحليل الإحصائي التفصيلي للصف (Data Analyst View) -->
+        <div id="view-analysis" style="display:none;">
+            <div class="card-panel" style="border-top: 4px solid var(--purple);">
+                <div class="panel-header">
+                    <div>
+                        <h3 class="panel-title" style="color:var(--purple);">📈 التقرير الإحصائي والتربوي التفصيلي لنتائج الصف</h3>
+                        <p style="font-size:12.5px; color:var(--text-muted); font-weight:600; margin-top:3px;">
+                            تحليل وصفي واستدلالي شامل وفق سلم التقديرات الرسمي في لائحة تقويم الطالب بوزارة التعليم.
+                        </p>
+                    </div>
+                    <button class="u-btn analysis-btn" onclick="openAnalysisReportModal()">
+                        🖨️ معاينة وطباعة وثيقة تحليل النتائج المعتمدة (A4)
+                    </button>
+                </div>
+
+                <div id="onScreenAnalysisContent"></div>
+            </div>
+        </div>
+
+        <!-- 3. شاشة الخطة العلاجية الجماعية -->
         <div id="view-remedial" style="display:none;">
             <div class="card-panel" style="border-top: 4px solid var(--rose);">
                 <div class="panel-header">
                     <div>
                         <h3 class="panel-title" style="color:var(--rose);">🎯 سجل الخطة العلاجية الشاملة لطلاب الفصل</h3>
-                        <p style="font-size:13px; color:var(--text-muted); font-weight:600; margin-top:4px;">
-                            المعيار: مجموع أقل من (48/60) أو اختبار (≤ 12/20) أو فاقد في المشروع/الواجبات.
+                        <p style="font-size:12.5px; color:var(--text-muted); font-weight:600; margin-top:3px;">
+                            المعيار: مجموع أقل من (48/60) أو اختبار (≤ 12/20) أو فاقد في المشروع/أعمال الفترة.
                         </p>
                     </div>
-                    <button class="u-btn" style="background:var(--rose); color:#fff; border:none;" onclick="openGroupPlanModal('remedial')">
-                        🖨️ معاينة وطباعة وثيقة الخطة العلاجية العامة (A4)
-                    </button>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="u-btn" style="background:var(--rose); color:#fff; border:none;" onclick="openGroupPlanModal('remedial')">
+                            🖨️ طباعة كشف الخطة العلاجية الشاملة (A4)
+                        </button>
+                        <button class="u-btn" style="background:#9f1239; color:#fff; border:none;" onclick="openBatchIndividualModal('remedial')">
+                            🗂️ طباعة جميع البطاقات الفردية للعلاجي دفعة واحدة
+                        </button>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="remedialTable">
                         <thead>
                             <tr>
                                 <th>م</th>
-                                <th style="text-align:right;">اسم الطالب</th>
+                                <th class="th-name">اسم الطالب</th>
                                 <th>أعمال الفترة (40)</th>
                                 <th>الاختبار (20)</th>
                                 <th>المجموع (60)</th>
                                 <th>تحديد موضع الفاقد</th>
                                 <th>الإجراء العلاجي المعتمد</th>
                                 <th>المستهدف</th>
-                                <th class="no-print">وثيقة فردية</th>
+                                <th class="no-print">بطاقة فردية</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -730,33 +868,38 @@
             </div>
         </div>
 
-        <!-- 3. شاشة الخطة الإثرائية الجماعية -->
+        <!-- 4. شاشة الخطة الإثرائية الجماعية -->
         <div id="view-enrichment" style="display:none;">
             <div class="card-panel" style="border-top: 4px solid var(--emerald);">
                 <div class="panel-header">
                     <div>
                         <h3 class="panel-title" style="color:var(--emerald);">🌟 سجل الخطة الإثرائية الشاملة لطلاب الفصل</h3>
-                        <p style="font-size:13px; color:var(--text-muted); font-weight:600; margin-top:4px;">
-                            يشمل كافة الطلاب المتقنين والمتفوقين لتنمية مهارات التفكير العليا واختبارات القدرات.
+                        <p style="font-size:12.5px; color:var(--text-muted); font-weight:600; margin-top:3px;">
+                            يشمل كافة الطلاب المتقنين والمتفوقين لتنمية مهارات التفكير العليا واختبارات القدرات والتحصيلي.
                         </p>
                     </div>
-                    <button class="u-btn" style="background:var(--emerald); color:#fff; border:none;" onclick="openGroupPlanModal('enrichment')">
-                        🖨️ معاينة وطباعة وثيقة الخطة الإثرائية العامة (A4)
-                    </button>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="u-btn" style="background:var(--emerald); color:#fff; border:none;" onclick="openGroupPlanModal('enrichment')">
+                            🖨️ طباعة كشف الخطة الإثرائية الشاملة (A4)
+                        </button>
+                        <button class="u-btn" style="background:#065f46; color:#fff; border:none;" onclick="openBatchIndividualModal('enrichment')">
+                            🗂️ طباعة جميع البطاقات الفردية للإثرائي دفعة واحدة
+                        </button>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="enrichmentTable">
                         <thead>
                             <tr>
                                 <th>م</th>
-                                <th style="text-align:right;">اسم الطالب</th>
+                                <th class="th-name">اسم الطالب</th>
                                 <th>أعمال الفترة (40)</th>
                                 <th>الاختبار (20)</th>
                                 <th>المجموع (60)</th>
                                 <th>مستوى الإتقان</th>
                                 <th>البرنامج الإثرائي المعتمد</th>
-                                <th>الدور بالصف</th>
-                                <th class="no-print">وثيقة فردية</th>
+                                <th>الدور القيادي بالصف</th>
+                                <th class="no-print">بطاقة فردية</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -771,13 +914,16 @@
 <div class="modal-overlay" id="printModal" onclick="if(event.target===this) closePrintModal()">
     <div class="modal-box">
         <div class="modal-bar">
-            <span style="font-weight:700; font-size:14px;">📄 معاينة الوثيقة المعتمدة (مضبوطة لصفحة A4 واحدة كاملة بدون قص)</span>
+            <div>
+                <div style="font-weight:800; font-size:13.5px; margin-bottom:3px;">📄 معاينة الوثيقة الرسمية المعتمدة (جاهزة للطباعة أو الحفظ PDF)</div>
+                <div class="doc-filename-badge" id="modalFilenameBadge">اسم ملف الطباعة التلقائي: -</div>
+            </div>
             <div style="display:flex; gap:8px;">
-                <button class="u-btn" style="background:#10b981; color:#fff; border:none;" onclick="window.print()">🖨️ طباعة الوثيقة الآن (A4)</button>
+                <button class="u-btn" style="background:#10b981; color:#fff; border:none;" onclick="window.print()">🖨️ طباعة / حفظ PDF الآن</button>
                 <button class="u-btn" style="background:#ef4444; color:#fff; border:none;" onclick="closePrintModal()">✖ إغلاق</button>
             </div>
         </div>
-        <div class="a4-printable" id="a4Content"></div>
+        <div id="a4Container"></div>
     </div>
 </div>
 
@@ -786,11 +932,17 @@
 
 <script>
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbKahFg5bk53xhd5HvgLfs0Lmul_ETPgo1JSG6i24m-S7FNI0zoOsmYP9muBsq99c/exec";
+const DEFAULT_PAGE_TITLE = "منظومة التحليل التربوي والخطط العلاجية والإثرائية - ثانوية نعام";
 
 const classMeta = {
-    class1: { grade: 'الصف الأول الثانوي', course: 'رياضيات (1-1)', units: 'الفصل الأول (التبرير والبرهان) والفصل الثاني (التوازي والتعامد)' },
-    class2: { grade: 'الصف الثاني الثانوي', course: 'رياضيات (2-1)', units: 'الفصل الأول (الدوال والمتباينات) والفصل الثاني (المصفوفات)' },
-    class3: { grade: 'الصف الثالث الثانوي', course: 'رياضيات (3-1)', units: 'الفصل الأول (تحليل الدوال) والفصل الثاني (العلاقات والدوال الأسية واللوغاريتمية)' }
+    class1: { grade: 'الصف الأول الثانوي', shortGrade: 'أول ثانوي', course: 'رياضيات (1-1)', units: 'الفصل الأول (التبرير والبرهان) والفصل الثاني (التوازي والتعامد)' },
+    class2: { grade: 'الصف الثاني الثانوي', shortGrade: 'ثاني ثانوي', course: 'رياضيات (2-1)', units: 'الفصل الأول (الدوال والمتباينات) والفصل الثاني (المصفوفات)' },
+    class3: { grade: 'الصف الثالث الثانوي', shortGrade: 'ثالث ثانوي', course: 'رياضيات (3-1)', units: 'الفصل الأول (تحليل الدوال) والفصل الثاني (العلاقات والدوال الأسية واللوغاريتمية)' }
+};
+
+const periodNames = {
+    p1: 'الفترة الأولى',
+    p2: 'الفترة الثانية'
 };
 
 let allPeriodsData = {
@@ -858,6 +1010,19 @@ let currentClass = 'class1';
 let currentSubview = 'overview';
 let barChart, radarChart;
 
+// سلم التقديرات الرسمي المعتمد من وزارة التعليم (محول إلى 60 درجة)
+function getMinistryGrade(total) {
+    if (total >= 57) return { label: 'ممتاز مرتفع (أ+)', cat: 'excellent', color: '#059669' };
+    if (total >= 54) return { label: 'ممتاز (أ)', cat: 'excellent', color: '#10b981' };
+    if (total >= 51) return { label: 'جيد جداً مرتفع (ب+)', cat: 'vgood', color: '#0284c7' };
+    if (total >= 48) return { label: 'جيد جداً (ب)', cat: 'vgood', color: '#3b82f6' };
+    if (total >= 45) return { label: 'جيد مرتفع (ج+)', cat: 'good', color: '#6366f1' };
+    if (total >= 42) return { label: 'جيد (ج)', cat: 'good', color: '#8b5cf6' };
+    if (total >= 36) return { label: 'مقبول مرتفع (د+)', cat: 'pass_high', color: '#d97706' };
+    if (total >= 30) return { label: 'مقبول (د)', cat: 'pass', color: '#f59e0b' };
+    return { label: 'ضعيف / غير مجتاز (هـ)', cat: 'low', color: '#dc2626' };
+}
+
 function isRemedial(s) {
     return (s.total < 48 || s.exam <= 12 || s.p4 === 0 || s.pw < 30);
 }
@@ -895,6 +1060,79 @@ function getDiagnosisDetails(s) {
     }
 }
 
+// محرك التحليل الإحصائي الوصفي والاستدلالي للصف
+function computeClassStatistics(data) {
+    const n = data.length;
+    const totals = data.map(d => d.total).sort((a, b) => a - b);
+    const sumTotal = totals.reduce((a, b) => a + b, 0);
+    const mean = sumTotal / n;
+
+    // الوسيط الحسابي
+    const mid = Math.floor(n / 2);
+    const median = n % 2 !== 0 ? totals[mid] : (totals[mid - 1] + totals[mid]) / 2;
+
+    // الانحراف المعياري
+    const variance = totals.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / n;
+    const stdDev = Math.sqrt(variance);
+
+    const maxScore = totals[n - 1];
+    const minScore = totals[0];
+    const range = maxScore - minScore;
+
+    // متوسطات المعايير ونسب الإتقان المئوية
+    const avgP1 = data.reduce((a, b) => a + b.p1, 0) / n;
+    const avgP2 = data.reduce((a, b) => a + b.p2, 0) / n;
+    const avgP3 = data.reduce((a, b) => a + b.p3, 0) / n;
+    const avgP4 = data.reduce((a, b) => a + b.p4, 0) / n;
+    const avgPW = data.reduce((a, b) => a + b.pw, 0) / n;
+    const avgExam = data.reduce((a, b) => a + b.exam, 0) / n;
+
+    const criteriaList = [
+        { name: 'المشاركة الصفية', avg: avgP1, max: 10, pct: (avgP1 / 10) * 100 },
+        { name: 'الواجبات المنزلية', avg: avgP2, max: 10, pct: (avgP2 / 10) * 100 },
+        { name: 'المهام الأدائية', avg: avgP3, max: 10, pct: (avgP3 / 10) * 100 },
+        { name: 'المشروع الفصلي', avg: avgP4, max: 10, pct: (avgP4 / 10) * 100 },
+        { name: 'اختبار الفترة التحريري', avg: avgExam, max: 20, pct: (avgExam / 20) * 100 }
+    ];
+
+    const sortedCriteria = [...criteriaList].sort((a, b) => b.pct - a.pct);
+    const strongestCriterion = sortedCriteria[0];
+    const weakestCriterion = sortedCriteria[sortedCriteria.length - 1];
+
+    // الفجوة بين أعمال الفترة والاختبار
+    const pwPct = (avgPW / 40) * 100;
+    const examPct = (avgExam / 20) * 100;
+    const gapPct = pwPct - examPct;
+
+    // توزيع التقديرات وفق لائحة تقويم الطالب بوزارة التعليم
+    const bands = [
+        { title: 'ممتاز (أ+ / أ)', rangeText: '90% - 100% (54 - 60 درجة)', color: '#059669', bg: '#ecfdf5', students: data.filter(s => s.total >= 54) },
+        { title: 'جيد جداً (ب+ / ب)', rangeText: '80% - أقل من 90% (48 - 53.9)', color: '#0284c7', bg: '#eff6ff', students: data.filter(s => s.total >= 48 && s.total < 54) },
+        { title: 'جيد (ج+ / ج)', rangeText: '70% - أقل من 80% (42 - 47.9)', color: '#6366f1', bg: '#eef2ff', students: data.filter(s => s.total >= 42 && s.total < 48) },
+        { title: 'مقبول مرتفع (د+)', rangeText: '60% - أقل من 70% (36 - 41.9)', color: '#d97706', bg: '#fffbeb', students: data.filter(s => s.total >= 36 && s.total < 42) },
+        { title: 'مقبول (د)', rangeText: '50% - أقل من 60% (30 - 35.9)', color: '#ea580c', bg: '#fff7ed', students: data.filter(s => s.total >= 30 && s.total < 36) },
+        { title: 'ضعيف / غير مجتاز (هـ)', rangeText: 'أقل من 50% (أقل من 30 درجة)', color: '#dc2626', bg: '#fef2f2', students: data.filter(s => s.total < 30) }
+    ];
+
+    const passCount = data.filter(s => s.total >= 30).length;
+    const passRate = ((passCount / n) * 100).toFixed(1);
+
+    let homogeneityText = stdDev <= 7 ? 'تجانس عالٍ وتقارب في المستويات' : (stdDev <= 11 ? 'تباين طبيعي معتدل بين المستويات' : 'تشتت مرتفع يستوجب التمايز في التدريس');
+
+    return {
+        n, mean, median, stdDev, maxScore, minScore, range,
+        avgP1, avgP2, avgP3, avgP4, avgPW, avgExam,
+        pwPct, examPct, gapPct,
+        criteriaList, strongestCriterion, weakestCriterion,
+        bands, passCount, passRate, homogeneityText
+    };
+}
+
+function setDocumentPrintTitle(customTitle) {
+    document.title = customTitle;
+    document.getElementById('modalFilenameBadge').innerText = `📁 مسار واسم ملف الـ PDF الجاهز: ${customTitle}.pdf`;
+}
+
 function cellColorClass(val, max) {
     if (val === max) return 'score-full';
     if (val <= max / 2) return 'score-low';
@@ -909,7 +1147,7 @@ function shortName(fullName) {
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
-    document.getElementById('themeBtn').innerText = isDark ? '☀️ الوضع الفاتح (أبيض)' : '🌙 الوضع الداكن';
+    document.getElementById('themeBtn').innerText = isDark ? '☀️ فاتح' : '🌙 داكن';
     updateDashboard();
 }
 
@@ -930,10 +1168,12 @@ function switchClass(cls, btn) {
 function switchSubview(view) {
     currentSubview = view;
     document.getElementById('view-overview').style.display = view === 'overview' ? 'block' : 'none';
+    document.getElementById('view-analysis').style.display = view === 'analysis' ? 'block' : 'none';
     document.getElementById('view-remedial').style.display = view === 'remedial' ? 'block' : 'none';
     document.getElementById('view-enrichment').style.display = view === 'enrichment' ? 'block' : 'none';
 
     document.getElementById('tab-overview').className = 'subview-btn' + (view === 'overview' ? ' active-main' : '');
+    document.getElementById('tab-analysis').className = 'subview-btn' + (view === 'analysis' ? ' active-analysis' : '');
     document.getElementById('tab-remedial').className = 'subview-btn' + (view === 'remedial' ? ' active-remedial' : '');
     document.getElementById('tab-enrichment').className = 'subview-btn' + (view === 'enrichment' ? ' active-enrichment' : '');
 }
@@ -952,70 +1192,67 @@ async function fetchLiveData(isManual = false) {
             allPeriodsData[currentPeriod][currentClass] = result.data;
             toast.innerText = '✅ تم تحديث وتزامن البيانات بنجاح!';
         } else {
-            toast.innerText = 'ℹ️ تم استخدام البيانات المخزنة محلياً.';
+            toast.innerText = 'ℹ️ تم عرض البيانات المعتمدة.';
         }
     } catch (e) {
-        toast.innerText = '⚠️ تعذر الاتصال بالشيت، يتم عرض أحدث نسخة محفوظة.';
+        toast.innerText = '⚠️ تعذر الاتصال بالشيت، يتم عرض النسخة المحفوظة.';
     }
 
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    setTimeout(() => { toast.style.display = 'none'; }, 2200);
     updateDashboard();
 }
 
 function updateDashboard() {
     const data = allPeriodsData[currentPeriod][currentClass] || [];
     const count = data.length;
+    const meta = classMeta[currentClass];
+    const pName = periodNames[currentPeriod];
+
+    document.getElementById('mainTableTitle').innerText = `📋 كشف درجات ${meta.grade} (${pName}) - مقرر ${meta.course}`;
 
     if (count === 0) {
         document.getElementById('kpi-total-students').innerText = '0';
-        document.querySelector('#mainTable tbody').innerHTML = '<tr><td colspan="11">لا توجد بيانات مسجلة في هذا القسم بعد.</td></tr>';
+        document.querySelector('#mainTable tbody').innerHTML = '<tr><td colspan="12">لم يتم رصد درجات هذه الفترة في Google Sheets حتى الآن.</td></tr>';
         return;
     }
 
-    let sumP1=0, sumP2=0, sumP3=0, sumP4=0, sumPW=0, sumExam=0, sumTotal=0;
-    let remedialList = [], enrichmentList = [];
-
-    data.forEach(s => {
-        sumP1 += s.p1; sumP2 += s.p2; sumP3 += s.p3; sumP4 += s.p4;
-        sumPW += s.pw; sumExam += s.exam; sumTotal += s.total;
-        if (isRemedial(s)) remedialList.push(s);
-        else enrichmentList.push(s);
-    });
-
-    const avgTotal = (sumTotal / count).toFixed(1);
-    const avgPW = (sumPW / count).toFixed(1);
-    const avgExam = (sumExam / count).toFixed(1);
+    const stats = computeClassStatistics(data);
+    const remedialList = data.filter(s => isRemedial(s));
+    const enrichmentList = data.filter(s => !isRemedial(s));
 
     document.getElementById('kpi-total-students').innerText = `${count} طالباً`;
-    document.getElementById('kpi-avg-total').innerText = avgTotal;
-    document.getElementById('kpi-avg-total-sub').innerText = `نسبة الإتقان العام ${((avgTotal/60)*100).toFixed(1)}%`;
-    document.getElementById('kpi-avg-pw').innerText = avgPW;
-    document.getElementById('kpi-avg-pw-sub').innerText = `من 40 (${((avgPW/40)*100).toFixed(1)}%)`;
-    document.getElementById('kpi-avg-exam').innerText = avgExam;
-    document.getElementById('kpi-avg-exam-sub').innerText = `من 20 (${((avgExam/20)*100).toFixed(1)}%)`;
+    document.getElementById('kpi-pass-rate').innerText = `نسبة النجاح ${stats.passRate}%`;
+    document.getElementById('kpi-avg-total').innerText = `${stats.mean.toFixed(1)} / 60`;
+    document.getElementById('kpi-avg-total-sub').innerText = `إتقان عام ${((stats.mean/60)*100).toFixed(1)}%`;
+    document.getElementById('kpi-avg-pw').innerText = `${stats.avgPW.toFixed(1)} / 40`;
+    document.getElementById('kpi-avg-pw-sub').innerText = `إتقان ${stats.pwPct.toFixed(1)}%`;
+    document.getElementById('kpi-avg-exam').innerText = `${stats.avgExam.toFixed(1)} / 20`;
+    document.getElementById('kpi-avg-exam-sub').innerText = `إتقان ${stats.examPct.toFixed(1)}%`;
 
     document.getElementById('kpi-remedial-count').innerText = `${remedialList.length} طلاب`;
-    document.getElementById('kpi-remedial-sub').innerText = `يمثلون ${Math.round((remedialList.length/count)*100)}% من الفصل`;
+    document.getElementById('kpi-remedial-sub').innerText = `${Math.round((remedialList.length/count)*100)}% من الفصل`;
     document.getElementById('kpi-enrichment-count').innerText = `${enrichmentList.length} طالباً`;
-    document.getElementById('kpi-enrichment-sub').innerText = `يمثلون ${Math.round((enrichmentList.length/count)*100)}% من الفصل`;
+    document.getElementById('kpi-enrichment-sub').innerText = `${Math.round((enrichmentList.length/count)*100)}% من الفصل`;
 
     document.getElementById('count-rem-tab').innerText = remedialList.length;
     document.getElementById('count-enr-tab').innerText = enrichmentList.length;
 
-    renderTables(data, remedialList, enrichmentList);
-    renderCharts(data, sumP1/count, sumP2/count, sumP3/count, sumP4/count, (sumExam/count)/2);
+    renderTables(data, remedialList, enrichmentList, stats);
+    renderOnScreenAnalysis(stats, meta, pName);
+    renderCharts(data, stats.avgP1, stats.avgP2, stats.avgP3, stats.avgP4, stats.avgExam / 2);
 }
 
-function renderTables(data, remedialList, enrichmentList) {
+function renderTables(data, remedialList, enrichmentList, stats) {
     const mainBody = document.querySelector('#mainTable tbody');
     const mainFoot = document.querySelector('#mainTable tfoot');
     mainBody.innerHTML = '';
 
     data.forEach(s => {
         const diag = getDiagnosisDetails(s);
+        const gradeObj = getMinistryGrade(s.total);
         const badgeHTML = diag.type === 'remedial'
-            ? `<span class="badge-remedial">🎯 خطة علاجية</span>`
-            : `<span class="badge-enrichment">🌟 خطة إثرائية</span>`;
+            ? `<span class="badge-remedial">🎯 علاجي</span>`
+            : `<span class="badge-enrichment">🌟 إثرائي</span>`;
 
         mainBody.innerHTML += `
             <tr>
@@ -1027,29 +1264,29 @@ function renderTables(data, remedialList, enrichmentList) {
                 <td class="${cellColorClass(s.p4, 10)}">${s.p4}</td>
                 <td class="${cellColorClass(s.pw, 40)}" style="font-weight:800;">${s.pw}</td>
                 <td class="${cellColorClass(s.exam, 20)}" style="font-weight:800;">${s.exam}</td>
-                <td class="${cellColorClass(s.total, 60)}" style="font-size:15px; font-weight:800;">${s.total}</td>
+                <td class="${cellColorClass(s.total, 60)}" style="font-size:14.5px; font-weight:800;">${s.total}</td>
+                <td><span style="color:${gradeObj.color}; font-weight:800; font-size:12px;">${gradeObj.label}</span></td>
                 <td>${badgeHTML}</td>
-                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">📄 وثيقة الطالب</button></td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">📄 بطاقة الطالب</button></td>
             </tr>
         `;
     });
 
-    const c = data.length;
-    const avg = k => (data.reduce((a,b)=>a+b[k],0)/c).toFixed(1);
     mainFoot.innerHTML = `
         <tr>
-            <td colspan="2" style="text-align:right; padding-right:12px;">📊 المتوسط الحسابي العام للفصل</td>
-            <td>${avg('p1')}</td>
-            <td>${avg('p2')}</td>
-            <td>${avg('p3')}</td>
-            <td>${avg('p4')}</td>
-            <td>${avg('pw')} / 40</td>
-            <td>${avg('exam')} / 20</td>
-            <td>${avg('total')} / 60</td>
-            <td colspan="2">${remedialList.length} علاجي | ${enrichmentList.length} إثرائي</td>
+            <td colspan="2" style="text-align:right; padding-right:10px;">📊 المتوسط الحسابي العام للفصل</td>
+            <td>${stats.avgP1.toFixed(1)}</td>
+            <td>${stats.avgP2.toFixed(1)}</td>
+            <td>${stats.avgP3.toFixed(1)}</td>
+            <td>${stats.avgP4.toFixed(1)}</td>
+            <td>${stats.avgPW.toFixed(1)} / 40</td>
+            <td>${stats.avgExam.toFixed(1)} / 20</td>
+            <td>${stats.mean.toFixed(1)} / 60</td>
+            <td colspan="3">الانحراف المعياري: ${stats.stdDev.toFixed(2)} | الوسيط: ${stats.median}</td>
         </tr>
     `;
 
+    // جدول الخطة العلاجية
     const remBody = document.querySelector('#remedialTable tbody');
     remBody.innerHTML = '';
     remedialList.forEach((s, idx) => {
@@ -1064,11 +1301,12 @@ function renderTables(data, remedialList, enrichmentList) {
                 <td style="color:var(--rose); text-align:right;">${d.reason}</td>
                 <td style="text-align:right; font-weight:600;">${d.action}</td>
                 <td>${d.target}</td>
-                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ خطة فردية</button></td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ بطاقة الطالب</button></td>
             </tr>
         `;
     });
 
+    // جدول الخطة الإثرائية
     const enrBody = document.querySelector('#enrichmentTable tbody');
     enrBody.innerHTML = '';
     enrichmentList.forEach((s, idx) => {
@@ -1083,38 +1321,256 @@ function renderTables(data, remedialList, enrichmentList) {
                 <td style="color:var(--emerald);">${d.reason}</td>
                 <td style="text-align:right; font-weight:600;">${d.action}</td>
                 <td style="text-align:right;">${d.target}</td>
-                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ خطة فردية</button></td>
+                <td class="no-print"><button class="btn-doc" onclick="openIndividualPlanModal(${s.id})">🖨️ بطاقة الطالب</button></td>
             </tr>
         `;
     });
 }
 
-// ================= نافذة طباعة الخطة الجماعية للفصل (مضبوطة لصفحة A4 واحدة دون قص) =================
+// عرض التحليل الإحصائي داخل تبويب الموقع
+function renderOnScreenAnalysis(stats, meta, pName) {
+    const container = document.getElementById('onScreenAnalysisContent');
+    const bandsRows = stats.bands.map(b => {
+        const pct = ((b.students.length / stats.n) * 100).toFixed(1);
+        const names = b.students.length ? b.students.map(s => `${shortName(s.name)} (${s.total})`).join(' ، ') : 'لا يوجد طلاب في هذه الفئة';
+        return `
+            <tr>
+                <td style="font-weight:800; color:${b.color}; text-align:right;">${b.title}</td>
+                <td>${b.rangeText}</td>
+                <td style="font-weight:800;">${b.students.length}</td>
+                <td style="width:180px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <div class="dist-bar-wrap"><div class="dist-bar-fill" style="width:${pct}%; background:${b.color};"></div></div>
+                        <span style="font-size:11.5px; min-width:38px;">${pct}%</span>
+                    </div>
+                </td>
+                <td style="text-align:right; font-size:12px;">${names}</td>
+            </tr>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <div class="stats-deep-grid">
+            <div class="deep-box">
+                <div class="lbl">المتوسط الحسابي (μ)</div>
+                <div class="val">${stats.mean.toFixed(2)} <small style="font-size:13px;">/ 60</small></div>
+                <div class="desc">بنسبة تحصيل ${((stats.mean/60)*100).toFixed(1)}%</div>
+            </div>
+            <div class="deep-box">
+                <div class="lbl">الوسيط الحسابي (Median)</div>
+                <div class="val">${stats.median} <small style="font-size:13px;">/ 60</small></div>
+                <div class="desc">نقطة تمركز نصف طلاب الصف</div>
+            </div>
+            <div class="deep-box">
+                <div class="lbl">الانحراف المعياري (σ)</div>
+                <div class="val">${stats.stdDev.toFixed(2)}</div>
+                <div class="desc">${stats.homogeneityText}</div>
+            </div>
+            <div class="deep-box">
+                <div class="lbl">المدى الإحصائي (Range)</div>
+                <div class="val">${stats.range} <small style="font-size:13px;">درجة</small></div>
+                <div class="desc">أعلى: ${stats.maxScore} | أقل: ${stats.minScore}</div>
+            </div>
+            <div class="deep-box">
+                <div class="lbl">مؤشر الفجوة (الأعمال - الاختبار)</div>
+                <div class="val" style="color:${stats.gapPct > 20 ? 'var(--rose)' : 'var(--emerald)'};">${stats.gapPct.toFixed(1)}%</div>
+                <div class="desc">أعمال: ${stats.pwPct.toFixed(0)}% | اختبار: ${stats.examPct.toFixed(0)}%</div>
+            </div>
+        </div>
+
+        <h4 style="margin-bottom:10px; font-size:14.5px;">📊 توزيع الطلاب وفق سلم التقديرات الرسمي (لائحة تقويم الطالب بوزارة التعليم):</h4>
+        <div class="table-responsive" style="margin-bottom:16px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:right;">فئة التقدير الوزاري</th>
+                        <th>النطاق المعياري (من 60)</th>
+                        <th>العدد</th>
+                        <th>النسبة والتمثيل</th>
+                        <th style="text-align:right;">بيان أسماء الطلاب في الفئة</th>
+                    </tr>
+                </thead>
+                <tbody>${bandsRows}</tbody>
+            </table>
+        </div>
+    `;
+}
+
+// ================= 1. طباعة وثيقة التحليل الإحصائي التفصيلي للصف (A4) =================
+function openAnalysisReportModal() {
+    const data = allPeriodsData[currentPeriod][currentClass];
+    const meta = classMeta[currentClass];
+    const pName = periodNames[currentPeriod];
+    const stats = computeClassStatistics(data);
+
+    const fileTitle = `تقرير تحليل النتائج التفصيلي - ${meta.grade} - ${pName}`;
+    setDocumentPrintTitle(fileTitle);
+
+    const bandsTableRows = stats.bands.map(b => {
+        const pct = ((b.students.length / stats.n) * 100).toFixed(1);
+        const names = b.students.length ? b.students.map(s => `${shortName(s.name)} (${s.total})`).join(' ، ') : '—';
+        return `
+            <tr>
+                <td style="text-align:right; font-weight:800; color:${b.color};">${b.title}</td>
+                <td>${b.rangeText}</td>
+                <td style="font-weight:800;">${b.students.length}</td>
+                <td style="font-weight:800;">${pct}%</td>
+                <td style="text-align:right;">${names}</td>
+            </tr>
+        `;
+    }).join('');
+
+    const criteriaRows = stats.criteriaList.map(c => `
+        <tr>
+            <td style="text-align:right; font-weight:800;">${c.name}</td>
+            <td>${c.max}</td>
+            <td style="font-weight:800;">${c.avg.toFixed(2)}</td>
+            <td style="font-weight:800; color:${c.pct >= 80 ? '#059669' : '#d97706'};">${c.pct.toFixed(1)}%</td>
+            <td>${c.pct >= 85 ? 'إتقان مرتفع جداً' : (c.pct >= 75 ? 'إتقان جيد' : 'يحتاج لتعزيز وتدريب')}</td>
+        </tr>
+    `).join('');
+
+    document.getElementById('a4Container').innerHTML = `
+        <div class="a4-printable">
+            <div class="a4-header">
+                <div class="a4-header-right">
+                    <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                    <h4>إدارة التعليم بمنطقة الرياض</h4>
+                    <h4>مدرسة ثانوية نعام</h4>
+                </div>
+                <div class="a4-title-box">
+                    <h2>تقرير تحليل النتائج الإحصائي والتربوي التفصيلي</h2>
+                    <p>${meta.grade} • ${pName} • المقرر: ${meta.course} • العام 1448هـ</p>
+                </div>
+                <div class="a4-header-left">
+                    <div>عدد الطلاب: (${stats.n}) طالباً</div>
+                    <div>نسبة الاجتياز: (${stats.passRate}%)</div>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">أولاً: مؤشرات الإحصاء الوصفي والاستدلالي لأداء الفصل (من 60 درجة)</div>
+                <div class="a4-sec-body" style="padding:6px;">
+                    <table class="a4-table" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th>المتوسط الحسابي (μ)</th>
+                                <th>نسبة التحصيل العام</th>
+                                <th>الوسيط الحسابي</th>
+                                <th>الانحراف المعياري (σ)</th>
+                                <th>أعلى / أقل درجة</th>
+                                <th>المدى الإحصائي</th>
+                                <th>مستوى تجانس الصف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:800; font-size:12px;">${stats.mean.toFixed(2)} / 60</td>
+                                <td style="font-weight:800;">${((stats.mean/60)*100).toFixed(1)}%</td>
+                                <td style="font-weight:800;">${stats.median} / 60</td>
+                                <td style="font-weight:800;">${stats.stdDev.toFixed(2)}</td>
+                                <td style="font-weight:800;">${stats.maxScore} / ${stats.minScore}</td>
+                                <td style="font-weight:800;">${stats.range} درجة</td>
+                                <td style="font-weight:800; color:#1e3a8a;">${stats.homogeneityText}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">ثانياً: مصفوفة توزيع التقديرات وفق لائحة تقويم الطالب المعتمدة بوزارة التعليم</div>
+                <div class="a4-sec-body" style="padding:6px;">
+                    <table class="a4-table" style="margin-bottom:0;">
+                        <colgroup>
+                            <col style="width:18%;">
+                            <col style="width:22%;">
+                            <col style="width:8%;">
+                            <col style="width:10%;">
+                            <col style="width:42%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th style="text-align:right;">التقدير الوزاري</th>
+                                <th>النطاق المعياري (من 60)</th>
+                                <th>العدد</th>
+                                <th>النسبة</th>
+                                <th style="text-align:right;">أسماء الطلاب ودرجاتهم</th>
+                            </tr>
+                        </thead>
+                        <tbody>${bandsTableRows}</tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">ثالثاً: تحليل كفاءة المعايير التربوية الخمسة ومؤشر الفجوة التحصيلية</div>
+                <div class="a4-sec-body" style="padding:6px;">
+                    <table class="a4-table" style="margin-bottom:6px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:right;">معيار التقويم</th>
+                                <th>الدرجة العظمى</th>
+                                <th>متوسط أداء الفصل</th>
+                                <th>نسبة الإتقان المئوية</th>
+                                <th>التشخيص المعياري</th>
+                            </tr>
+                        </thead>
+                        <tbody>${criteriaRows}</tbody>
+                    </table>
+                    <div style="font-size:10.5px; line-height:1.5;">
+                        • <strong>نقطة القوة الأبرز في الصف:</strong> معيار (${stats.strongestCriterion.name}) بنسبة إتقان (${stats.strongestCriterion.pct.toFixed(1)}%).<br>
+                        • <strong>المعيار الأكثر احتياجاً للدعم:</strong> معيار (${stats.weakestCriterion.name}) بنسبة إتقان (${stats.weakestCriterion.pct.toFixed(1)}%).<br>
+                        • <strong>تحليل الفجوة بين أعمال الفترة والاختبار:</strong> بلغ متوسط إتقان أعمال الفترة (${stats.pwPct.toFixed(1)}%) مقابل (${stats.examPct.toFixed(1)}%) في الاختبار التحريري بفجوة قدرها (${stats.gapPct.toFixed(1)}%)، مما يوجه التدخل العلاجي نحو التدريب التحريري المركز للطلاب المدرجين في المسار العلاجي.
+                    </div>
+                </div>
+            </div>
+
+            <div class="a4-signatures">
+                <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
+            </div>
+        </div>
+    `;
+
+    document.body.classList.add('modal-open');
+    document.getElementById('printModal').classList.add('show');
+}
+
+// ================= 2. طباعة الخطة العامة للفصل (العلاجية أو الإثرائية الشاملة A4) =================
 function openGroupPlanModal(type) {
     const data = allPeriodsData[currentPeriod][currentClass];
     const meta = classMeta[currentClass];
+    const pName = periodNames[currentPeriod];
     const list = data.filter(s => type === 'remedial' ? isRemedial(s) : !isRemedial(s));
 
+    const pathName = type === 'remedial' ? 'خطة علاجية شاملة' : 'خطة إثرائية شاملة';
+    const fileTitle = `${pathName} - ${meta.grade} - ${pName}`;
+    setDocumentPrintTitle(fileTitle);
+
     const title = type === 'remedial'
-        ? `وثيقة الخطة العلاجية العامة (${meta.grade})`
-        : `وثيقة الخطة الإثرائية ورعاية المتفوقين (${meta.grade})`;
+        ? `وثيقة الخطة العلاجية الشاملة (${meta.grade} - ${pName})`
+        : `وثيقة الخطة الإثرائية ورعاية المتفوقين (${meta.grade} - ${pName})`;
 
     const desc = type === 'remedial'
-        ? `بيان بأسماء الطلاب المدرجين بالمسار العلاجي لمقرر ${meta.course} وتشخيص الفاقد والإجراءات التربوية المعتمدة.`
-        : `بيان بأسماء الطلاب المدرجين بالمسار الإثرائي لمقرر ${meta.course} وبرامج تنمية المهارات العليا والقدرات.`;
+        ? `بيان شامل بأسماء الطلاب المدرجين بالمسار العلاجي لمقرر ${meta.course} وتشخيص الفاقد والإجراءات المعتمدة.`
+        : `بيان شامل بأسماء الطلاب المدرجين بالمسار الإثرائي لمقرر ${meta.course} وبرامج تنمية المهارات العليا والقدرات.`;
 
     const rowsHTML = list.map((s, idx) => {
         const d = getDiagnosisDetails(s);
+        const g = getMinistryGrade(s.total);
         return `
             <tr>
                 <td style="font-weight:800;">${idx + 1}</td>
-                <td style="text-align:right; font-weight:800; padding-right:6px;">${s.name}</td>
+                <td style="text-align:right; font-weight:800; padding-right:5px;">${s.name}</td>
                 <td>
-                    <strong style="font-size:12px;">${s.pw} / 40</strong>
-                    <span class="sub-scores-line">م:${s.p1} | و:${s.p2} | مه:${s.p3} | مش:${s.p4}</span>
+                    <strong style="font-size:11.5px;">${s.pw} / 40</strong>
+                    <span class="sub-scores-line">م:${s.p1}|و:${s.p2}|مه:${s.p3}|مش:${s.p4}</span>
                 </td>
-                <td style="font-weight:800; font-size:12px; ${s.exam<=10?'color:#dc2626;':''}">${s.exam} / 20</td>
-                <td style="font-weight:800; font-size:12px;">${s.total} / 60</td>
+                <td style="font-weight:800; ${s.exam<=10?'color:#dc2626;':''}">${s.exam} / 20</td>
+                <td style="font-weight:800;">${s.total} / 60<br><span style="font-size:9px; color:${g.color};">${g.label}</span></td>
                 <td style="text-align:right;">${d.reason}</td>
                 <td style="text-align:right;">${d.action}</td>
                 <td style="font-weight:700;">${d.target}</td>
@@ -1122,56 +1578,58 @@ function openGroupPlanModal(type) {
         `;
     }).join('');
 
-    document.getElementById('a4Content').innerHTML = `
-        <div class="a4-header">
-            <div class="a4-header-right">
-                <h4>المملكة العربية السعودية - وزارة التعليم</h4>
-                <h4>إدارة التعليم بمنطقة الرياض</h4>
-                <h4>مدرسة ثانوية نعام</h4>
+    document.getElementById('a4Container').innerHTML = `
+        <div class="a4-printable">
+            <div class="a4-header">
+                <div class="a4-header-right">
+                    <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                    <h4>إدارة التعليم بمنطقة الرياض</h4>
+                    <h4>مدرسة ثانوية نعام</h4>
+                </div>
+                <div class="a4-title-box">
+                    <h2>${title}</h2>
+                    <p>العام الدراسي 1448هـ / 2026م • المقرر: ${meta.course}</p>
+                </div>
+                <div class="a4-header-left">
+                    <div>العدد بالمسار: (${list.length}) من (${data.length})</div>
+                    <div>النطاق: ${meta.units}</div>
+                </div>
             </div>
-            <div class="a4-title-box">
-                <h2>${title}</h2>
-                <p>العام الدراسي 1448هـ / 2026م • المقرر: ${meta.course}</p>
+
+            <p style="font-size:11px; font-weight:700; margin-bottom:6px; color:#1e293b;">• ${desc}</p>
+
+            <table class="a4-table">
+                <colgroup>
+                    <col style="width: 4%;">
+                    <col style="width: 22%;">
+                    <col style="width: 14%;">
+                    <col style="width: 7%;">
+                    <col style="width: 9%;">
+                    <col style="width: 16%;">
+                    <col style="width: 18%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>م</th>
+                        <th style="text-align:right; padding-right:5px;">اسم الطالب</th>
+                        <th>أعمال الفترة (40)<br><small style="font-size:8.5px;">(مشاركة|واجب|مهام|مشروع)</small></th>
+                        <th>الاختبار<br>(20)</th>
+                        <th>المجموع والتقدير</th>
+                        <th>التشخيص وفق الدرجات</th>
+                        <th>الإجراء التربوي والرقمي المعتمد</th>
+                        <th>المستهدف</th>
+                    </tr>
+                </thead>
+                <tbody>${rowsHTML}</tbody>
+            </table>
+
+            <div class="a4-signatures">
+                <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
             </div>
-            <div class="a4-header-left">
-                <div>العدد بالمسار: (${list.length}) من (${data.length})</div>
-                <div>النطاق: ${meta.units}</div>
-            </div>
-        </div>
-
-        <p style="font-size:11.5px; font-weight:700; margin-bottom:8px; color:#1e293b;">• ${desc}</p>
-
-        <table class="a4-table">
-            <colgroup>
-                <col style="width: 4%;">
-                <col style="width: 23%;">
-                <col style="width: 14%;">
-                <col style="width: 7%;">
-                <col style="width: 7%;">
-                <col style="width: 17%;">
-                <col style="width: 18%;">
-                <col style="width: 10%;">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>م</th>
-                    <th style="text-align:right; padding-right:6px;">اسم الطالب</th>
-                    <th>أعمال الفترة (40)<br><small style="font-weight:600; font-size:9px;">(مشاركة|واجب|مهام|مشروع)</small></th>
-                    <th>الاختبار<br>(20)</th>
-                    <th>المجموع<br>(60)</th>
-                    <th>التشخيص وفق الدرجات</th>
-                    <th>الإجراء التربوي والرقمي المعتمد</th>
-                    <th>المستهدف</th>
-                </tr>
-            </thead>
-            <tbody>${rowsHTML}</tbody>
-        </table>
-
-        <div class="a4-signatures">
-            <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
         </div>
     `;
 
@@ -1179,103 +1637,134 @@ function openGroupPlanModal(type) {
     document.getElementById('printModal').classList.add('show');
 }
 
-// ================= نافذة طباعة الخطة الفردية للطالب (A4) =================
+// دالة بناء كود بطاقة A4 فردية لطالب واحد (تستخدم للطباعة الفردية وللطباعة المجمعة)
+function buildStudentCardHTML(s, meta, pName, isBatch = false) {
+    const d = getDiagnosisDetails(s);
+    const g = getMinistryGrade(s.total);
+    const planTypeTitle = d.type === 'remedial'
+        ? `وثيقة خطة علاجية فردية (${meta.shortGrade} - ${pName})`
+        : `وثيقة خطة إثرائية فردية (${meta.shortGrade} - ${pName})`;
+
+    return `
+        <div class="a4-printable ${isBatch ? 'batch-page' : ''}">
+            <div class="a4-header">
+                <div class="a4-header-right">
+                    <h4>المملكة العربية السعودية - وزارة التعليم</h4>
+                    <h4>إدارة التعليم بمنطقة الرياض</h4>
+                    <h4>مدرسة ثانوية نعام</h4>
+                </div>
+                <div class="a4-title-box">
+                    <h2>${planTypeTitle}</h2>
+                    <p>العام الدراسي 1448هـ / 2026م • المقرر: ${meta.course}</p>
+                </div>
+                <div class="a4-header-left">
+                    <div>الصف: ${meta.grade}</div>
+                    <div>الفترة: ${pName}</div>
+                </div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #94a3b8; border-right:5px solid #1e3a8a; padding:10px 14px; border-radius:8px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <span style="font-size:11px; color:#475569; font-weight:700;">اسم الطالب الرباعي:</span>
+                    <div style="font-size:15px; font-weight:800; color:#0f172a;">${s.name}</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size:12px; font-weight:800; color:${g.color}; background:#fff; padding:4px 10px; border-radius:6px; border:1px solid #cbd5e1;">التقدير: ${g.label}</span>
+                    <span style="font-size:12.5px; font-weight:800; padding:5px 12px; border-radius:8px; background:${d.type==='remedial'?'#ffe4e6':'#dcfce7'}; color:${d.type==='remedial'?'#9f1239':'#166534'};">${d.badge}</span>
+                </div>
+            </div>
+
+            <table class="a4-table">
+                <thead>
+                    <tr>
+                        <th>المشاركة (10)</th>
+                        <th>الواجبات (10)</th>
+                        <th>المهام الأدائية (10)</th>
+                        <th>المشروع (10)</th>
+                        <th>أعمال الفترة (40)</th>
+                        <th>اختبار الفترة (20)</th>
+                        <th>المجموع الكلي (60)</th>
+                        <th>النسبة المئوية</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:800;">${s.p1}</td>
+                        <td style="font-weight:800;">${s.p2}</td>
+                        <td style="font-weight:800;">${s.p3}</td>
+                        <td style="font-weight:800;">${s.p4}</td>
+                        <td style="font-weight:800;">${s.pw} / 40</td>
+                        <td style="font-weight:800;">${s.exam} / 20</td>
+                        <td style="font-weight:800; font-size:13px;">${s.total} / 60</td>
+                        <td style="font-weight:800;">${Math.round((s.total/60)*100)}%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">1. التشخيص التربوي الدقيق وفق درجات الطالب واللائحة المعتمدة</div>
+                <div class="a4-sec-body">
+                    • <strong>نتيجة الفرز والتشخيص:</strong> ${d.reason} (التقدير الفصلي: ${g.label}).<br>
+                    • <strong>النطاق المنهجي المقرر:</strong> ${meta.units}.
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">2. الإجراءات المعتمدة (المعلم • منصة مدرستي • أوراق العمل)</div>
+                <div class="a4-sec-body">
+                    ☐ ${d.action}.<br>
+                    ☐ تسليم الطالب تدريبات وأوراق عمل موجهة من إعداد معلم المادة ومتابعة إنجازها أسبوعياً.<br>
+                    ☐ <strong>المستهدف في الفترة القادمة:</strong> ${d.target}.
+                </div>
+            </div>
+
+            <div class="a4-section">
+                <div class="a4-sec-head">3. ملاحظات وتوصيات المعلم والموجه الطلابي وولي الأمر</div>
+                <div class="a4-sec-body" style="min-height:42px;">
+                    .........................................................................................................................................................................................................................
+                </div>
+            </div>
+
+            <div class="a4-signatures">
+                <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
+                <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
+            </div>
+        </div>
+    `;
+}
+
+// ================= 3. طباعة بطاقة طالب فردية واحدة (A4) =================
 function openIndividualPlanModal(studentId) {
     const data = allPeriodsData[currentPeriod][currentClass];
     const s = data.find(x => x.id === studentId);
     const meta = classMeta[currentClass];
+    const pName = periodNames[currentPeriod];
     const d = getDiagnosisDetails(s);
 
-    const planTypeTitle = d.type === 'remedial'
-        ? 'وثيقة خطة علاجية فردية لطالب'
-        : 'وثيقة خطة إثرائية فردية لطالب متقن/متميز';
+    const trackLabel = d.type === 'remedial' ? 'وثيقة خطة علاجية فردية' : 'وثيقة خطة إثرائية فردية';
+    const fileTitle = `${trackLabel} - ${s.name} - ${meta.grade} - ${pName}`;
+    setDocumentPrintTitle(fileTitle);
 
-    document.getElementById('a4Content').innerHTML = `
-        <div class="a4-header">
-            <div class="a4-header-right">
-                <h4>المملكة العربية السعودية - وزارة التعليم</h4>
-                <h4>إدارة التعليم بمنطقة الرياض</h4>
-                <h4>مدرسة ثانوية نعام</h4>
-            </div>
-            <div class="a4-title-box">
-                <h2>${planTypeTitle}</h2>
-                <p>العام الدراسي 1448هـ / 2026م</p>
-            </div>
-            <div class="a4-header-left">
-                <div>الصف: ${meta.grade}</div>
-                <div>المقرر: ${meta.course}</div>
-            </div>
-        </div>
+    document.getElementById('a4Container').innerHTML = buildStudentCardHTML(s, meta, pName, false);
+    document.body.classList.add('modal-open');
+    document.getElementById('printModal').classList.add('show');
+}
 
-        <div style="background:#f8fafc; border:1px solid #94a3b8; border-right:5px solid #1e3a8a; padding:10px 14px; border-radius:8px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <span style="font-size:11.5px; color:#475569; font-weight:700;">اسم الطالب الرباعي:</span>
-                <div style="font-size:15px; font-weight:800; color:#0f172a;">${s.name}</div>
-            </div>
-            <div style="font-size:13px; font-weight:800; padding:5px 12px; border-radius:8px; background:${d.type==='remedial'?'#ffe4e6':'#dcfce7'}; color:${d.type==='remedial'?'#9f1239':'#166534'};">
-                ${d.badge}
-            </div>
-        </div>
+// ================= 4. طباعة جميع البطاقات الفردية لطلاب المسار دفعة واحدة (كل طالب في صفحة A4 مستقلة) =================
+function openBatchIndividualModal(type) {
+    const data = allPeriodsData[currentPeriod][currentClass];
+    const meta = classMeta[currentClass];
+    const pName = periodNames[currentPeriod];
+    const list = data.filter(s => type === 'remedial' ? isRemedial(s) : !isRemedial(s));
 
-        <table class="a4-table">
-            <thead>
-                <tr>
-                    <th>المشاركة (10)</th>
-                    <th>الواجبات (10)</th>
-                    <th>المهام الأدائية (10)</th>
-                    <th>المشروع (10)</th>
-                    <th>أعمال الفترة (40)</th>
-                    <th>اختبار الفترة (20)</th>
-                    <th>المجموع الكلي (60)</th>
-                    <th>النسبة المئوية</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="font-weight:800;">${s.p1}</td>
-                    <td style="font-weight:800;">${s.p2}</td>
-                    <td style="font-weight:800;">${s.p3}</td>
-                    <td style="font-weight:800;">${s.p4}</td>
-                    <td style="font-weight:800;">${s.pw} / 40</td>
-                    <td style="font-weight:800;">${s.exam} / 20</td>
-                    <td style="font-weight:800; font-size:13px;">${s.total} / 60</td>
-                    <td style="font-weight:800;">${Math.round((s.total/60)*100)}%</td>
-                </tr>
-            </tbody>
-        </table>
+    const batchTitle = type === 'remedial'
+        ? `بطاقات الخطط العلاجية الفردية - ${meta.grade} - ${pName}`
+        : `بطاقات الخطط الإثرائية الفردية - ${meta.grade} - ${pName}`;
+    setDocumentPrintTitle(batchTitle);
 
-        <div class="a4-section">
-            <div class="a4-sec-head">1. التشخيص التربوي الدقيق وفق درجات الطالب الحية</div>
-            <div class="a4-sec-body">
-                • <strong>نتيجة الفرز والتشخيص:</strong> ${d.reason}.<br>
-                • <strong>النطاق المنهجي المقرر:</strong> ${meta.units}.
-            </div>
-        </div>
-
-        <div class="a4-section">
-            <div class="a4-sec-head">2. الإجراءات المعتمدة (المعلم • منصة مدرستي • أوراق العمل)</div>
-            <div class="a4-sec-body">
-                ☐ ${d.action}.<br>
-                ☐ تسليم الطالب تدريبات موجهة من إعداد معلم المادة ومتابعة إنجازها أسبوعياً.<br>
-                ☐ <strong>المستهدف في الفترة القادمة:</strong> ${d.target}.
-            </div>
-        </div>
-
-        <div class="a4-section">
-            <div class="a4-sec-head">3. ملاحظات المعلم والموجه الطلابي وولي الأمر</div>
-            <div class="a4-sec-body" style="min-height:45px;">
-                .........................................................................................................................................................................................................................
-            </div>
-        </div>
-
-        <div class="a4-signatures">
-            <div class="sig-card"><div class="role">معلم المادة</div><div class="name">أ. فيصل محمد مدخلي</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">الموجه الطلابي</div><div class="name">................................</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">وكيل شؤون الطلاب</div><div class="name">................................</div><div class="line">التوقيع</div></div>
-            <div class="sig-card"><div class="role">مدير المدرسة</div><div class="name">أ. زيد الداود</div><div class="line">التوقيع والختم</div></div>
-        </div>
-    `;
-
+    document.getElementById('a4Container').innerHTML = list.map(s => buildStudentCardHTML(s, meta, pName, true)).join('');
     document.body.classList.add('modal-open');
     document.getElementById('printModal').classList.add('show');
 }
@@ -1283,6 +1772,7 @@ function openIndividualPlanModal(studentId) {
 function closePrintModal() {
     document.getElementById('printModal').classList.remove('show');
     document.body.classList.remove('modal-open');
+    document.title = DEFAULT_PAGE_TITLE;
 }
 
 function renderCharts(data, a1, a2, a3, a4, a5) {
@@ -1312,7 +1802,7 @@ function renderCharts(data, a1, a2, a3, a4, a5) {
         options: {
             responsive: true,
             scales: {
-                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 11 } } },
+                x: { stacked: true, grid: { display: false }, ticks: { color: textColor, font: { weight: '700', size: 10.5 } } },
                 y: { stacked: true, beginAtZero: true, max: 60, grid: { color: gridColor } }
             }
         }
@@ -1337,7 +1827,7 @@ function renderCharts(data, a1, a2, a3, a4, a5) {
                 r: {
                     beginAtZero: true, max: 10, ticks: { display: false },
                     grid: { color: gridColor }, angleLines: { color: gridColor },
-                    pointLabels: { color: textColor, font: { size: 12, weight: '800' } }
+                    pointLabels: { color: textColor, font: { size: 11.5, weight: '800' } }
                 }
             }
         }
